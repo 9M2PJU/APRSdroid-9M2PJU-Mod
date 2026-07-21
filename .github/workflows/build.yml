@@ -208,9 +208,20 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # The checkout is at the tag (detached HEAD). Switch to
+          # master so we can push the version.json update.
+          git checkout master || true
+          # Regenerate version.json on the master branch in case it
+          # was already updated manually (avoid conflicts).
+          tag="${GITHUB_REF_NAME}"
+          apk_name=$(ls release-assets/*.apk | head -1 | xargs basename)
+          apk_url="https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/download/${tag}/${apk_name}"
+          date=$(date -u +"%Y-%m-%d")
+          printf '{\n  "version": "%s",\n  "apkUrl": "%s",\n  "apkName": "%s",\n  "date": "%s"\n}\n' \
+            "$tag" "$apk_url" "$apk_name" "$date" > docs/version.json
           git add docs/version.json
           git commit -m "chore: update version.json for ${GITHUB_REF_NAME} [skip ci]" || echo "No changes to commit"
-          git push origin master
+          git push origin master || echo "Push failed (version.json may already be up to date)"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

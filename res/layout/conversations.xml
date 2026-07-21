@@ -34,6 +34,6 @@
 		android:layout_height="wrap_content"
 		app:menu="@menu/bottom_nav_menu"
 		app:labelVisibilityMode="labeled"
-		android:background="?android:attr/windowBackground"
+		android:background="@color/md_background"
 		/>
 </LinearLayout>

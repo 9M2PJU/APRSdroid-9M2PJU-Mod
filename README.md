@@ -285,7 +285,7 @@ If you find APRSdroid 9M2PJU Mod useful, consider supporting development:
 |---|---|
 | Malaysia e-wallet (scan QR) | See QR below |
 | Buy Me a Coffee | https://www.buymeacoffee.com/9m2pju |
-| Wise (tag: faizulz13) | https://wise.me/faizulz13 |
+| Wise (tag: faizulz13) | https://wise.com/pay/me/faizulz13 |
 
 <div align="center">
 

@@ -67,15 +67,16 @@ class PrefsAct extends PreferenceActivity {
 		if (resId > 0) {
 			val statusBarHeight = res.getDimensionPixelSize(resId)
 			if (statusBarHeight > 0) {
-				val root = getWindow.getDecorView.findViewById(android.R.id.content)
+				val root = getWindow.getDecorView.findViewById(
+					android.R.id.content).asInstanceOf[android.view.View]
 				if (root != null)
 					root.setPadding(root.getPaddingLeft, statusBarHeight,
 						root.getPaddingRight, root.getPaddingBottom)
-				val lv = findViewById(android.R.id.list)
+				val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
 				if (lv != null) {
 					lv.setPadding(lv.getPaddingLeft, statusBarHeight,
 						lv.getPaddingRight, lv.getPaddingBottom)
-					lv.setClipToPadding(false)
+					lv.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
 				}
 			}
 		}

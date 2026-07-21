@@ -96,13 +96,13 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 
 <div align="center">
 
-| Log | Hub | Map |
+| Splash | Log | Hub |
 |:---:|:---:|:---:|
-| ![Log](docs/assets/screenshots/screenshot-log.png) | ![Hub](docs/assets/screenshots/screenshot-hub.png) | ![Map](docs/assets/screenshots/screenshot-map.png) |
+| ![Splash](docs/assets/splash-user.jpg) | ![Log](docs/assets/screenshots/screenshot-log.png) | ![Hub](docs/assets/screenshots/screenshot-hub.png) |
 
-| Messages | Preferences |
-|:---:|:---:|
-| ![Messages](docs/assets/screenshots/screenshot-messages.png) | ![Preferences](docs/assets/screenshots/screenshot-prefs.png) |
+| Map | Messages | Preferences |
+|:---:|:---:|:---:|
+| ![Map](docs/assets/screenshots/screenshot-map.png) | ![Messages](docs/assets/screenshots/screenshot-messages.png) | ![Preferences](docs/assets/screenshots/screenshot-prefs.png) |
 
 </div>
 

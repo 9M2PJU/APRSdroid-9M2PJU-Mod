@@ -47,7 +47,7 @@ object UIHelper
 	 * Uses RECEIVER_NOT_EXPORTED since all our receivers are for internal broadcasts.
 	 */
 	def safeRegisterReceiver(ctx : Context, receiver : BroadcastReceiver, filter : IntentFilter) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+		if (Build.VERSION.SDK_INT >= 34) {  // Android 14 (UPSIDE_DOWN_CAKE)
 			ctx.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
 		} else {
 			ctx.registerReceiver(receiver, filter)

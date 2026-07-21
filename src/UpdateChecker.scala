@@ -298,7 +298,18 @@ object UpdateChecker {
      */
     def checkForUpdates(act : Activity) : Unit = {
         if (!shouldCheck(act)) return
+        doCheck(act, force = false)
+    }
 
+    /**
+     * Force an update check, bypassing the 24h cooldown.
+     * Called from the "Check for updates" menu item.
+     */
+    def forceCheckForUpdates(act : Activity) : Unit = {
+        doCheck(act, force = true)
+    }
+
+    private def doCheck(act : Activity, force : Boolean) : Unit = {
         val localVersion = getInstalledVersionName(act)
         if (localVersion.isEmpty) return
 
@@ -309,7 +320,11 @@ object UpdateChecker {
                 fetchLatestRelease()
             }
             override def onPostExecute(info : ReleaseInfo) : Unit = {
-                if (info == null) return
+                if (info == null) {
+                    if (force)
+                        Toast.makeText(act, R.string.update_check_failed, Toast.LENGTH_SHORT).show()
+                    return
+                }
 
                 // User skipped this version previously?
                 val prefs = PreferenceManager.getDefaultSharedPreferences(act)
@@ -321,6 +336,8 @@ object UpdateChecker {
                     showUpdateDialog(act, localVersion, info)
                 } else {
                     Log.d(TAG, s"Up to date: $localVersion (latest: ${info.tag})")
+                    if (force)
+                        Toast.makeText(act, act.getString(R.string.up_to_date, info.tag), Toast.LENGTH_SHORT).show()
                 }
             }
         }.execute()

@@ -431,6 +431,9 @@ trait UIHelper extends Activity
 		case R.id.about =>
 			aboutDialog()
 			true
+		case R.id.check_updates =>
+			UpdateChecker.forceCheckForUpdates(this)
+			true
 		case R.id.age =>
 			ageDialog()
 			true

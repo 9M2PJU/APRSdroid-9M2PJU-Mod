@@ -110,6 +110,9 @@
 <string name="update_download_failed">Download failed. Opening browser instead.</string>
 <string name="update_download_cancelled">Download cancelled.</string>
 <string name="update_install_failed">Could not launch installer. Opening browser instead.</string>
+<string name="check_updates">Check for updates</string>
+<string name="up_to_date">You are running the latest version (%s).</string>
+<string name="update_check_failed">Could not check for updates. Check your internet connection.</string>
 
 <!-- about dialog -->
 <string name="ad_title">About APRSdroid 9M2PJU Mod %s</string>

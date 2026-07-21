@@ -28,6 +28,10 @@
 		android:title="@string/about"
 		android:alphabeticShortcut="a"
 		android:icon="@android:drawable/ic_menu_info_details" />
+	<item android:id="@+id/check_updates"
+		android:title="@string/check_updates"
+		android:alphabeticShortcut="u"
+		android:icon="@android:drawable/ic_menu_upload" />
 </group>
 </menu>
 

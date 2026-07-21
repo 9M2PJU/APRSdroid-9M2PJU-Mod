@@ -27,6 +27,17 @@ class LogActivity extends MainListActivity("log", R.id.log) {
 	lazy val locReceiver = new LocationReceiver2[Cursor](load_cursor, replace_cursor, cancel_cursor)
 	lazy val la = new PostListAdapter(this)
 
+	// Periodic refresh handler — ensures the log updates in real-time
+	// even if UPDATE broadcasts are delayed or coalesced by the OS.
+	val refreshHandler = new Handler()
+	val REFRESH_INTERVAL_MS = 2000L  // 2 seconds
+	val refreshRunnable = new Runnable {
+		override def run() : Unit = {
+			locReceiver.startTask(null)
+			refreshHandler.postDelayed(this, REFRESH_INTERVAL_MS)
+		}
+	}
+
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.main)
@@ -46,8 +57,15 @@ class LogActivity extends MainListActivity("log", R.id.log) {
 	override def onResume() {
 		super.onResume()
 		Log.d(TAG, "onResume: registering receiver")
-		UIHelper.safeRegisterReceiver(this, locReceiver, new IntentFilter(AprsService.UPDATE))
+		// Listen for UPDATE (new posts) and SERVICE_STARTED (tracking
+		// started) to ensure the log refreshes immediately.
+		val filter = new IntentFilter(AprsService.UPDATE)
+		filter.addAction(AprsService.SERVICE_STARTED)
+		UIHelper.safeRegisterReceiver(this, locReceiver, filter)
 		locReceiver.startTask(null)
+
+		// Start periodic refresh to catch any missed broadcasts
+		refreshHandler.postDelayed(refreshRunnable, REFRESH_INTERVAL_MS)
 
 		postlist.requestFocus()
 	}
@@ -55,6 +73,8 @@ class LogActivity extends MainListActivity("log", R.id.log) {
 	override def onPause() {
 		super.onPause()
 		unregisterReceiver(locReceiver)
+		// Stop periodic refresh
+		refreshHandler.removeCallbacks(refreshRunnable)
 	}
 
 	override def onDestroy() {

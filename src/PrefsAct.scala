@@ -164,12 +164,11 @@ class PrefsAct extends PreferenceActivity {
 						val lv = dialog.findViewById(android.R.id.list)
 							.asInstanceOf[android.widget.ListView]
 						if (lv != null) {
-							// clipToPadding=true (default) so items are clipped
-							// at the padding boundary and can't scroll under
-							// the status bar. The dialog's background still
-							// flows under the transparent status bar (edge-to-
-							// edge), but text stays below the status bar icons.
-							lv.setClipToPadding(true)
+							// clipToPadding=false for smooth edge-to-edge
+							// scrolling. setSelection(0) ensures the list
+							// starts at the top so the first item is below
+							// the status bar when the dialog opens.
+							lv.setClipToPadding(false)
 							// Set an insets listener on the dialog's decorView
 							// so padding is applied during layout and survives
 							// any internal re-layout by the AlertDialog.

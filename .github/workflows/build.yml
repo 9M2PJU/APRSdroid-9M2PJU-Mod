@@ -28,23 +28,26 @@ jobs:
           submodules: recursive
           fetch-depth: 0   # git describe needs tags/history for versionName
 
-      - name: Set up JDK 8
+      - name: Set up JDK 17 (for Android SDK setup)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '8'
+          java-version: '17'
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
-          # cmdline-tools 16.0 requires JDK 17+; we build with JDK 8
-          # (Scala plugin), so pin to 8.0 which runs on JDK 8.
-          cmdline-tools-version: 9477386
           packages: |
             tools
             platform-tools
             build-tools;33.0.2
             platforms;android-33
+
+      - name: Switch to JDK 8 (for Scala build)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
 
       - name: Write local.properties
         run: |

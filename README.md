@@ -299,8 +299,6 @@ If you find APRSdroid 9M2PJU Mod useful, consider supporting development:
 
 <div align="center">
 
-**Made by Amateur Radio operators, for Amateur Radio operators.**
-
-*73 and happy APRSing!*
+**Made with care by [9M2PJU](https://hamradio.my). 73.**
 
 </div>

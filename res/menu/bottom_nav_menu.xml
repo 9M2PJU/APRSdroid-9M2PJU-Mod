@@ -17,7 +17,7 @@
         android:icon="@drawable/ic_nav_messages"
         android:title="@string/app_messages" />
     <item
-        android:id="@+id/nav_settings"
-        android:icon="@drawable/ic_nav_settings"
-        android:title="@string/preferences" />
+        android:id="@+id/nav_menu"
+        android:icon="@drawable/ic_nav_menu"
+        android:title="@string/menu" />
 </menu>

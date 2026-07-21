@@ -26,22 +26,39 @@ public class OsmTileDownloader extends TileDownloader {
 
     @Override
     public String getHostName() {
-        String hostName = prefsWrapper.isOfflineMap() ? HOST_NAME_OFFLINE : HOST_NAME_ONLINE;
-        Log.d(TAG, "Getting host name: " + hostName); // Log host name
+        boolean offline = prefsWrapper.isOfflineMap();
+        // If offline mode is on, try to detect if the local tile server is
+        // actually running. If not, fall back to online OSM tiles so the
+        // map still loads instead of showing a blank grid.
+        if (offline) {
+            try {
+                java.net.Socket socket = new java.net.Socket();
+                socket.connect(new java.net.InetSocketAddress(HOST_NAME_OFFLINE, 8080), 500);
+                socket.close();
+                Log.d(TAG, "Offline tile server detected, using local tiles");
+            } catch (Exception e) {
+                Log.w(TAG, "Offline tile server not reachable, falling back to online OSM tiles");
+                offline = false;
+            }
+        }
+        String hostName = offline ? HOST_NAME_OFFLINE : HOST_NAME_ONLINE;
+        Log.d(TAG, "Getting host name: " + hostName);
         return hostName;
     }
 
     @Override
     public String getProtocol() {
-        String protocol = prefsWrapper.isOfflineMap() ? "http" : "https"; // Use HTTP for offline maps
-        Log.d(TAG, "Getting protocol: " + protocol); // Log protocol
+        boolean offline = prefsWrapper.isOfflineMap();
+        String protocol = offline ? "http" : "https";
+        Log.d(TAG, "Getting protocol: " + protocol);
         return protocol;
     }
 
     @Override
     public int getPort() {
-        int port = prefsWrapper.isOfflineMap() ? 8080 : 443; // Use port 8080 for offline maps
-        Log.d(TAG, "Getting port: " + port); // Log port
+        boolean offline = prefsWrapper.isOfflineMap();
+        int port = offline ? 8080 : 443;
+        Log.d(TAG, "Getting port: " + port);
         return port;
     }
 

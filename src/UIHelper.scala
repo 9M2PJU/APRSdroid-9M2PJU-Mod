@@ -19,6 +19,7 @@ import android.content.pm.PackageManager
 import android.provider.Settings
 
 import androidx.core.content.FileProvider
+import android.widget.PopupMenu
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 object UIHelper
@@ -226,13 +227,43 @@ trait UIHelper extends Activity
 						startActivity(new Intent(UIHelper.this, classOf[ConversationsActivity])
 							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
 						true
-					case R.id.nav_settings =>
-						startActivity(new Intent(UIHelper.this, classOf[PrefsAct]))
+					case R.id.nav_menu =>
+						showOptionsMenuPopup(bn)
 						true
 					case _ => false
 				}
 			}
 		})
+	}
+
+	// Show the old options menu as a popup anchored above the bottom nav.
+	// This replaces the 3-dot action bar overflow menu which wasn't visible
+	// on all screens (e.g. the map). Contains Preferences, Export, Clear,
+	// Start/Stop, About, and map-specific options.
+	def showOptionsMenuPopup(anchor : View) {
+		val popup = new PopupMenu(this, anchor)
+		val menu = popup.getMenu()
+		// Inflate the same menus the old onCreateOptionsMenu used
+		getMenuInflater().inflate(R.menu.options_activities, menu)
+		getMenuInflater().inflate(R.menu.options_map, menu)
+		getMenuInflater().inflate(R.menu.options, menu)
+		// Hide activity-switching items (handled by bottom nav) and the
+		// "own" activity item
+		Array(R.id.hub, R.id.map, R.id.log, R.id.conversations).map((id) => {
+			menu.findItem(id).setVisible(false)
+		})
+		menu.findItem(R.id.age).setVisible(R.id.map == menu_id || R.id.hub == menu_id)
+		menu.findItem(R.id.overlays).setVisible(R.id.map == menu_id)
+		// Update start/stop label
+		val ssmi = menu.findItem(R.id.startstopbtn)
+		ssmi.setTitle(if (AprsService.running) R.string.stoplog else R.string.startlog)
+		ssmi.setIcon(if (AprsService.running) android.R.drawable.ic_menu_close_clear_cancel else android.R.drawable.ic_menu_compass)
+		// Handle item selection via the existing onOptionsItemSelected
+		popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener {
+			override def onMenuItemClick(mi : MenuItem) : Boolean =
+				onOptionsItemSelected(mi)
+		})
+		popup.show()
 	}
 
 	// keep screen on all the time if requested

@@ -56,8 +56,8 @@ class GoogleMapAct extends Activity with MapLoaderBase
                                                         startActivity(new Intent(GoogleMapAct.this, classOf[ConversationsActivity])
                                                                 .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
                                                         true
-                                                case R.id.nav_settings =>
-                                                        startActivity(new Intent(GoogleMapAct.this, classOf[PrefsAct]))
+                                                case R.id.nav_menu =>
+                                                        showOptionsMenuPopup(bn)
                                                         true
                                                 case _ => false
                                         }

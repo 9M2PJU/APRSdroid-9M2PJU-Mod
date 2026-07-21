@@ -3,6 +3,7 @@
 <resources>
 <string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">APRSdroid Preferences</string>
+<string name="menu">Menu</string>
 <string name="app_map">APRSdroid Map</string>
 <string name="app_hub">APRSdroid Hub</string>
 <string name="app_log">APRSdroid Log</string>

@@ -61,7 +61,14 @@ class PrefsAct extends PreferenceActivity {
 	// PreferenceActivity, and when navigating to a PreferenceScreen
 	// sub-screen (e.g. Notifications), the ListView content is swapped
 	// and the first item (category title) would draw under the status bar.
-	var insetHeaderAdded = false
+	//
+	// We use two approaches:
+	// 1. Set padding on the root content view (works for the main screen)
+	// 2. Add a transparent header spacer view to the ListView (works for
+	//    sub-screens where the ListView adapter is swapped and padding
+	//    gets reset)
+	var lastInsetListView : android.view.View = null
+	var lastInsetHeaderCount : Int = -1
 	def applyPrefTopInset() {
 		val res = getResources()
 		val resId = res.getIdentifier("status_bar_height", "dimen", "android")
@@ -69,15 +76,19 @@ class PrefsAct extends PreferenceActivity {
 		if (statusBarHeight > 0) {
 			val root = getWindow.getDecorView.findViewById(
 				android.R.id.content).asInstanceOf[android.view.View]
-			if (root != null)
+			if (root != null && root.getPaddingTop != statusBarHeight)
 				root.setPadding(root.getPaddingLeft, statusBarHeight,
 					root.getPaddingRight, root.getPaddingBottom)
-			// Also apply padding to the ListView with clipToPadding=false
+			// Apply padding to the ListView with clipToPadding=false
 			val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
 			if (lv != null) {
-				lv.setPadding(lv.getPaddingLeft, statusBarHeight,
-					lv.getPaddingRight, lv.getPaddingBottom)
-				lv.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
+				android.util.Log.d("PrefsAct", "applyPrefTopInset: lv=" + lv.hashCode() +
+					" paddingTop=" + lv.getPaddingTop + " target=" + statusBarHeight)
+				if (lv.getPaddingTop != statusBarHeight) {
+					lv.setPadding(lv.getPaddingLeft, statusBarHeight,
+						lv.getPaddingRight, lv.getPaddingBottom)
+					lv.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
+				}
 			}
 		}
 	}

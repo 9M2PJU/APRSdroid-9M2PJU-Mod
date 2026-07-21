@@ -203,18 +203,6 @@ GPS → Phone → APRSdroid → BLE → LoRa Tracker → LoRa Radio → APRS Net
 - **Incoming:** The tracker receives LoRa APRS packets and forwards
   them to APRSdroid via BLE. APRSdroid decodes and displays them.
 
-#### Compatible firmware
-
-| Firmware | Boards | Link |
-|---|---|---|
-| richonguzman LoRa APRS Tracker | TTGO T-Beam, Heltec, LilyGO, T-Beam Supreme | [GitHub](https://github.com/richonguzman/LoRa_APRS_Tracker) |
-| SQ9MDD LoRa APRS | Various ESP32 + LoRa boards | [GitHub](https://github.com/SQ9MDD/LoRa-APRS) |
-| Mobilinkd TNC | Mobilinkd NucleoTNC, TNC3 | [mobilinkd.com](https://mobilinkd.com/) |
-
-> **Note:** The tracker firmware must support **BLE KISS TNC** over
-> Bluetooth Low Energy. Classic Bluetooth KISS TNC is also supported
-> but requires a different connection setup.
-
 ---
 
 ## Documentation & Support

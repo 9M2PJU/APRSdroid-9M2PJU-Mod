@@ -307,6 +307,34 @@ h2 { font-size: 1.8rem; margin-top: 0; }
   border: 1px solid var(--surface-2);
 }
 
+/* ---------- Screenshots ---------- */
+.screenshots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+.screenshots-grid figure {
+  margin: 0;
+  text-align: center;
+}
+.screenshots-grid img {
+  width: 100%;
+  max-width: 260px;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+  border: 1px solid var(--surface-2);
+  transition: transform 0.2s ease;
+}
+.screenshots-grid img:hover {
+  transform: scale(1.03);
+}
+.screenshots-grid figcaption {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
 /* ---------- Build ---------- */
 pre {
   background: var(--bg);

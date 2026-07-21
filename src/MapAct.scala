@@ -2,12 +2,13 @@ package org.aprsdroid.app
 
 import _root_.android.{Manifest => AndroidManifest}
 import _root_.android.app.AlertDialog
-import _root_.android.content.{DialogInterface, Intent, IntentFilter}
+import _root_.android.content.{Context, DialogInterface, Intent, IntentFilter}
 import _root_.android.content.pm.PackageManager
 import _root_.android.content.res.Configuration
 import _root_.android.database.Cursor
 import _root_.android.graphics.drawable.{BitmapDrawable, Drawable}
 import _root_.android.graphics.{Canvas, Paint, Path, Point, Rect, Typeface}
+import _root_.android.location.LocationManager
 import _root_.android.os.{Build, Bundle}
 import _root_.android.util.Log
 import _root_.android.view.{KeyEvent, Menu, MenuItem, View, WindowManager}
@@ -39,6 +40,7 @@ class MapAct extends MapActivity with MapMenuHelper {
 	lazy val loading = findViewById(R.id.loading).asInstanceOf[View]
 	lazy val locReceiver = new LocationReceiver2[ArrayList[OSMStation]](staoverlay.load_stations,
 			staoverlay.replace_stations, staoverlay.cancel_stations)
+	lazy val myLocationBtn = findViewById(R.id.my_location_btn).asInstanceOf[com.google.android.material.floatingactionbutton.FloatingActionButton]
 
 	// Apply hardware acceleration based on user preference
 	def applyHardwareAcceleration(useHardwareAcceleration : Boolean, mapview : MapView) {
@@ -62,8 +64,31 @@ class MapAct extends MapActivity with MapMenuHelper {
 		// Apply hardware acceleration preference
 		applyHardwareAcceleration(prefs.getBoolean("hardware_acceleration", true), mapview)
 		setupBottomNav()
+		// "My location" FAB — center the map on the last known GPS location
+		myLocationBtn.setOnClickListener(new View.OnClickListener {
+			override def onClick(v : View) : Unit = centerOnMyLocation()
+		})
 
 		startLoading()
+	}
+
+	def centerOnMyLocation() {
+		try {
+			val locMan = getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager]
+			val provider = PeriodicGPS.bestProvider(locMan)
+			if (provider != null) {
+				val loc = locMan.getLastKnownLocation(provider)
+				if (loc != null) {
+					mapview.getController().setCenter(new GeoPoint(loc.getLatitude.toFloat, loc.getLongitude.toFloat))
+					mapview.getController().setZoom(14)
+					return
+				}
+			}
+		} catch {
+			case _ : SecurityException => /* ignore */
+			case _ : Throwable => /* ignore */
+		}
+		Toast.makeText(this, R.string.map_no_location, Toast.LENGTH_SHORT).show()
 	}
 
 	override def onResume() {

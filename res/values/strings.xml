@@ -29,6 +29,8 @@
 <string name="map_track_call">Tracking %s...</string>
 <string name="map_track_unknown">Position for %s unknown!</string>
 <string name="map_select">Select station</string>
+<string name="map_my_location">Center on my location</string>
+<string name="map_no_location">No last known location available</string>
 
 <string name="map_loading">Loading...</string>
 

@@ -44,13 +44,13 @@
         <item name="android:actionBarTheme">@style/ThemeOverlay.AppTheme.ActionBar</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppTheme.ActionBar</item>
 
-        <!-- ===== System bars — transparent for full edge-to-edge ===== -->
-        <!-- Status and nav bars are transparent so the app's navy
-             background flows seamlessly under the system bars.
-             Content padding is applied at runtime via WindowInsets
-             to keep text below the status bar icons. -->
+        <!-- ===== System bars — transparent status bar, dark nav bar ===== -->
+        <!-- Status bar is transparent so the app's navy background flows
+             under it. Nav bar uses the app's navy color so it's always
+             dark (some screens have light content at the bottom that
+             would show through a transparent nav bar). -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/md_background</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">@bool/light_nav_bar_icons</item>
         <!-- Allow content to draw in the display cutout area for true
@@ -100,7 +100,7 @@
         <item name="android:colorBackground">@color/md_background</item>
         <item name="android:windowBackground">@color/md_background</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/md_background</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:windowAnimationStyle">@null</item>
     </style>

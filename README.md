@@ -103,12 +103,28 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 
 The default map is **OpenStreetMap (online)**. To use offline maps:
 
-1. Go to **Menu** (bottom nav) → **Preferences** → **OSM Maps**
-2. Tap **"Grant Storage Permissions"** and grant all-file permissions
-3. Enable **Offline Map**
-4. Set the map file path to your `.map` or `.mbtiles` file
+1. Go to **Menu** (bottom nav) → **Preferences** → **Offline Map**
+2. Tap **"Choose map file"** and select your `.map` file
+3. Open **Map** — offline tiles will load without internet
 
-NA7Q provides several tools for downloading offline maps:
+#### Malaysia, Singapore & Brunei offline map
+
+A ready-to-use offline map for Malaysia, Singapore, and Brunei is
+available as a GitHub release asset:
+
+> [**Download Malaysia Offline Maps**](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/tag/maps-v1.0)
+> (528 MB zip, contains MapsForge `.map` + MBTiles files)
+
+**Installation:**
+1. Download and extract the zip file on your computer
+2. Copy `malaysia-singapore-brunei.map` to your phone (any folder)
+3. In APRSdroid: **Menu** → **Preferences** → **Offline Map** → **Choose map file**
+4. Select the `.map` file you copied
+5. Open **Map** — the offline map loads without internet
+
+#### Other map sources
+
+NA7Q provides several tools for downloading offline maps for other regions:
 
 | Tool | Platform | Description |
 |---|---|---|
@@ -118,6 +134,69 @@ NA7Q provides several tools for downloading offline maps:
 | [Multi-Map Maker](https://na7q.com/wp-content/uploads/2025/02/mapmaker-0.2.exe) | Windows | Google, OSM, USGS, Canada Topo, and more |
 | [Map Viewer](https://na7q.com/wp-content/uploads/2025/02/mapviewer.exe) | Windows | Preview different map styles |
 | [BBBike MapsForge](https://extract.bbbike.org/) | Web | Custom MapsForge OSM maps online |
+
+### Connecting a LoRa APRS Tracker via Bluetooth (BLE KISS TNC)
+
+APRSdroid can connect to LoRa APRS tracker boards (e.g. LilyGO T-Beam,
+TTGO T-Beam, Heltec WiFi LoRa 32, RAK Wireless modules, and other
+ESP32-based APRS trackers) using **Bluetooth Low Energy (BLE)** with
+the **KISS TNC** protocol. This lets you send and receive APRS packets
+over LoRa radio without a phone data connection.
+
+#### Requirements
+
+- A LoRa APRS tracker board with BLE KISS TNC firmware (e.g.
+  [OE5HMC's LoRa APRS Tracker](https://github.com/oe5hmc/LoRa-APRS-Tracker))
+- Android phone with Bluetooth
+- APRSdroid 9M2PJU Mod installed
+
+#### Setup steps
+
+1. **Flash your tracker board** with BLE KISS TNC firmware (if not
+   already done). The firmware must advertise a BLE KISS service.
+2. **Power on the tracker** and put it in BLE pairing mode (usually
+   automatic on boot).
+3. **Pair the tracker with your phone:**
+   - Go to Android **Settings** → **Bluetooth**
+   - Find your tracker in the device list (e.g. "LoraTracker" or
+     "OE5HMC")
+   - Tap to pair
+4. **Configure APRSdroid:**
+   - Open APRSdroid → **Menu** → **Preferences** → **Connection Setup**
+   - Select **Bluetooth TNC (KISS)** as the backend
+   - Select your tracker from the Bluetooth device list
+   - Set your callsign and passcode
+5. **Start the service:**
+   - Tap the **Start** button (or **Menu** → **Start**)
+   - APRSdroid will connect to the tracker via BLE
+   - Position reports are sent over LoRa radio
+   - Received packets appear in the Log and on the Map
+
+#### How it works
+
+```
+GPS → Phone → APRSdroid → BLE → LoRa Tracker → LoRa Radio → APRS Network
+                                                    ↓
+                                          Received packets → APRSdroid
+```
+
+- **Outgoing:** APRSdroid gets your GPS position, formats an APRS
+  packet, and sends it to the tracker via BLE KISS TNC. The tracker
+  transmits it over LoRa radio.
+- **Incoming:** The tracker receives LoRa APRS packets and forwards
+  them to APRSdroid via BLE. APRSdroid decodes and displays them.
+
+#### Compatible firmware
+
+| Firmware | Boards | Link |
+|---|---|---|
+| OE5HMC LoRa APRS Tracker | TTGO T-Beam, Heltec, LilyGO | [GitHub](https://github.com/oe5hmc/LoRa-APRS-Tracker) |
+| SQ9MDD LoRa APRS | Various ESP32 + LoRa boards | [GitHub](https://github.com/SQ9MDD/LoRa-APRS) |
+| Mobilinkd TNC | Mobilinkd NucleoTNC, TNC3 | [mobilinkd.com](https://mobilinkd.com/) |
+
+> **Note:** The tracker firmware must support **BLE KISS TNC** over
+> Bluetooth Low Energy. Classic Bluetooth KISS TNC is also supported
+> but requires a different connection setup.
 
 ---
 

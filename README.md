@@ -1,10 +1,11 @@
-# 📡 NA7Q APRSdroid 9M2PJU Mod
-### *The Ultimate APRS Companion for Android — 9M2PJU-Mod*
+# APRSdroid 9M2PJU Mod
+### *Enhanced APRS client for Android*
 
-> 🌟 **This is the 9M2PJU-Mod** of [NA7Q's enhanced APRSdroid](https://github.com/na7q/aprsdroid),
+> **APRSdroid 9M2PJU Mod** is a fork of [NA7Q's enhanced APRSdroid](https://github.com/na7q/aprsdroid),
 > which is itself a fork of [Georg Lukas's original APRSdroid](https://aprsdroid.org/).
-> It adds a launch splash screen, modern Android support, GitHub Actions CI/CD with
-> signed release builds, and a project landing page with live download counters.
+> It adds modern Android compatibility, a Material Design UI, bottom navigation,
+> branded splash screen, in-app updates, GitHub Actions CI/CD with signed release
+> builds, and a project landing page at <https://aprsdroid.hamradio.my/>.
 
 ---
 
@@ -18,286 +19,163 @@
 [![Release](https://img.shields.io/github/v/release/9M2PJU/APRSdroid-9M2PJU-Mod?style=for-the-badge&label=Latest%20Release)](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/9M2PJU/APRSdroid-9M2PJU-Mod/total?style=for-the-badge&label=Total%20Downloads)](https://aprsdroid.hamradio.my/)
 
-**[🌐 Landing Page](https://aprsdroid.hamradio.my/)** • **[⬇️ Download](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/latest)** • **[🗺️ Original APRSdroid](https://aprsdroid.org/)** • **[📦 Source](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod)**
+**[Landing Page](https://aprsdroid.hamradio.my/)** | **[Download](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/latest)** | **[Original APRSdroid](https://aprsdroid.org/)** | **[NA7Q Fork](https://github.com/na7q/aprsdroid)** | **[Source](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod)**
 
 </div>
 
 ---
 
-## ✨ **What is NA7Q APRSdroid 9M2PJU Mod?**
+## About
 
-NA7Q APRSdroid 9M2PJU Mod is a powerful, extensively enhanced Android client for the
-[**APRS (Automatic Packet Reporting System)**](http://aprs.org/) network. It builds on
-NA7Q's enhanced APRSdroid and adds modern Android compatibility, a branded splash screen,
-CI/CD with signed release APKs, and a project landing page.
-
-### 🆕 **What's new in the 9M2PJU-Mod**
-
-This mod is a comprehensive refresh of NA7Q's enhanced APRSdroid. Below is everything that
-changed compared to the upstream NA7Q fork.
-
-#### 🏗️ **Repo & branding**
-- 🔖 **Repo renamed** `NA7Q-APRSdroid` → `APRSdroid-9M2PJU-Mod` (clearer identity)
-- 🏷️ **Version bumped** to `v2.0.0` (APRS tocall `APDR20`, displayed as "APRSdroid 2.0.0" in
-  IGATE comment strings). Versioning is tag-driven — each release gets a `vX.Y.Z` tag.
-- 🖼️ **New app icon & logo** — replaced all 6 density-specific `icon.png` files
-  (ldpi/mdpi/hdpi/xhdpi/xxhdpi/xxxhdpi) from a new 2048×2048 source. Added a 512×512
-  `logo.png` for in-app branding and Play Store listing.
-- 🎨 **Branded splash screen** — added `SplashTheme` that shows a full-screen splash image
-  as the launcher activity's `windowBackground` during cold start. Splash image is a 153 KB
-  lossy WebP (down from 4.7 MB PNG) in `drawable-nodpi/`. No activity code changes needed —
-  pure theme-based splash.
-
-#### 📱 **Modern Android support (targetSdk 33 → 35)**
-- 🎯 **`targetSdkVersion` 33 → 35** (Android 15). Satisfies the Google Play targetSdk floor
-  (within 1 year of latest). `compileSdkVersion` stays at 33 due to the Scala plugin's AGP
-  limitation (see build notes below). `minSdkVersion` bumped 14 → 19 to enable modern
-  AndroidX libraries.
-- 🔐 **Foreground service types** (Android 14+ requirement): `AprsService` now declares
-  `foregroundServiceType="location|microphone|connectedDevice"` and the manifest requests
-  `FOREGROUND_SERVICE_LOCATION`, `FOREGROUND_SERVICE_MICROPHONE`,
-  `FOREGROUND_SERVICE_CONNECTED_DEVICE`. `ServiceNotifier.start()` passes an explicit type
-  bitmask to `startForeground()` on API 29+, selecting `microphone` and `connectedDevice`
-  only when the corresponding runtime permission is granted.
-- 📶 **Bluetooth permissions** (Android 12+): added `BLUETOOTH_SCAN` with `neverForLocation`
-  and `BLUETOOTH_CONNECT`. `BLUETOOTH`/`BLUETOOTH_ADMIN` now have `maxSdkVersion="30"`.
-- 📂 **Storage permissions** (Android 11+): added `MANAGE_EXTERNAL_STORAGE` for all-files
-  access to offline MBTiles map files. `READ_EXTERNAL_STORAGE`/`WRITE_EXTERNAL_STORAGE` now
-  have `maxSdkVersion="32"`.
-- 🔔 **`POST_NOTIFICATIONS`** (Android 13+): already declared; now requested at runtime via
-  `PermissionHelper` when starting the service.
-- 🪟 **Edge-to-edge opt-out** (Android 15+): `UIHelper.applySystemBarInsets()` calls
-  `WindowCompat.setDecorFitsSystemWindows(window, true)` to prevent content from going under
-  the status/navigation bars. Applied to all list-based activities via
-  `LoadingListActivity.onResume`.
-
-#### 🎨 **UI modernization (Phase 1 — theme & chrome)**
-- 🌙 **Material Design dark theme** — migrated from `Theme.Holo` (2011) to
-  `Theme.MaterialComponents`. The app uses a **dark-only** theme with
-  navy surfaces and amber accent, matching the app icon.
-- 🎨 **Brand palette** derived from the app icon:
-  - Navy surfaces `#0D182D`/`#13203A`/`#1C2F51` (elevation tints)
-  - Amber accent `#CEB619`
-  - Cool grey text `#9DA4B0`/`#E8EAEF`
-  - Lighter navy primary `#9DB4D6` for dark-mode contrast
-- 🧩 **New dependencies:** `androidx.appcompat:appcompat:1.6.1` +
-  `com.google.android.material:material:1.9.0`.
-- 🪟 **Status bar** now colored to match the navy primary (`colorPrimaryDark`).
-- 🔘 **Material buttons** — `Widget.AppTheme.Button` style with amber background and navy
-  text, applied via `materialButtonStyle`.
-- 🧱 **Activity migrations:** `APRSdroid`, `ProfileImportActivity`,
-  `KeyfileImportActivity` → `AppCompatActivity`. ListActivity-based and
-  PreferenceActivity-based activities keep their superclasses for now (the Material theme
-  applies to them via the manifest).
-- 🗺️ **Map activity excluded** — `MapAct` (MapsForge) keeps `MapViewTheme` (Holo-based) for
-  compatibility. Will be migrated in a later phase.
-
-> **Phase 2 (not yet done):** ListActivity → RecyclerView, PreferenceActivity →
-> PreferenceFragmentCompat, Material dialogs (`MaterialAlertDialogBuilder`), layout
-> hardcoded colors → `@color/` resources, dynamic color (Material You), core-splashscreen
-> API.
-
-#### 🌐 **GitHub Pages landing page**
-- 🌍 **Custom domain:** <https://aprsdroid.hamradio.my/>
-- 🎨 **Dark navy + amber theme** matching the app icon.
-- 📊 **Live download counters** — no backend. Real GitHub release download counts.
-- ⬇️ **Download buttons** for every release APK, with file size and per-asset download count.
-- 🖼️ **Splash preview**, **features grid**, **credits**.
-
-### 🎯 **Core Features**
-- 📍 **Real-time Position Reporting** — Share your location with the APRS network
-- 🗺️ **Interactive Station Map** — Visualize nearby amateur radio stations with offline mapping
-- 💬 **APRS Messaging** — Send and receive messages through the network
-- 🔄 **Network Integration** — Full compatibility with APRS infrastructure
-- 🎨 **Material Design UI** — dark-only theme with navy/amber branding
-
-### 🚀 **Enhanced Features (inherited from NA7Q, not in official APRSdroid)**
-
-#### 📡 **RF & Networking**
-- 🔄 **Digipeater** — Direct or full digipeating capabilities
-- 🌐 **2-Way IGating** — Full Internet Gateway functionality
-- 📶 **Flexible Packet Routing** — Send packets via RF and APRS-IS, or RF only while IGating
-- 🎚️ **Radio Control** — Support for Vero, BTech, Radioddity, and other radios
-- 📻 **DigiRig Support** — Seamless integration with DigiRig interfaces
-- 🔵 **Bluetooth Low Energy** — Stable BLE support
-
-#### 🗺️ **Advanced Offline Mapping**
-- 🗺️ **Offline Maps with MBTiles** — Complete offline operation capability
-- 🆕 **MapsForge V3 Support** — Enhanced offline mapping with MapsForge
-- 🌍 **OpenStreetMap Integration** — Full OSM compatibility for mapping
-- ⚠️ **Note**: Google Maps is not supported — the mod uses OSM maps
-  (MBTiles + MapsForge V3) for offline mapping, privacy, and zero dependencies
-
-#### 📊 **Data & Compression**
-- 🗜️ **Mic-E Compression** — Efficient position encoding
-- 🚨 **Mic-E Emergency Status** — Including EMERGENCY status support
-- 📈 **Standard Compression** — Multiple compression formats supported
-
-#### ⚙️ **User Experience Enhancements**
-- 📏 **Unit Options** — Choose between Metric or Imperial units
-- 🔧 **Hardware Control** — Option to disable hardware acceleration
-- 📊 **Enhanced Station Viewer** — Added speed and course information
-- 💬 **Advanced Messaging Tweaks** — Features for power users
-- 🆔 **Message ID Control** — Option to disable Message ID
-- 📋 **Smart Hub Log** — Sort by distance or newest stations
-- 🔍 **Under-the-Hood Improvements** — Numerous performance and stability enhancements
-
----
-
-## 🚀 **Quick Start**
-
-> ⚠️ **Note**: This build is a work in progress — some features may be incomplete or
-> broken at the time of download, as it is actively updated.
-> See the [**ChangeLog**](ChangeLog) for details.
-
-### 📲 **Installation**
-
-> ⚠️ **Important**: Uninstall any previous OFFICIAL version of APRSdroid before installing
-> this mod — the signing key differs, so Android will refuse an in-place upgrade.
-
-1. **Download the latest signed release APK** from the
-   [**Releases page**](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/latest)
-   (or browse all releases + live download counts on the
-   [**landing page**](https://aprsdroid.hamradio.my/))
-2. **Install** the APK on your Android device (enable "Install from unknown sources" if prompted)
-3. On **Android 11+**, grant *All files access* for offline MBTiles maps (see below)
-
-> 🗺️ **Google Maps not supported**: This mod uses OSM maps (MBTiles + MapsForge V3)
-> for offline mapping, privacy, and zero dependencies. Google Maps is not available.
-
-### 🗺️ **Setting Up Offline Maps**
-
-For Android 11+ devices, manual storage permissions are required for offline mapping files:
-
-1. In APRSdroid settings, go to **OSM Maps** category
-2. Tap **"Grant Storage Permissions"**
-3. Grant **ALL file permissions** for device storage access
-4. Set map viewer to **OpenStreetMap.org** to use offline maps
-5. Configure offline maps in the **OSM Maps** preferences section
-
-If offline mode is not enabled, the online OSM maps server will be used.
-
-#### 🗺️ **Getting Maps**
-
-There are various providers who offer paid or free MBTiles maps. APRSdroid requires
-MBTiles in **PNG or JPG format** (NOT Vector or PBF). NA7Q provides several tools for
-downloading offline maps:
-
-| Tool | Platform | Description |
-|---|---|---|
-| 🌍 [**World Map**](https://na7q.com/wp-content/uploads/2024/12/map.mbtiles) | Any | Ready-to-use starter world map (zoom level 6) |
-| 🖥️ [**OSM Map Maker**](https://downloads.aprs.wiki/APRSdroid/gui7-concurrency.exe) | Windows | GUI tool for downloading OSM maps |
-| 🐍 [**Python Map Maker**](https://na7q.com/wp-content/uploads/2025/01/gui7-concurrency.py) | Win/Mac/Linux | Python script version, cross-platform |
-| 🗺️ [**Multi-Map Maker**](https://na7q.com/wp-content/uploads/2025/02/mapmaker-0.2.exe) | Windows | Supports Google, Google Sat, Google Terrain, OSM, USGS, USFS, Canada Topo, Thunderforest, MapBuilder Light/Dark, and more |
-| 👁️ [**Map Viewer**](https://na7q.com/wp-content/uploads/2025/02/mapviewer.exe) | Windows | Preview different map types to see which style you prefer |
-| 🌐 [**BBBike MapsForge**](https://extract.bbbike.org/) | Web | Custom MapsForge OSM maps online |
-
-**Map tips**:
-- Use a **precise location** for best results (e.g. "Portland, Oregon", "Oregon USA",
-  "Texas USA"). Use the Map Viewer to double-check the selected area.
-- **Zoom level** is required (1-18). A distance input is optional — if left blank for a
-  city, state, or region, it will download everything within that boundary.
-- For **states or larger**, zoom 13-14 is recommended. Washington State at zoom 15 is
-  2-5GB depending on the map used.
-- Not all maps support all zoom levels or areas — research the map type you want.
-
-### 📚 **Documentation & Support**
-- 🌐 [**9M2PJU-Mod Landing Page**](https://aprsdroid.hamradio.my/)
-- 📋 [**Releases & download counters**](https://aprsdroid.hamradio.my/#download)
-- 📖 [**Original APRSdroid FAQ**](https://github.com/ge0rg/aprsdroid/wiki/Frequently-Asked-Questions)
-- ⚙️ [**Original APRSdroid Configuration Guide**](https://github.com/ge0rg/aprsdroid/wiki/Settings)
-- 🛠️ [**NA7Q's Homepage**](https://na7q.com/aprsdroid-osm/) & [**Changelog**](https://na7q.com/aprsdroid-changelog/)
-
----
-
-## 🌐 **Landing Page & Download Counters**
-
-A static landing page is published via GitHub Pages at
-**<https://aprsdroid.hamradio.my/>**. It shows:
-
-- App branding (icon, splash, features)
-- **Download buttons** for the latest release APK
-- **Live download counters** — per-release and total — fetched client-side from the
-  public GitHub API (`download_count` per release asset). No backend, no separate
-  counter service; the numbers are real GitHub release download counts.
-
----
-
-## 📜 **License**
-
-This project is licensed under the **GNU General Public License v2.0** — see the
-[LICENSE](LICENSE) file for details.
-
----
-
-## 🤝 **Contributing**
-
-Contributions are welcome from the amateur radio community! Whether you're fixing bugs,
-adding features, or improving documentation, your help makes APRSdroid better for everyone.
-Please open an issue or pull request at the
-[**9M2PJU-Mod repo**](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod).
-
----
-
-## 🙏 **About & Credits**
+**APRSdroid 9M2PJU Mod** is an Android client for the
+[APRS (Automatic Packet Reporting System)](http://aprs.org/) network.
+It is a fork of [NA7Q's enhanced APRSdroid](https://github.com/na7q/aprsdroid),
+which is itself a fork of [Georg Lukas's original APRSdroid](https://aprsdroid.org/).
 
 ### The APRSdroid family tree
 
-APRSdroid has a rich history of contributions from the amateur radio
-community. This project stands on the shoulders of giants:
+| Project | Author | Description |
+|---|---|---|
+| [APRSdroid](https://aprsdroid.org/) | Georg Lukas (ge0rg) | The original APRS client for Android, since 2010. Scala + Java, GPLv2. |
+| [NA7Q's fork](https://github.com/na7q/aprsdroid) | NA7Q | Enhanced fork with BLE TNC, digipeater, IGate, Mic-E, offline maps. |
+| **APRSdroid 9M2PJU Mod** (this repo) | 9M2PJU | Builds on NA7Q's fork with modern Android, Material UI, CI/CD, in-app updates. |
 
-#### Georg Lukas (ge0rg) — Original Author
+This mod is maintained by **9M2PJU** (Kuala Lumpur, Malaysia) and focuses on
+modern Android compatibility, UI/UX polish, and project infrastructure.
+The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 
-[APRSdroid](https://aprsdroid.org/) was created by **Georg Lukas,
-ge0rg** and has been the premier APRS client for Android since 2010.
-Written in Scala with a Java core, it supports TCP/IP, AFSK (AFSK
-modem), Bluetooth TNCs, and USB TNCs. Georg continues to maintain
-the upstream project and graciously licenses it under the GPLv2 so
-that the community can build on his work.
+### What 9M2PJU added on top of NA7Q's fork
 
-#### NA7Q — Enhanced Fork
-
-[NA7Q's fork](https://github.com/na7q/aprsdroid) builds on Georg's
-original work with significant enhancements:
-- BLE TNC support for modern Bluetooth TNCs (Mobilinkd, DigiRig, etc.)
-- Digipeater and IGate functionality
-- Symbol overlay support
-- Mic-E decoding improvements
-- Various bug fixes and compatibility updates
-
-NA7Q's fork is the direct upstream of this mod.
-
-#### 9M2PJU — This Mod
-
-This mod, maintained by **9M2PJU** (Kuala Lumpur, Malaysia), builds on
-NA7Q's fork with a focus on modern Android compatibility, UI/UX
-polish, and project infrastructure. Contributions include:
-- 🎨 New app icon and logo across all density buckets
-- 🖼️ Branded splash screen with perfect-fit centerCrop rendering
-- 📱 Modern Android support — `targetSdk 35`, foreground service types
-  for Android 14+, Bluetooth permissions for Android 12+, storage
+- **Modern Android support** — `targetSdk 35` (Android 15), foreground service
+  types for Android 14+, Bluetooth permissions for Android 12+, storage
   permissions for Android 11+, `POST_NOTIFICATIONS` for Android 13+,
   edge-to-edge opt-out for Android 15+
-- 🎨 Material 3-inspired UI design system — `Theme.MaterialComponents`
-  with tonal navy/amber palette, shape theming, refined typography,
-  modern component styles (buttons, text fields, dialogs, cards, bottom
-  sheets), bottom navigation bar, dark theme
-- 🤖 GitHub Actions CI/CD — signed release APK builds, automatic
-  GitHub Releases on `v*` tags
-- 🌐 GitHub Pages landing page at <https://aprsdroid.hamradio.my/>
-  with live download counters
-- 🔄 In-app update checker — download and install updates directly
-  from GitHub Releases
-- 🏷️ Version bumped to `v2.0.0` (tocall `APDR20`)
-- 📝 Comprehensive README and documentation rewrite
+- **Material Design dark theme** — `Theme.MaterialComponents` with navy/amber
+  palette, bottom navigation bar, modern component styles
+- **Branded splash screen** — full-screen splash with centerCrop rendering
+- **In-app update checker** — download and install updates directly from
+  GitHub Releases
+- **GitHub Actions CI/CD** — signed release APK builds, automatic GitHub
+  Releases on `v*` tags
+- **GitHub Pages landing page** at <https://aprsdroid.hamradio.my/> with
+  live download counters
+- **New app icon and logo** across all density buckets
+- **Version bumped** to `v2.0.0` (tocall `APDR20`)
 
-#### Bob Bruninga, WB4APR — Creator of APRS
+### Features inherited from NA7Q's fork
 
-**Bob Bruninga, WB4APR** (1947–2022) created the Automatic Packet
-Reporting System (APRS) in the 1980s. His vision of a real-time,
-position-aware digital communications network for amateur radio
-lives on in every APRS client, igate, and digipeater worldwide.
-Without Bob's pioneering work, none of this would exist.
+- **Digipeater** — direct or full digipeating
+- **2-Way IGating** — full Internet Gateway functionality
+- **BLE TNC support** — Mobilinkd, DigiRig, and other Bluetooth TNCs
+- **Offline maps** — MBTiles + MapsForge V3 with OpenStreetMap
+- **Radio control** — Vero, BTech, Radioddity, and other radios
+- **Mic-E compression** — efficient position encoding with emergency status
+- **Symbol overlay support**
+- **Unit options** — metric or imperial
+
+### Features from the original APRSdroid
+
+- **Real-time position reporting** via GPS
+- **APRS messaging** — send and receive messages
+- **TCP/IP connectivity** to APRS-IS
+- **AFSK modem** for audio-based TNC
+- **USB TNC support**
+
+---
+
+## Quick Start
+
+### Installation
+
+> **Important:** Uninstall any previous official version of APRSdroid before
+> installing this mod — the signing key differs, so Android will refuse an
+> in-place upgrade.
+
+1. Download the latest signed release APK from the
+   [Releases page](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/latest)
+   (or browse all releases on the
+   [landing page](https://aprsdroid.hamradio.my/))
+2. Install the APK on your Android device (enable "Install from unknown
+   sources" if prompted)
+3. On Android 11+, grant *All files access* for offline MBTiles maps
+
+### Maps
+
+The default map is **OpenStreetMap (online)**. To use offline maps:
+
+1. Go to **Menu** (bottom nav) → **Preferences** → **OSM Maps**
+2. Tap **"Grant Storage Permissions"** and grant all-file permissions
+3. Enable **Offline Map**
+4. Set the map file path to your `.map` or `.mbtiles` file
+
+NA7Q provides several tools for downloading offline maps:
+
+| Tool | Platform | Description |
+|---|---|---|
+| [World Map](https://na7q.com/wp-content/uploads/2024/12/map.mbtiles) | Any | Ready-to-use starter world map (zoom 6) |
+| [OSM Map Maker](https://downloads.aprs.wiki/APRSdroid/gui7-concurrency.exe) | Windows | GUI tool for downloading OSM maps |
+| [Python Map Maker](https://na7q.com/wp-content/uploads/2025/01/gui7-concurrency.py) | Cross-platform | Python script version |
+| [Multi-Map Maker](https://na7q.com/wp-content/uploads/2025/02/mapmaker-0.2.exe) | Windows | Google, OSM, USGS, Canada Topo, and more |
+| [Map Viewer](https://na7q.com/wp-content/uploads/2025/02/mapviewer.exe) | Windows | Preview different map styles |
+| [BBBike MapsForge](https://extract.bbbike.org/) | Web | Custom MapsForge OSM maps online |
+
+---
+
+## Documentation & Support
+
+- [Landing Page](https://aprsdroid.hamradio.my/)
+- [Releases & download counters](https://aprsdroid.hamradio.my/#download)
+- [Original APRSdroid FAQ](https://github.com/ge0rg/aprsdroid/wiki/Frequently-Asked-Questions)
+- [Original APRSdroid Configuration Guide](https://github.com/ge0rg/aprsdroid/wiki/Settings)
+- [NA7Q's Homepage](https://na7q.com/aprsdroid-osm/) & [Changelog](https://na7q.com/aprsdroid-changelog/)
+
+---
+
+## License
+
+This project is licensed under the **GNU General Public License v2.0** — see
+the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contributing
+
+Contributions are welcome from the amateur radio community! Please open an
+issue or pull request at the
+[APRSdroid-9M2PJU-Mod repo](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod).
+
+---
+
+## Credits
+
+### Georg Lukas (ge0rg) — Original Author
+
+[APRSdroid](https://aprsdroid.org/) was created by **Georg Lukas, ge0rg** and
+has been the premier APRS client for Android since 2010. Written in Scala
+with a Java core, it supports TCP/IP, AFSK, Bluetooth TNCs, and USB TNCs.
+Georg continues to maintain the upstream project and licenses it under the
+GPLv2 so that the community can build on his work.
+
+### NA7Q — Enhanced Fork
+
+[NA7Q's fork](https://github.com/na7q/aprsdroid) builds on Georg's original
+work with BLE TNC support, digipeater and IGate functionality, symbol
+overlays, Mic-E improvements, and offline mapping. NA7Q's fork is the direct
+upstream of this mod.
+
+### 9M2PJU — This Mod
+
+This mod is maintained by **9M2PJU** (Kuala Lumpur, Malaysia). It builds on
+NA7Q's fork with modern Android compatibility, Material Design UI, bottom
+navigation, in-app updates, CI/CD, and a landing page.
+
+### Bob Bruninga, WB4APR — Creator of APRS
+
+**Bob Bruninga, WB4APR** (1947–2022) created the Automatic Packet Reporting
+System (APRS) in the 1980s. His vision of a real-time, position-aware digital
+communications network for amateur radio lives on in every APRS client,
+igate, and digipeater worldwide. Without Bob's pioneering work, none of this
+would exist.
 
 APRS® is a registered trademark of Bob Bruninga, WB4APR.
 
@@ -305,8 +183,8 @@ APRS® is a registered trademark of Bob Bruninga, WB4APR.
 
 <div align="center">
 
-**Made with ❤️ by Amateur Radio operators, for Amateur Radio operators**
+**Made by Amateur Radio operators, for Amateur Radio operators.**
 
-*73 and happy APRSing!* 📡
+*73 and happy APRSing!*
 
 </div>

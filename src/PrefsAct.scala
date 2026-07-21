@@ -164,8 +164,17 @@ class PrefsAct extends PreferenceActivity {
 				if (item != null) {
 					if (item.isInstanceOf[android.preference.PreferenceScreen])
 						showSubScreenDialog(item.asInstanceOf[android.preference.PreferenceScreen])
-					else
-						item.performClick()
+					else {
+						// performClick() is public in the Android runtime
+						// but not in the compilation stubs — use reflection.
+						try {
+							val m = classOf[android.preference.Preference].getMethod("performClick")
+							m.invoke(item)
+						} catch {
+							case e : Exception =>
+								android.util.Log.e("PrefsAct", "performClick via reflection failed", e)
+						}
+					}
 				}
 			}
 		})

@@ -60,7 +60,7 @@ object UIHelper
 	 *
 	 * Uses three approaches for maximum compatibility:
 	 *  1. setDecorFitsSystemWindows(true) — native API on API 30+
-	 *  2. ViewCompat.setOnApplyWindowInsetsListener — applies status bar
+	 *  2. Native View.OnApplyWindowInsetsListener — applies status bar
 	 *     height as top padding on the root view (works even when
 	 *     setDecorFitsSystemWindows is ignored, e.g. MIUI/HyperOS)
 	 *  3. fitsSystemWindows=true on root view via XML (fallback)
@@ -74,20 +74,29 @@ object UIHelper
 				act.getWindow(), true)
 		}
 
-		// Approach 2: programmatic inset listener on the root view
+		// Approach 2: native inset listener on the root content view
+		// Uses the framework API (API 20+) so no AndroidX dependency needed
 		val root = act.getWindow().getDecorView().findViewById(
 			android.R.id.content)
 		if (root != null) {
-			androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(
-				root,
-				new androidx.core.view.ViewCompat.OnApplyWindowInsetsListener() {
+			root.setOnApplyWindowInsetsListener(
+				new View.OnApplyWindowInsetsListener() {
 					override def onApplyWindowInsets(v : View,
-							insets : androidx.core.view.WindowInsetsCompat
-							) : androidx.core.view.WindowInsetsCompat = {
-						val sysBars = insets.getInsets(
-							androidx.core.view.WindowInsetsCompat.Type.systemBars())
-						androidx.core.view.ViewCompat.setPaddingRelative(v,
-							sysBars.left, sysBars.top, sysBars.right, sysBars.bottom)
+							insets : android.view.WindowInsets
+							) : android.view.WindowInsets = {
+						if (Build.VERSION.SDK_INT >= 30) {
+							val bars = insets.getInsets(
+								android.view.WindowInsets.Type.systemBars())
+							v.setPadding(bars.left, bars.top,
+								bars.right, bars.bottom)
+						} else {
+							// API 20-29: use getSystemWindowInset*
+							v.setPadding(
+								insets.getSystemWindowInsetLeft(),
+								insets.getSystemWindowInsetTop(),
+								insets.getSystemWindowInsetRight(),
+								insets.getSystemWindowInsetBottom())
+						}
 						insets
 					}
 				})

@@ -32,6 +32,9 @@ object UpdateChecker {
     val REPO_NAME  = "APRSdroid-9M2PJU-Mod"
     val API_URL = s"https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/releases/latest"
     val RELEASES_URL = s"https://github.com/$REPO_OWNER/$REPO_NAME/releases/latest"
+    // Fallback: self-hosted version.json on Cloudflare CDN (different network
+    // than api.github.com, works when GitHub API is blocked/throttled)
+    val FALLBACK_URL = "https://aprsdroid.hamradio.my/version.json"
     val CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000L  // 24 hours
 
     // Result of fetching release info from GitHub API
@@ -88,10 +91,24 @@ object UpdateChecker {
     }
 
     /**
-     * Fetch the latest release info from GitHub API.
-     * Returns the tag name and APK download URL, or null on error.
+     * Fetch the latest release info. Tries the GitHub API first, and
+     * falls back to a self-hosted version.json on Cloudflare CDN if the
+     * GitHub API is unreachable (blocked/throttled by some networks).
      */
     def fetchLatestRelease() : ReleaseInfo = {
+        // Try GitHub API first
+        val apiResult = fetchFromGitHubApi()
+        if (apiResult != null) return apiResult
+
+        // Fallback: self-hosted version.json
+        Log.d(TAG, "GitHub API failed, trying fallback: " + FALLBACK_URL)
+        fetchFromFallback()
+    }
+
+    /**
+     * Fetch from the GitHub Releases API.
+     */
+    def fetchFromGitHubApi() : ReleaseInfo = {
         val url = new URL(API_URL)
         val conn = url.openConnection().asInstanceOf[HttpURLConnection]
         try {
@@ -136,7 +153,46 @@ object UpdateChecker {
             ReleaseInfo(tag, RELEASES_URL, null)
         } catch {
             case e : Exception =>
-                Log.e(TAG, "Failed to fetch latest release: " + e.getMessage)
+                Log.e(TAG, "GitHub API failed: " + e.getMessage)
+                null
+        } finally {
+            conn.disconnect()
+        }
+    }
+
+    /**
+     * Fetch from the self-hosted fallback (version.json on Cloudflare CDN).
+     * Format: {"version":"v2.0.2","apkUrl":"...","apkName":"...","date":"..."}
+     */
+    def fetchFromFallback() : ReleaseInfo = {
+        val url = new URL(FALLBACK_URL)
+        val conn = url.openConnection().asInstanceOf[HttpURLConnection]
+        try {
+            conn.setRequestMethod("GET")
+            conn.setRequestProperty("User-Agent", "APRSdroid-9M2PJU-Mod")
+            conn.setConnectTimeout(10000)
+            conn.setReadTimeout(10000)
+            if (conn.getResponseCode != 200) {
+                Log.e(TAG, "Fallback returned " + conn.getResponseCode)
+                return null
+            }
+            val reader = new BufferedReader(new InputStreamReader(conn.getInputStream))
+            val sb = new StringBuilder()
+            var line : String = null
+            while ({ line = reader.readLine; line != null }) {
+                sb.append(line)
+            }
+            reader.close()
+            val json = new JSONObject(sb.toString())
+            val tag = json.optString("version", null)
+            if (tag == null) return null
+            val apkUrl = json.optString("apkUrl", RELEASES_URL)
+            val apkName = json.optString("apkName", null)
+            Log.d(TAG, "Fallback succeeded: " + tag)
+            ReleaseInfo(tag, apkUrl, apkName)
+        } catch {
+            case e : Exception =>
+                Log.e(TAG, "Fallback failed: " + e.getMessage)
                 null
         } finally {
             conn.disconnect()

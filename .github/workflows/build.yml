@@ -13,10 +13,8 @@ concurrency:
 jobs:
   build:
     name: Build signed release APK
+    if: ${{ !github.event.pull_request.head.repo.fork && !contains(github.event.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
-    # Signing requires secrets; skip on forks (e.g. PRs from contributors)
-    # where secrets are not available.
-    if: ${{ !github.event.pull_request.head.repo.fork }}
 
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.caching=true -Dorg.gradle.parallel=true
@@ -185,12 +183,34 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
       - name: Download release APK
         uses: actions/download-artifact@v5
         with:
           name: apk-release
           path: release-assets
+
+      - name: Update version.json for in-app update fallback
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          apk_name=$(ls release-assets/*.apk | head -1 | xargs basename)
+          apk_url="https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/download/${tag}/${apk_name}"
+          date=$(date -u +"%Y-%m-%d")
+          printf '{\n  "version": "%s",\n  "apkUrl": "%s",\n  "apkName": "%s",\n  "date": "%s"\n}\n' \
+            "$tag" "$apk_url" "$apk_name" "$date" > docs/version.json
+          echo "Generated docs/version.json:"
+          cat docs/version.json
+
+      - name: Commit version.json to master
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/version.json
+          git commit -m "chore: update version.json for ${GITHUB_REF_NAME} [skip ci]" || echo "No changes to commit"
+          git push origin master
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

@@ -107,6 +107,13 @@
         <item name="colorAccent">@color/md_accent</item>
         <item name="android:windowBackground">@drawable/dialog_background</item>
         <item name="android:textColorPrimary">@color/md_on_surface</item>
+        <!-- On Android 15+ (targetSdk 35), dialogs are edge-to-edge by
+             default, causing PreferenceScreen sub-screen content (like
+             "Incoming Messages" section headers) to bleed under the
+             status bar. fitsSystemWindows=true on the dialog theme makes
+             the dialog's window apply system window insets as padding to
+             its content, pushing it below the status bar. -->
+        <item name="android:fitsSystemWindows">true</item>
         <item name="buttonBarPositiveButtonStyle">
             @style/Widget.AppTheme.Dialog.Button.Positive
         </item>

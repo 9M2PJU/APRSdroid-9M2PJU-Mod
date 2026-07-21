@@ -111,50 +111,25 @@ class PrefsAct extends PreferenceActivity {
 	// Called when the window focus changes. This fires after layout
 	// is complete, so padding set here won't be reset by the layout pass.
 	// This catches PreferenceScreen sub-screen navigation where the
-	// ListView content is swapped. Also restores edge-to-edge mode
-	// (DecorFitsSystemWindows(false)) after a dialog sub-screen closes.
+	// ListView content is swapped.
 	override def onWindowFocusChanged(hasFocus : Boolean) {
 		super.onWindowFocusChanged(hasFocus)
-		if (hasFocus) {
-			// Activity regained focus (dialog closed). Switch back to
-			// edge-to-edge for the activity's own content and re-apply
-			// the ListView padding.
-			if (Build.VERSION.SDK_INT >= 30 && was_dialog_shown) {
-				getWindow().setDecorFitsSystemWindows(false)
-				android.util.Log.d("PrefsAct", "onWindowFocusChanged: " +
-					"restored DecorFitsSystemWindows(false)")
-				was_dialog_shown = false
-			}
+		if (hasFocus)
 			applyPrefTopInset()
-		}
 	}
 
 	// Intercept clicks on PreferenceScreen items (sub-screens like
 	// Notifications, Connection Preferences, etc.). PreferenceScreen
 	// sub-screens are shown as dialogs with their own window. On Android
-	// 16, we can't access the dialog directly (hidden API restrictions
-	// block reflection on PreferenceScreen.mDialog, getWindows(), etc.).
-	// Instead, set DecorFitsSystemWindows(true) on the activity's window
-	// BEFORE super.onPreferenceTreeClick() creates the dialog, so the
-	// dialog's window inherits the non-edge-to-edge setting and its
-	// content is pushed below the status bar automatically. When the
-	// dialog closes, onWindowFocusChanged restores edge-to-edge mode.
+	// 15+ (targetSdk 35), dialogs are edge-to-edge by default, causing
+	// section headers like "Incoming Messages" to bleed under the status
+	// bar. The dialog theme (ThemeOverlay.AppTheme.Dialog) has
+	// android:fitsSystemWindows=true which makes the dialog's window
+	// apply system window insets as padding, pushing content below the
+	// status bar. No runtime code is needed — the theme handles it.
 	override def onPreferenceTreeClick(preferenceScreen : android.preference.PreferenceScreen,
 			preference : android.preference.Preference) : Boolean = {
 		android.util.Log.d("PrefsAct", "onPreferenceTreeClick: " + preference)
-		// If the clicked preference is a PreferenceScreen, it opens a
-		// dialog sub-screen. Set DecorFitsSystemWindows(true) BEFORE
-		// super.onPreferenceTreeClick() creates the dialog, so the
-		// dialog's window inherits the non-edge-to-edge setting and
-		// its content is pushed below the status bar automatically.
-		if (preference.isInstanceOf[android.preference.PreferenceScreen]) {
-			if (Build.VERSION.SDK_INT >= 30) {
-				getWindow().setDecorFitsSystemWindows(true)
-				was_dialog_shown = true
-				android.util.Log.d("PrefsAct", "onPreferenceTreeClick: " +
-					"set DecorFitsSystemWindows(true) before dialog")
-			}
-		}
 		val result = super.onPreferenceTreeClick(preferenceScreen, preference)
 		postApplyPrefTopInset()
 		new android.os.Handler(getMainLooper).postDelayed(new Runnable {
@@ -165,11 +140,6 @@ class PrefsAct extends PreferenceActivity {
 		}, 300)
 		result
 	}
-
-	// Flag: a dialog sub-screen was shown and we set
-	// DecorFitsSystemWindows(true) on the activity's window for it.
-	// When the dialog closes (hasFocus=true), we restore false.
-	@volatile var was_dialog_shown = false
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)

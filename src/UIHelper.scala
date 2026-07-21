@@ -151,6 +151,24 @@ object UIHelper
 						insets
 					}
 				})
+
+		// Fallback for PreferenceActivity: the inset listener above may
+		// not be triggered reliably on Android 16 (edge-to-edge enforced).
+		// Directly read the status bar height from the system resource and
+		// apply it as top padding to the content view. This ensures the
+		// preference headers and list items are not drawn under the status
+		// bar. The OnApplyWindowInsetsListener above will refine this if it
+		// fires (e.g. on rotation or multi-window changes).
+		if (act.isInstanceOf[android.preference.PreferenceActivity]) {
+			val res = act.getResources()
+			val resId = res.getIdentifier("status_bar_height", "dimen", "android")
+			if (resId > 0) {
+				val statusBarHeight = res.getDimensionPixelSize(resId)
+				if (statusBarHeight > 0) {
+					root.setPadding(root.getPaddingLeft(), statusBarHeight,
+						root.getPaddingRight(), root.getPaddingBottom())
+				}
+			}
 		}
 	}
 

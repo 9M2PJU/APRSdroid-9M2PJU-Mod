@@ -64,20 +64,21 @@ class PrefsAct extends PreferenceActivity {
 	def applyPrefTopInset() {
 		val res = getResources()
 		val resId = res.getIdentifier("status_bar_height", "dimen", "android")
-		if (resId > 0) {
-			val statusBarHeight = res.getDimensionPixelSize(resId)
-			if (statusBarHeight > 0) {
-				val root = getWindow.getDecorView.findViewById(
-					android.R.id.content).asInstanceOf[android.view.View]
-				if (root != null)
-					root.setPadding(root.getPaddingLeft, statusBarHeight,
-						root.getPaddingRight, root.getPaddingBottom)
-				val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
-				if (lv != null) {
-					lv.setPadding(lv.getPaddingLeft, statusBarHeight,
-						lv.getPaddingRight, lv.getPaddingBottom)
-					lv.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
-				}
+		val statusBarHeight = if (resId > 0) res.getDimensionPixelSize(resId) else 0
+		android.util.Log.d("PrefsAct", "applyPrefTopInset: statusBarHeight=" + statusBarHeight)
+		if (statusBarHeight > 0) {
+			val root = getWindow.getDecorView.findViewById(
+				android.R.id.content).asInstanceOf[android.view.View]
+			android.util.Log.d("PrefsAct", "applyPrefTopInset: root=" + root)
+			if (root != null)
+				root.setPadding(root.getPaddingLeft, statusBarHeight,
+					root.getPaddingRight, root.getPaddingBottom)
+			val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
+			android.util.Log.d("PrefsAct", "applyPrefTopInset: lv=" + lv)
+			if (lv != null) {
+				lv.setPadding(lv.getPaddingLeft, statusBarHeight,
+					lv.getPaddingRight, lv.getPaddingBottom)
+				lv.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
 			}
 		}
 	}
@@ -85,6 +86,7 @@ class PrefsAct extends PreferenceActivity {
 	// Called when the preference list content changes (e.g. when navigating
 	// into a PreferenceScreen sub-screen). Re-apply the top inset padding.
 	override def onContentChanged() {
+		android.util.Log.d("PrefsAct", "onContentChanged")
 		super.onContentChanged()
 		applyPrefTopInset()
 	}

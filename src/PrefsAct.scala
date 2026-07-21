@@ -101,11 +101,26 @@ class PrefsAct extends PreferenceActivity {
 	}
 
 	// Called when the preference list content changes (e.g. when navigating
-	// into a PreferenceScreen sub-screen). Re-apply the top inset padding.
+	// into a PreferenceScreen sub-screen). Re-apply the top inset padding
+	// and re-attach the OnPreDrawListener to the new content view.
 	override def onContentChanged() {
+		android.util.Log.d("PrefsAct", "onContentChanged")
 		super.onContentChanged()
 		applyPrefTopInset()
 		postApplyPrefTopInset()
+		// Re-attach the OnPreDrawListener to the new content view
+		val rootView = getWindow.getDecorView.findViewById(
+			android.R.id.content).asInstanceOf[android.view.View]
+		android.util.Log.d("PrefsAct", "onContentChanged: rootView=" + rootView)
+		if (rootView != null) {
+			rootView.getViewTreeObserver.addOnPreDrawListener(
+				new android.view.ViewTreeObserver.OnPreDrawListener {
+					override def onPreDraw() : Boolean = {
+						applyPrefTopInset()
+						true
+					}
+				})
+		}
 	}
 
 	// Called when the window focus changes. This fires after layout
@@ -123,6 +138,7 @@ class PrefsAct extends PreferenceActivity {
 	// top inset padding after the new screen content is loaded.
 	override def onPreferenceTreeClick(preferenceScreen : android.preference.PreferenceScreen,
 			preference : android.preference.Preference) : Boolean = {
+		android.util.Log.d("PrefsAct", "onPreferenceTreeClick: " + preference)
 		val result = super.onPreferenceTreeClick(preferenceScreen, preference)
 		postApplyPrefTopInset()
 		new android.os.Handler(getMainLooper).postDelayed(new Runnable {

@@ -15,7 +15,7 @@ import scala.collection.JavaConversions._ // for enumeration of keystore aliases
 
 class TcpUploader(service : AprsService, prefs : PrefsWrapper) extends AprsBackend(prefs) {
 	val TAG = "APRSdroid.TcpUploader"
-	val hostport = prefs.getString("tcp.server", "euro.aprs2.net")
+	val hostport = prefs.getString("tcp.server", "aprs.hamradio.my")
 	val so_timeout = prefs.getStringInt("tcp.sotimeout", 120)
 	val RECONNECT = 30
 	var conn : TcpSocketThread = null

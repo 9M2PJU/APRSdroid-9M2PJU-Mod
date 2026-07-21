@@ -16,7 +16,7 @@ trait ConnectionListener {
 class IgateService(service: AprsService, prefs: PrefsWrapper) extends ConnectionListener {
 
   val TAG = "IgateService"
-  val hostport = prefs.getString("p.igserver", "rotate.aprs2.net")
+  val hostport = prefs.getString("p.igserver", "aprs.hamradio.my")
   val (host, port) = parseHostPort(hostport)  
   val so_timeout = prefs.getStringInt("p.igsotimeout", 120)
   val connectretryinterval = prefs.getStringInt("p.igconnectretry", 30)

@@ -25,7 +25,10 @@ object MapModes {
 
 	def defaultMapMode(ctx : Context, prefs : PrefsWrapper): MapMode = {
 		MapModes.initialize(ctx)
-		val tag = prefs.getString("mapmode", "google")
+		// Default to OSM maps — Google Maps requires a build-time API key
+		// that is not included in this mod. Users who build from source
+		// with their own key can still select Google Maps from the menu.
+		val tag = prefs.getString("mapmode", "osm")
 		android.util.Log.d("MapModes", "tag is " + tag )
 		var default : MapMode = null
 		for (mode <- all_mapmodes) {

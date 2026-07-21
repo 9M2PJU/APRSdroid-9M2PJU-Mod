@@ -125,8 +125,8 @@ changed compared to the upstream NA7Q fork.
 - 🗺️ **Offline Maps with MBTiles** — Complete offline operation capability
 - 🆕 **MapsForge V3 Support** — Enhanced offline mapping with MapsForge
 - 🌍 **OpenStreetMap Integration** — Full OSM compatibility for mapping
-- ⚠️ **Note**: Google Maps is not included by default; the mod focuses on offline
-  mapping (MBTiles + MapsForge V3) for privacy and reduced dependencies
+- ⚠️ **Note**: Google Maps is not supported — the mod uses OSM maps
+  (MBTiles + MapsForge V3) for offline mapping, privacy, and zero dependencies
 
 #### 📊 **Data & Compression**
 - 🗜️ **Mic-E Compression** — Efficient position encoding
@@ -162,10 +162,8 @@ changed compared to the upstream NA7Q fork.
 2. **Install** the APK on your Android device (enable "Install from unknown sources" if prompted)
 3. On **Android 11+**, grant *All files access* for offline MBTiles maps (see below)
 
-> 🗺️ **Google Maps not included**: This build does not include the Google Maps API.
-> If you need Google Maps functionality, build the app from source and add your own API key.
-> The mod focuses on offline mapping (MBTiles + MapsForge V3) for privacy and reduced
-> dependencies.
+> 🗺️ **Google Maps not supported**: This mod uses OSM maps (MBTiles + MapsForge V3)
+> for offline mapping, privacy, and zero dependencies. Google Maps is not available.
 
 ### 🗺️ **Setting Up Offline Maps**
 

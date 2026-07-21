@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">APRSdroid Preferencje</string>
 <string name="app_map">APRSdroid Mapa</string>
 <string name="app_hub">APRSdroid Hub</string>
@@ -71,20 +71,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">O APRSdroid v%s</string>
-<string name="ad_copyright">Copyright © 2009-2021 Georg Lukas (DO1GL)\n https://aprsdroid.org \n\n APRS® jest zarejestrowanym znakiem towarowym Bob \'a Bruninga (WB4APR)</string>
-<string name="ad_gpl">Niniejszy program jest wolnym oprogramowaniem; możesz go rozprowadzać dalej i/lub modyfikować na warunkach Powszechnej Licencji Publicznej GNU, wydanej przez Fundację Wolnego Oprogramowania - według wersji 2-giej tej Licencji lub którejś
-z późniejszych wersji. \n\n Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny - jednak BEZ JAKIEJKOLWIEK GWARANCJI, nawet domyślnej gwarancji PRZYDATNOŚCI HANDLOWEJ albo PRZYDATNOŚCI DO OKREŚLONYCH ZASTOSOWAŃ. W celu uzyskania bliższych informacji - Powszechna Licencja Publiczna GNU. \n\n Z pewnością wraz z niniejszym programem otrzymałeś też egzemplarz Powszechnej Licencji Publicznej GNU (GNU General Public License); jeśli nie - napisz do Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. \n\n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">Podziękowania dla:</string>
-<string name="ad_thanks_0">Mojej YL ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: pomysł</string>
-<string name="ad_thanks_2">Dirk, DB5OY: motywacja i wsparcie</string>
-<string name="ad_thanks_3">Bastian, DB1BM: Implementacja AFSK</string>
-<string name="ad_thanks_4">Matti, OH2MQK oraz John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: demodulator AFSK, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™ autorstwa HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nTłumaczenie:</string>
-<string name="ad_homepage">Strona domowa</string>
 
 <!-- map view -->
 <string name="map_overlays">Wykładniki</string>
@@ -346,7 +332,6 @@ z późniejszych wersji. \n\n Niniejszy program rozpowszechniany jest z nadziej�
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   Adam Czabara https://launchpad.net/~adam-czabara
   Andrzej Konopka https://launchpad.net/~sq7oiv
   Georg Lukas https://launchpad.net/~ge0rg

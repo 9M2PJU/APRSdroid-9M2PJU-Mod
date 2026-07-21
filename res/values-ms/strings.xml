@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">APRSdroid Preferences</string>
 <string name="app_map">Peta APRSdroid</string>
 <string name="app_hub">APRSdroid Hub</string>
@@ -73,23 +73,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">Mengenai APRSdroid v%s</string>
-<string name="ad_copyright">Copyright © 2009-2021 Georg Lukas (DO1GL)\n
-	https://aprsdroid.org
-	\n\n
-	APRS® is a registered trademark of Bob Bruninga (WB4APR)
-</string>
-<string name="ad_gpl">Program ini adalah perisian bebas; anda boleh mengedarkannya semula dan/atau mengubah suai di bawah syarat-syarat GNU General Public License seperti yang diterbitkan oleh Free Software Foundation; sama ada versi 2 Lesen, atau (pada pilihan anda) mana-mana versi selepas ini. \n\n Program ini diedarkan dengan harapan bahawa ia akan menjadi berguna, tetapi TANPA SEBARANG WARANTI; tanpa jaminan yang tersirat KEBOLEHDAGANGAN atau KESESUAIAN UNTUK TUJUAN TERTENTU. Lihat GNU General Public License untuk maklumat lanjut. \n\n Anda harus telah menerima salinan GNU General Public License bersama-sama dengan program ini, jika tidak, menulis kepada Free Software Foundation, Inc, 51 Franklin Street, Tingkat Kelima, Boston, MA 02110-1301, Amerika Syarikat. \n\n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">Terima kasih kepada:</string>
-<string name="ad_thanks_0">YL Saya ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: idea</string>
-<string name="ad_thanks_2">Dirk, DB5OY: motivasi dan sokongan</string>
-<string name="ad_thanks_3">Bastian, DB1BM: AFSK pelaksanaan</string>
-<string name="ad_thanks_4">Matti, OH2MQK dan John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: AFSK penyahmodulat, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™ oleh HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nTerjemahan</string>
-<string name="ad_homepage">Laman Utama</string>
 
 <!-- map view -->
 <string name="map_overlays">Lapisan</string>
@@ -351,7 +334,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   Abdullah https://launchpad.net/~azi88</string>
 
 <!-- Bluetooth TNC settings -->

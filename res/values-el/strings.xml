@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">Προτιμήσεις APRSdroid</string>
 <string name="app_map">Χάρτης APRSdroid</string>
 <string name="app_hub">Κόμβος APRSdroid</string>
@@ -71,19 +71,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">Σχετικά με APRSdroid v%s</string>
-<string name="ad_copyright">Copyright © 2009-2021 Georg Lukas (DO1GL)\n https://aprsdroid.org \n\n Το APRS® είναι σήμα κατατεθέν του Bob Bruninga (WB4APR)</string>
-<string name="ad_gpl">Αυτό το πρόγραμμα είναι ελεύθερο λογισμικό; Μπορείτε να το αναδιανέμετε ή/και να το τροποποιήσετε υπό τους όρους της GNU General Public License όπως αυτή δημοσιεύεται από το Ίδρυμα Ελεύθερου Λογισμικού; είτε της έκδοσης 2 της Άδειας, είτε (κατ\'επιλογή σας) οποιαδήποτε μεταγενέστερη έκδοση. \n\n Αυτό το πρόγραμμα διανέμεται με την ελπίδα ότι θα είναι χρήσιμο, αλλά ΧΩΡΙΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ; χωρίς καν την υπονοούμενη εγγύηση της ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ. Δείτε την GNU Γενική Άδεια Δημόσιας Χρήσης για περισσότερες λεπτομέρειες. \n\n Θα πρέπει να έχετε λάβει ένα αντίγραφο της GNU General Public License μαζί με αυτό το πρόγραμμα; αν όχι, γράψτε στο Ίδρυμα Ελεύθερου Λογισμικού, Inc, 51 Franklin Street, πέμπτο όροφο, Boston, MA 02110-1301, ΗΠΑ. \n\n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">Ευχαριστίες σε:</string>
-<string name="ad_thanks_0">Η YL μου ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: ιδέα</string>
-<string name="ad_thanks_2">Dirk, DB5OY: κίνητρα και υποστήριξη</string>
-<string name="ad_thanks_3">Bastian, DB1BM: AFSK εκτέλεση</string>
-<string name="ad_thanks_4">Matti, OH2MQK and John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: αποδιαμορφωτής AFSK, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™ by HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nΜετάφραση:</string>
-<string name="ad_homepage">Αρχική Σελίδα</string>
 
 <!-- map view -->
 <string name="map_overlays">Επικαλύψεις</string>
@@ -345,7 +332,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   Athanasios B. https://launchpad.net/~sv2ctv
   Demetre Valaris https://launchpad.net/~dvalaris
   Efstathios Iosifidis https://launchpad.net/~iosifidis

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">העדפות APRSdroid</string>
 <string name="app_map">מפת APRSdroid</string>
 <string name="app_hub">מוקד APRSdroid</string>
@@ -74,23 +74,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">אודות APRSdroid v%s</string>
-<string name="ad_copyright">Copyright © 2009-2021 Georg Lukas (DO1GL)\n
-	https://aprsdroid.org
-	\n\n
-	APRS® is a registered trademark of Bob Bruninga (WB4APR)
-</string>
-<string name="ad_gpl">תוכנית זו הינה תכנה חופשית; זכותכם להפיצה ו/או לשנותה בכפוף לתנאי הרשיון GNU General Public License גרסא 2 כפי שזה פורסם על ידי Free Software Foundation; או בגרסא 2 של הרשיון, או (בתור אופציה השמורה לכם) בכל גרסא מאוחרת. \n\n תוכנית זו הינה מופצת מתוך תקווה כי זו תהיה יעילה, אך ללא כל אחריות שהיא; אפילו ללא אחריות משתמעת של סחירות או כשירות לתכלית מסוימת. ראו את הרשיון GNU General Public License לשם פרטים נוספים. \n\n היתם אמורים לקבל העתק של הרשיון GNU General Public License יחד עם תוכנית זו; במידה ולא, כתבו למען Free Software Foundation, Inc.‎, רחוב פרנקלין (Franklin)‏ 51 , קומה חמישית, בוסטון (Boston), מסצ׳וסטס (MA) ‏02110-1301, ארה״ב (USA). \n\n קישור: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">תודות לכבוד:</string>
-<string name="ad_thanks_0">My YL ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: רעיון</string>
-<string name="ad_thanks_2">Dirk, DB5OY: מוטיבציה ותמיכה</string>
-<string name="ad_thanks_3">Bastian, DB1BM: יישום AFSK</string>
-<string name="ad_thanks_4">Matti, OH2MQK וגם John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: AFSK demodulator, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">™SmartBeaconing מאת HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nתרגום:</string>
-<string name="ad_homepage">עמוד בית</string>
 
 <!-- map view -->
 <string name="map_overlays">שכבות</string>
@@ -352,7 +335,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   GenghisKhan https://launchpad.net/~genghiskhan
   Georg Lukas https://launchpad.net/~ge0rg</string>
 

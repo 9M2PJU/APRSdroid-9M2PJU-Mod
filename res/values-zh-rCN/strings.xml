@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">APRSdroid 偏好设置</string>
 <string name="app_map">APRSdroid 地图</string>
 <string name="app_hub">APRSdroid 列表中心</string>
@@ -71,19 +71,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">关于 APRSdroid v%s</string>
-<string name="ad_copyright">版权信息 © 2009-2021 Georg Lukas (DO1GL)\n https://aprsdroid.org \n\n APRS® is a registered trademark of Bob Bruninga (WB4APR)</string>
-<string name="ad_gpl">这是一个免费软件;你可以在GNU 通用公共授权(或第二版授权)的条款下进行修改. \n\n 希望这个程序的发布是有用的,但是它是没有任何承诺性担保或保证的，甚至没有商业或其它特定目的而隐含的担保。有关详细信息，请参阅GNU通用公共许可证。 \n\n 您应该已经收到随着这项计划的GNU通用公共许可证的副本，如果没有，写信给自由软件基金会,51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. \n\n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">感谢:</string>
-<string name="ad_thanks_0">My YL ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: 创意</string>
-<string name="ad_thanks_2">Dirk, DB5OY: 鼓励和支持</string>
-<string name="ad_thanks_3">Bastian, DB1BM: AFSK 协议实施</string>
-<string name="ad_thanks_4">Matti, OH2MQK and John, AB0OO: Java  APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: AFSK 解码, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™(智慧信标) by HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\n 翻译:</string>
-<string name="ad_homepage">首页</string>
 
 <!-- map view -->
 <string name="map_overlays">图层</string>
@@ -345,7 +332,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   BG5DNS https://launchpad.net/~zihe
   BG6JJI https://launchpad.net/~bg6jji
   BG7NQF https://launchpad.net/~nijia

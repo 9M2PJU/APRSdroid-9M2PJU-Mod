@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">APRSdroid параметры</string>
 <string name="app_map">APRSdroid карта</string>
 <string name="app_hub">APRSdroid узел</string>
@@ -71,19 +71,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">Об APRSdroid v%s</string>
-<string name="ad_copyright">Copyright © 2009-2021 Георг Лукас (DO1GL)\n http://arpsdroid.org \n\n APRS® является зарегистрированным товарным знаком Боба Брунинга (WB4APR)</string>
-<string name="ad_gpl">Эта программа является свободным программным обеспечением, вы можете распространять и/или модифицировать его на условиях GNU General Public License, опубликованной Free Software Foundation; либо 2-ой версией лицензии, либо (по вашему выбору) любой более поздней версией.  \n\n Эта программа распространяется в надежде, что она будет полезной, но БЕЗ ВСЯКИХ ГАРАНТИЙ. Совершенно не подразумевается гарантия КОММЕРЧЕСКОЙ ЦЕННОСТИ или ПРИГОДНОСТИ ДЛЯ КОНКРЕТНЫХ ЦЕЛЕЙ. Смотрите общественную лицензию GNU General для получения более подробной информации.\n\n Вы должны были получить копию GNU General Public License вместе с этой программой. Если в не получили копии, напишите письмо по адресу Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. \n\n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">Благодарности:</string>
-<string name="ad_thanks_0">Моей YL ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: идея</string>
-<string name="ad_thanks_2">Dirk, DB5OY: мотивация и поддержка</string>
-<string name="ad_thanks_3">Bastian, DB1BM: AFSK реализация</string>
-<string name="ad_thanks_4">Matti, OH2MQK и John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: AFSK демодулятор, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™ с помощью HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nПеревод:</string>
-<string name="ad_homepage">Вебсайт проекта</string>
 
 <!-- map view -->
 <string name="map_overlays">Слои данных карты</string>
@@ -345,7 +332,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   Aleksey Kabanov https://launchpad.net/~ak099
   Andriy Tymchenko https://launchpad.net/~silpol
   Dmitrij Kiryanov https://launchpad.net/~kagaminep

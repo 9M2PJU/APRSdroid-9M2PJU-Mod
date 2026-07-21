@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">APRSdroid Voorkeure</string>
 <string name="app_map">APRSdroid Kaart</string>
 <string name="app_hub">APRSdroid Kern</string>
@@ -71,19 +71,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">Oor APRSdroid v%s</string>
-<string name="ad_copyright">Kopiereg © 2009-2021 Georg Lukas (DO1GL)\n https://aprsdroid.org \n\n APRS® is \'n geregistreerde handelsmerk van Bob Bruninga (WB4APR)</string>
-<string name="ad_gpl">Hierdie program is gratis sagteware; jy kan dit herverdeel en / of verander onder die bepalings van die GNU General Public License soos gepubliseer deur die Free Software Foundation; óf weergawe 2 van die lisensie, of (na u keuse) enige latere weergawe. \ n \ n Hierdie program word versprei in die hoop dat dit nuttig sal wees, maar SONDER ENIGE WAARBORG; sonder selfs die geïmpliseerde waarborg van VERKOOPBAARHEID of GESKIKTHEID VIR \'N SPESIFIEKE DOEL. Sien die GNU General Public License vir meer besonderhede. \ n \ n U moes \'n kopie van die GNU General Public License saam met hierdie program ontvang het; indien nie, skryf aan die Free Software Foundation, Inc., Franklinstraat 51, Vyfde Vloer, Boston, MA 02110-1301, VSA. \ n \ n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">Te danke aan:</string>
-<string name="ad_thanks_0">My YL ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: idea</string>
-<string name="ad_thanks_2">Dirk, DB5OY: motivering en ondersteuning</string>
-<string name="ad_thanks_3">Bastian, DB1BM: AFSK implementasie</string>
-<string name="ad_thanks_4">Matti, OH2MQK and John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: AFSK demodulator, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™ deur HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nVertaling:</string>
-<string name="ad_homepage">Tuisblad</string>
 
 <!-- map view -->
 <string name="map_overlays">Oorleggings</string>
@@ -345,7 +332,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   Georg Lukas https://launchpad.net/~ge0rg
   Robin Pringle https://launchpad.net/~pringlerobin</string>
 

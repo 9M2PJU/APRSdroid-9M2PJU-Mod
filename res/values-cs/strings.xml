@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">Možnosti APRSdroid</string>
 <string name="app_map">Mapa APRSdroid</string>
 <string name="app_hub">APRSdroid: Seznam stanic</string>
@@ -71,23 +71,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">O APRSdroid v%s</string>
-<string name="ad_copyright">Copyright © 2009-2021 Georg Lukas (DO1GL)\n
-	https://aprsdroid.org
-	\n\n
-	APRS® is a registered trademark of Bob Bruninga (WB4APR)
-</string>
-<string name="ad_gpl">Tento program je svobodný software; můžete jej šířit, a / nebo modifikovat podle podmínek GNU General Public License, vydávané Free Software Foundation; a to buď verze 2 této licence, nebo (podle vlastního uvážení) kterékoli pozdější verze. \ N \ n Tento program je rozšiřován v naději, že bude užitečný, ale BEZ JAKÉKOLIV ZÁRUKY; dokonce i bez předpokládané záruky PRODEJNOSTI nebo VHODNOSTI PRO KONKRÉTNÍ ÚČEL. Podívejte se na GNU General Public License pro další podrobnosti. \ N \ n Měli byste obdržet kopii GNU General Public License spolu s tímto programem; pokud ne, napište Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. \ N \ n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">Poděkování:</string>
-<string name="ad_thanks_0">Moje YL ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: nápad</string>
-<string name="ad_thanks_2">Dirk, DB5OY: motivace a podpora</string>
-<string name="ad_thanks_3">Bastian, DB1BM: AFSK implementace</string>
-<string name="ad_thanks_4">Matti, OH2MQK a John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: AFSK demodulátor, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™ od HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nPřeklad:</string>
-<string name="ad_homepage">Domovská stránka</string>
 
 <!-- map view -->
 <string name="map_overlays">Překryvy</string>
@@ -349,7 +332,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   Bronek OK2JIB https://launchpad.net/~bronajz
   Georg Lukas https://launchpad.net/~ge0rg
   Libor, OK1ALX https://launchpad.net/~ok1alx

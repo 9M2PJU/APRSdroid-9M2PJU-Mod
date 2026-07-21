@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">APRSdroid Asetukset</string>
 <string name="app_map">APRSdroid Kartta</string>
 <string name="app_hub">APRSdroid Läheiset</string>
@@ -71,19 +71,6 @@
 <string name="fr_text3">Tarvitaan vain APRS-yhteyteen Internetin kautta:</string>
 
 <!-- about dialog -->
-<string name="ad_title">Tietoja APRSdroid v%s:sta</string>
-<string name="ad_copyright">Copyright © 2009-2021 Georg Lukas (DO1GL)\n https://aprsdroid.org \n\n APRS® on Bob Bruningan (WB4APR) rekisteröity tavaramerkki.</string>
-<string name="ad_gpl">Tämä ohjelmisto on vapaa; voit jakaa sitä ja/tai muokata sitä Free Software Foundationin julkaiseman GNU General Public License ehtojen mukaisesti; joko Lisenssin 2-version tai myöhemmän version mukaisesti. \n\n Tätä ohjelmaa jaetaan siten, että siitä olisi jotain hyötyä, mutta EHDOTTOMASTI ILMAN MITÄÄN TAKUUTA; ilman vähäisintäkään takuuta KAUPALLISUUDESTA tai SOPIVUUDESTA ERITYISIIN TARKOITUKSIIN. Katso GNU General Public License tarkemista yksityiskohdista. \n\n Olet saanut kopion GNU General Public License:stä tämän ohjelman mukana; jos et, niin otayhteyttä Free Software Foundation:iin , Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. \n\n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">Kiitokset:</string>
-<string name="ad_thanks_0">Oma YL:ni ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: idea</string>
-<string name="ad_thanks_2">Dirk, DB5OY: motivaatio ja  tuki</string>
-<string name="ad_thanks_3">Bastian, DB1BM: AFSK-toteutus</string>
-<string name="ad_thanks_4">Matti, OH2MQK ja John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: AFSK-demodulaattori, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™ by HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nKäännös:</string>
-<string name="ad_homepage">Etusivu</string>
 
 <!-- map view -->
 <string name="map_overlays">Kartan peitteet</string>
@@ -345,7 +332,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   Georg Lukas https://launchpad.net/~ge0rg
   Heikki Hannikainen https://launchpad.net/~hessu
   Herkko R https://launchpad.net/~oh7fxk

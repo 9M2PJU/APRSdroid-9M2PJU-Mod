@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">APRSdroid    Preferie</string>
 <string name="app_map">APRSdroid cartinn-a</string>
 <string name="app_hub">APRSdroid   Noddu</string>
@@ -71,23 +71,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">Informasuin de APRSdroid v%s</string>
-<string name="ad_copyright">Copyright © 2009-2021 Georg Lukas (DO1GL)\n
-	https://aprsdroid.org
-	\n\n
-	APRS® is a registered trademark of Bob Bruninga (WB4APR)
-</string>
-<string name="ad_gpl">U programma l\'é liberu; ti pé re-distribuì e/o modificà sotto i termini dà GNU LISENSE PUBBLICA GENERALE  cumme pubblicoù da  Free Software Foundation; versiun 2 da licensa, o(ta opiniun) ultime versiun. \n\n Stu promgramma u l\'é distribuiu con a speransa   ca saria utile , ma SENSA A GARANSIA !; sensa l\'implicitaé de   MERCANSABILITAE ou FINALISOU PE PARTILER SCOP-PI. Vedie a GNU General Public Licensa pe atri dettaggi. \n\n Ti dovié avé resieu na cop-pia de la GNU General Public License apartenua a stu rogramma program; au contraiu , scrivvi au  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. \n\n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">Ringrasiamentu a:</string>
-<string name="ad_thanks_0">Me donna ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: pe idea</string>
-<string name="ad_thanks_2">Dirk, DB5OY: motivasiun e aggiuttu</string>
-<string name="ad_thanks_3">Bastian, DB1BM: AFSK implementasiun</string>
-<string name="ad_thanks_4">Matti, OH2MQK e John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: AFSK demodulatui, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™ di HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nTradusiun:</string>
-<string name="ad_homepage">Pag-ina prinsipà</string>
 
 <!-- map view -->
 <string name="map_overlays">Viduia  da cartin-a</string>
@@ -349,7 +332,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   Georg Lukas https://launchpad.net/~ge0rg
   SILVIO BARLETTA https://launchpad.net/~ik1bqd</string>
 

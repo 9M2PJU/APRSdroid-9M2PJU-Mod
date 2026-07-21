@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- APRSdroid strings.xml - this file contains strings which need to be translated -->
 <resources>
-<string name="app_name">APRSdroid</string>
+<string name="app_name">APRSdroid 9M2PJU</string>
 <string name="app_prefs">Préférences APRSdroid</string>
 <string name="app_map">Carte APRSdroid</string>
 <string name="app_hub">Réseau APRSdroid</string>
@@ -71,23 +71,6 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- about dialog -->
-<string name="ad_title">À propos d\'APRSdroid v%s</string>
-<string name="ad_copyright">Copyright © 2009-2021 Georg Lukas (DO1GL)\n
-	https://aprsdroid.org
-	\n\n
-	APRS® is a registered trademark of Bob Bruninga (WB4APR)
-</string>
-<string name="ad_gpl">Ce programme est un logiciel libre; vous pouvez le redistribuer et/ou le modifier selon les termes de la Licence Publique Générale GNU publiée par la Free Software Foundation; soit la version 2 de la Licence, ou (à votre choix) toute version ultérieure. \n\n Ce programme est distribué dans l\'espoir qu\'il sera utile, mais SANS AUCUNE GARANTIE: sans même la garantie implicite de COMMERCIALISATION ou D\'ADAPTATION A UN USAGE PARTICULIER. Voir la Licence Publique Générale GNU pour plus de détails. \n\n Vous devriez avoir reçu un exemplaire de la Licence Publique Générale GNU avec ce programme, sinon, écrivez à la Free Software Foundation, Inc, 51 rue Franklin, Fifth Floor, Boston, MA 02110-1301, USA. \n\n http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
-<string name="ad_thanks">Remerciements à :</string>
-<string name="ad_thanks_0">Ma femme ♥♥♥</string>
-<string name="ad_thanks_1">Michael, DO3BOX: idée</string>
-<string name="ad_thanks_2">Dirk, DB5OY: pour son support et sa motivation</string>
-<string name="ad_thanks_3">Bastian, DB1BM: implémentation AFSK</string>
-<string name="ad_thanks_4">Matti, OH2MQK et John, AB0OO: Java APRS</string>
-<string name="ad_thanks_5">Sivan, 4X6IZ: démodulateur AFSK, https://github.com/sivantoledo/javAX25</string>
-<string name="ad_thanks_6">SmartBeaconing™ par HamHUD Nichetronix, LLC, http://hamhud.net</string>
-<string name="ad_trans">\n\nTraduction:</string>
-<string name="ad_homepage">Page d\'accueil</string>
 
 <!-- map view -->
 <string name="map_overlays">Couches cartographiques</string>
@@ -349,7 +332,6 @@
 	<item>select</item>
 </string-array>
 
-<string name="translator_credits">Launchpad Contributions:
   Georg Lukas https://launchpad.net/~ge0rg
   Michel Robichaud https://launchpad.net/~mike-1103</string>
 

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NA7Q-APRSDroid 9M2PJU-Mod — enhanced APRS client for Android. Offline maps, BLE TNC, digipeater, I-gate, Mic-E.">
+<meta property="og:title" content="NA7Q-APRSDroid 9M2PJU-Mod">
+<meta property="og:description" content="Enhanced APRS companion for Android — 9M2PJU-Mod">
+<meta property="og:image" content="assets/icon-512.webp">
+<meta property="og:type" content="website">
+<title>NA7Q-APRSDroid 9M2PJU-Mod</title>
+<link rel="icon" href="assets/icon-256.png">
+<link rel="apple-touch-icon" href="assets/icon-256.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <img src="assets/icon-512.webp" alt="NA7Q-APRSDroid 9M2PJU-Mod logo" class="hero-logo" width="128" height="128">
+    <h1>NA7Q-APRSDroid <span class="mod">9M2PJU-Mod</span></h1>
+    <p class="tagline">The enhanced APRS companion for Android — built by hams, for hams.</p>
+    <div class="hero-badges">
+      <span class="badge">Android 4.0+ (API 14)</span>
+      <span class="badge">GPLv2</span>
+      <span class="badge">Scala + Java</span>
+      <span class="badge">Offline Maps</span>
+    </div>
+    <a href="#download" class="btn btn-primary btn-lg">Download &nbsp;↓</a>
+  </div>
+</header>
+
+<main>
+
+<section id="download" class="section">
+  <h2>Download</h2>
+  <p class="section-sub">Signed release APKs built by GitHub Actions. Pick the latest build below.</p>
+
+  <div id="download-status" class="download-status" aria-live="polite">
+    <span class="spinner"></span> Loading releases…
+  </div>
+
+  <div id="latest-release" class="release-card" hidden>
+    <div class="release-head">
+      <h3 id="latest-name">Latest release</h3>
+      <span id="latest-date" class="release-date"></span>
+    </div>
+    <div id="latest-assets" class="assets"></div>
+    <div class="release-meta">
+      <div class="counter">
+        <span id="latest-downloads" class="counter-num">0</span>
+        <span class="counter-label">downloads (this release)</span>
+      </div>
+      <div class="counter">
+        <span id="total-downloads" class="counter-num">0</span>
+        <span class="counter-label">total downloads (all releases)</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="releases-h3">All releases</h3>
+  <div id="all-releases" class="releases-list"></div>
+
+  <p class="note">
+    <strong>Important:</strong> Uninstall any official APRSdroid before installing this mod
+    (different signing key). Android 11+ devices need to grant
+    <em>All files access</em> for offline MBTiles maps (see Settings → OSM Maps).
+  </p>
+</section>
+
+<section id="features" class="section alt">
+  <h2>Features</h2>
+  <div class="features-grid">
+    <div class="feature">
+      <h3>Real-time position reporting</h3>
+      <p>GPS, fixed, periodic, or SmartBeaconing™. Share your location on the APRS network.</p>
+    </div>
+    <div class="feature">
+      <h3>Offline maps</h3>
+      <p>MBTiles + MapsForge V3. No Google Maps dependency — full OSM compatibility, works without a data connection.</p>
+    </div>
+    <div class="feature">
+      <h3>APRS messaging</h3>
+      <p>Send and receive messages through the network. Per-station conversation threads.</p>
+    </div>
+    <div class="feature">
+      <h3>Digipeater &amp; I-gate</h3>
+      <p>Full 2-way Internet Gateway. Direct or full digipeating. Flexible packet routing (RF + APRS-IS, or RF-only while IGating).</p>
+    </div>
+    <div class="feature">
+      <h3>Radio control</h3>
+      <p>Support for Vero, BTech, Radioddity, and other radios. DigiRig interface support.</p>
+    </div>
+    <div class="feature">
+      <h3>Bluetooth TNC</h3>
+      <p>Classic Bluetooth and stable BLE support. KISS, TNC-2, Kenwood, and AFSK protocols.</p>
+    </div>
+    <div class="feature">
+      <h3>Mic-E compression</h3>
+      <p>Efficient position encoding with Mic-E, including EMERGENCY status support.</p>
+    </div>
+    <div class="feature">
+      <h3>Enhanced station viewer</h3>
+      <p>Hub log sortable by distance or newest. Speed, course, and altitude information.</p>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots" class="section">
+  <h2>Splash</h2>
+  <div class="splash-wrap">
+    <img src="assets/splash.webp" alt="App splash screen" class="splash-img" loading="lazy">
+  </div>
+</section>
+
+<section id="build" class="section alt">
+  <h2>Build from source</h2>
+  <pre><code>git clone https://github.com/9M2PJU/NA7Q-APRSDroid-9M2PJU-Mod.git
+cd NA7Q-APRSDroid-9M2PJU-Mod
+git submodule update --init --recursive
+# optional: echo "mapsApiKey=AI..." &gt; local.properties
+./gradlew assembleRelease</code></pre>
+  <p class="section-sub">
+    Requires JDK 8, Android SDK with build-tools 33.0.2 and platform 33.
+    Full builds take ~3 minutes. See the
+    <a href="https://github.com/9M2PJU/NA7Q-APRSDroid-9M2PJU-Mod#readme" target="_blank" rel="noopener">README</a>
+    for details.
+  </p>
+</section>
+
+<section id="about" class="section">
+  <h2>About &amp; credits</h2>
+  <p>
+    NA7Q-APRSDroid 9M2PJU-Mod is a fork of
+    <a href="https://github.com/na7q/aprsdroid" target="_blank" rel="noopener">NA7Q's enhanced APRSdroid</a>,
+    which is itself a fork of
+    <a href="https://aprsdroid.org/" target="_blank" rel="noopener">Georg Lukas's original APRSdroid</a>.
+    Licensed under the <a href="https://www.gnu.org/licenses/gpl-2.0.html" target="_blank" rel="noopener">GNU GPLv2</a>.
+  </p>
+  <p>
+    APRS&reg; is a registered trademark of Bob Bruninga, WB4APR.
+  </p>
+</section>
+
+</main>
+
+<footer>
+  <p>
+    <a href="https://github.com/9M2PJU/NA7Q-APRSDroid-9M2PJU-Mod" target="_blank" rel="noopener">Source</a>
+    &middot;
+    <a href="https://github.com/9M2PJU/NA7Q-APRSDroid-9M2PJU-Mod/releases" target="_blank" rel="noopener">Releases</a>
+    &middot;
+    <a href="https://github.com/9M2PJU/NA7Q-APRSDroid-9M2PJU-Mod/issues" target="_blank" rel="noopener">Issues</a>
+  </p>
+  <p class="footer-meta">Made with care by amateur radio operators. 73.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

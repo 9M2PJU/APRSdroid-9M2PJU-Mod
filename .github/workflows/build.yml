@@ -44,11 +44,11 @@ jobs:
             "build-tools;33.0.2" \
             "platforms;android-33"
 
-      - name: Switch to JDK 8 (for Scala build)
+      - name: Switch to JDK 11 (for Scala 2.11 + modern AndroidX)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '8'
+          java-version: '11'
 
       - name: Write local.properties
         run: |

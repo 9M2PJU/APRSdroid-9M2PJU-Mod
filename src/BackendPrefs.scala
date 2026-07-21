@@ -1,6 +1,6 @@
 package org.aprsdroid.app
 
-import _root_.android.Manifest
+import _root_.android.{Manifest => AndroidManifest}
 import _root_.android.os.Bundle
 import _root_.android.content.{Context, Intent, SharedPreferences}
 import _root_.android.content.SharedPreferences.OnSharedPreferenceChangeListener
@@ -49,7 +49,7 @@ class BackendPrefs extends PreferenceActivity
 				def onPreferenceClick(preference: Preference) = {
 					if (preference.asInstanceOf[CheckBoxPreference].isChecked) {
 						preference.asInstanceOf[CheckBoxPreference].setChecked(false)
-						checkPermissions(Array(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_GPS)
+						checkPermissions(Array(AndroidManifest.permission.ACCESS_FINE_LOCATION, AndroidManifest.permission.ACCESS_COARSE_LOCATION), REQUEST_GPS)
 					}
 					true
 				}

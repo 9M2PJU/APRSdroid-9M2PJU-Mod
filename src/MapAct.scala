@@ -1,6 +1,6 @@
 package org.aprsdroid.app
 
-import _root_.android.Manifest
+import _root_.android.{Manifest => AndroidManifest}
 import _root_.android.app.AlertDialog
 import _root_.android.content.{DialogInterface, Intent, IntentFilter}
 import _root_.android.content.pm.PackageManager
@@ -61,7 +61,7 @@ class MapAct extends MapActivity with MapMenuHelper {
 			setLongTitle(R.string.app_map, targetcall)
 		setKeepScreenOn()
 		setVolumeControls()
-		//checkPermissions(Array(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), RELOAD_MAP)
+		//checkPermissions(Array(AndroidManifest.permission.READ_EXTERNAL_STORAGE, AndroidManifest.permission.WRITE_EXTERNAL_STORAGE), RELOAD_MAP)
 		reloadMapAndTheme()
 		mapview.requestFocus()
 	}

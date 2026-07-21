@@ -1,7 +1,7 @@
 
 package org.aprsdroid.app
 
-import android.Manifest
+import android.{Manifest => AndroidManifest}
 import android.os.Build
 import _root_.android.util.Log
 import _root_.net.ab0oo.aprs.parser.APRSPacket
@@ -37,9 +37,9 @@ object AprsBackend {
 	) {}
 
 	val BLUETOOTH_PERMISSION = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-		Manifest.permission.BLUETOOTH_CONNECT
+		AndroidManifest.permission.BLUETOOTH_CONNECT
 	} else {
-		Manifest.permission.BLUETOOTH_ADMIN
+		AndroidManifest.permission.BLUETOOTH_ADMIN
 	}
 
 	// map from old "backend" to new proto-link-aprsis (defaults are bluetooth and tcp)
@@ -71,7 +71,7 @@ object AprsBackend {
 		"vox" -> new BackendInfo(
 			(s, p) => new AfskUploader(s, p),
 			0,
-			Set(Manifest.permission.RECORD_AUDIO),
+			Set(AndroidManifest.permission.RECORD_AUDIO),
 			CAN_DUPLEX,
 			PASSCODE_NONE),
 		"tcp" -> new BackendInfo(
@@ -107,7 +107,7 @@ object AprsBackend {
 		"digirig" -> new BackendInfo(
 			(s, p) => new DigiRig(s, p),
 			R.xml.backend_digirig,
-                        Set(Manifest.permission.RECORD_AUDIO),
+                        Set(AndroidManifest.permission.RECORD_AUDIO),
 			CAN_DUPLEX,
 			PASSCODE_NONE
 		)
@@ -165,9 +165,9 @@ object AprsBackend {
 		val perms = scala.collection.mutable.Set[String]()
 		perms ++= AprsBackend.defaultBackendInfo(prefs).permissions
 		if (prefs.getProto() == "kenwood" && prefs.getBoolean("kenwood.gps", false))
-			perms += (Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+			perms += (AndroidManifest.permission.ACCESS_FINE_LOCATION, AndroidManifest.permission.ACCESS_COARSE_LOCATION)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        perms += (Manifest.permission.POST_NOTIFICATIONS)
+                        perms += (AndroidManifest.permission.POST_NOTIFICATIONS)
                 }
 		perms.toSet
 	}

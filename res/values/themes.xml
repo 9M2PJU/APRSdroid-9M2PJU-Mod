@@ -14,7 +14,7 @@
          ListActivity, and PreferenceActivity.
          ============================================================ -->
     <style name="AppTheme"
-           parent="Theme.MaterialComponents.DarkActionBar">
+           parent="Theme.MaterialComponents">
 
         <!-- ===== Core colors ===== -->
         <item name="colorPrimary">@color/md_primary</item>

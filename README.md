@@ -73,7 +73,7 @@ changed compared to the upstream NA7Q fork.
 
 #### 🎨 **UI modernization (Phase 1 — theme & chrome)**
 - 🌙 **Material Design dark theme** — migrated from `Theme.Holo` (2011) to
-  `Theme.MaterialComponents.DarkActionBar`. The app uses a **dark-only** theme with
+  `Theme.MaterialComponents`. The app uses a **dark-only** theme with
   navy surfaces and amber accent, matching the app icon.
 - 🎨 **Brand palette** derived from the app icon:
   - Navy surfaces `#0D182D`/`#13203A`/`#1C2F51` (elevation tints)
@@ -333,7 +333,7 @@ Please open an issue or pull request at the
   - 🎨 New app icon and logo across all density buckets
   - 🖼️ Branded splash screen (153 KB WebP, theme-based)
   - 📱 Modern Android support — `targetSdk 35`, foreground service types for Android 14+, Bluetooth permissions for Android 12+, storage permissions for Android 11+, `POST_NOTIFICATIONS` for Android 13+, edge-to-edge opt-out for Android 15+
-  - 🎨 Material 3-inspired UI design system — `Theme.MaterialComponents.DarkActionBar` with tonal navy/amber palette, shape theming, refined typography, modern component styles (buttons, text fields, dialogs, cards, bottom sheets), dark-only
+  - 🎨 Material 3-inspired UI design system — `Theme.MaterialComponents` with tonal navy/amber palette, shape theming, refined typography, modern component styles (buttons, text fields, dialogs, cards, bottom sheets), dark-only
   - 🤖 GitHub Actions CI/CD — signed release APK builds, automatic GitHub Releases on `v*` tags
   - 🌐 GitHub Pages landing page at <https://aprsdroid.hamradio.my/> with live download counters
   - 🏷️ Version bumped to `v1.8` (tocall `APDR18`)

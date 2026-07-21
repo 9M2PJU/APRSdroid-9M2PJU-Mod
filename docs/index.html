@@ -20,9 +20,8 @@
     <h1>NA7Q-APRSDroid <span class="mod">9M2PJU-Mod</span></h1>
     <p class="tagline">The enhanced APRS companion for Android — built by hams, for hams.</p>
     <div class="hero-badges">
-      <span class="badge">Android 4.0+ (API 14)</span>
+      <span class="badge">Android 4.4+ (API 19)</span>
       <span class="badge">GPLv2</span>
-      <span class="badge">Scala + Java</span>
       <span class="badge">Offline Maps</span>
     </div>
     <a href="#download" class="btn btn-primary btn-lg">Download &nbsp;↓</a>
@@ -33,7 +32,7 @@
 
 <section id="download" class="section">
   <h2>Download</h2>
-  <p class="section-sub">Signed release APKs built by GitHub Actions. Pick the latest build below.</p>
+  <p class="section-sub">Pick the latest build below.</p>
 
   <div id="download-status" class="download-status" aria-live="polite">
     <span class="spinner"></span> Loading releases…
@@ -68,9 +67,8 @@
   <p class="section-sub">
     <strong>Note:</strong> This build is a work in progress — some features may be
     incomplete or broken at the time of download, as it is actively updated.
-    Google Maps is not included; build from source with your own API key if needed.
-    The mod focuses on offline mapping (MBTiles + MapsForge V3) for privacy and
-    reduced dependencies.
+    Google Maps is not included; the mod focuses on offline mapping
+    (MBTiles + MapsForge V3) for privacy and reduced dependencies.
   </p>
 </section>
 
@@ -207,22 +205,11 @@
   </div>
 
   <div class="whatsnew-group">
-    <h3>CI/CD — GitHub Actions</h3>
-    <ul>
-      <li><strong>Signed release APK builds</strong> on every push to <code>master</code> and on <code>v*</code> tags. No debug APK is produced.</li>
-      <li><strong>Tests + lint</strong> (<code>./gradlew test lintRelease</code>) run before every build; reports uploaded as artifacts.</li>
-      <li><strong>Signed releases</strong> — the workflow decodes <code>RELEASE_KEYSTORE_BASE64</code> from GitHub Secrets and runs <code>assembleRelease</code> with signing properties. Verifies the APK with <code>apksigner verify --print-certs</code>.</li>
-      <li><strong>Automatic GitHub Releases</strong> on <code>v*</code> tags — release title <code>&lt;tag&gt;-9M2PJU</code>, APK named <code>NA7Q-APRSDroid-&lt;tag&gt;-9M2PJU.apk</code>, auto-generated release notes.</li>
-    </ul>
-  </div>
-
-  <div class="whatsnew-group">
     <h3>This landing page</h3>
     <ul>
-      <li><strong>Custom domain:</strong> <a href="https://aprsdroid.hamradio.my/">aprsdroid.hamradio.my</a> (CNAME → <code>9m2pju.github.io</code>).</li>
-      <li><strong>Static site</strong> in <code>docs/</code> — <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, <code>assets/</code>.</li>
+      <li><strong>Custom domain:</strong> <a href="https://aprsdroid.hamradio.my/">aprsdroid.hamradio.my</a>.</li>
       <li><strong>Dark navy + amber theme</strong> matching the app icon.</li>
-      <li><strong>Live download counters</strong> — no backend. <code>script.js</code> fetches the GitHub API client-side and sums <code>download_count</code> across all assets of all releases. Shows per-release and total counts.</li>
+      <li><strong>Live download counters</strong> — no backend. Real GitHub release download counts.</li>
       <li><strong>Download buttons</strong> for every release APK, with file size and per-asset download count.</li>
     </ul>
   </div>
@@ -291,7 +278,7 @@
       <li><strong>Offline maps with MBTiles</strong> — complete offline operation capability.</li>
       <li><strong>MapsForge V3 support</strong> — enhanced offline mapping with MapsForge.</li>
       <li><strong>OpenStreetMap integration</strong> — full OSM compatibility for mapping.</li>
-      <li><strong>Google Maps optional</strong> — build from source with your own API key; the mod focuses on offline mapping for privacy and reduced dependencies.</li>
+      <li><strong>Google Maps optional</strong> — not included by default; the mod focuses on offline mapping for privacy and reduced dependencies.</li>
     </ul>
   </div>
 
@@ -323,21 +310,6 @@
   <div class="splash-wrap">
     <img src="assets/splash.webp" alt="App splash screen" class="splash-img" loading="lazy">
   </div>
-</section>
-
-<section id="build" class="section alt">
-  <h2>Build from source</h2>
-  <pre><code>git clone https://github.com/9M2PJU/NA7Q-APRSDroid-9M2PJU-Mod.git
-cd NA7Q-APRSDroid-9M2PJU-Mod
-git submodule update --init --recursive
-# optional: echo "mapsApiKey=AI..." &gt; local.properties
-./gradlew assembleRelease</code></pre>
-  <p class="section-sub">
-    Requires JDK 8, Android SDK with build-tools 33.0.2 and platform 33.
-    Full builds take ~3 minutes. See the
-    <a href="https://github.com/9M2PJU/NA7Q-APRSDroid-9M2PJU-Mod#readme" target="_blank" rel="noopener">README</a>
-    for details.
-  </p>
 </section>
 
 <section id="about" class="section">

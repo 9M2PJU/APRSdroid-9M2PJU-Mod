@@ -97,31 +97,12 @@ changed compared to the upstream NA7Q fork.
 > hardcoded colors → `@color/` resources, dynamic color (Material You), core-splashscreen
 > API.
 
-#### 🤖 **CI/CD — GitHub Actions**
-- 📝 **`.github/workflows/build.yml`** — signed release APK builds on every push to `master`
-  and on `v*` tags. No debug APK is produced.
-- ✅ **Tests + lint** (`./gradlew test lintRelease`) run before every build; reports uploaded
-  as artifacts.
-- 🔏 **Signed releases** — the workflow decodes `RELEASE_KEYSTORE_BASE64` from GitHub
-  Secrets and runs `assembleRelease` with signing properties. Verifies the APK is actually
-  signed with `apksigner verify --print-certs`. Fails early with a clear error if any of the
-  4 signing secrets are missing.
-- 🏷️ **Automatic GitHub Releases** on `v*` tags — release title `<tag>-9M2PJU`, APK named
-  `NA7Q-APRSDroid-<tag>-9M2PJU.apk`, auto-generated release notes.
-- 🔑 **Signing key** generated locally and stored in `.dev/secrets/` (git-ignored). The
-  keystore is PKCS12, RSA 4096, 9125-day validity, alias `na7q-aprsdroid-9m2pju`.
-
 #### 🌐 **GitHub Pages landing page**
-- 🌍 **Custom domain:** <https://aprsdroid.hamradio.my/> (CNAME `aprsdroid.hamradio.my` →
-  `9m2pju.github.io`).
-- 📄 **Static site** in `docs/` — `index.html`, `style.css`, `script.js`, `assets/`.
+- 🌍 **Custom domain:** <https://aprsdroid.hamradio.my/>
 - 🎨 **Dark navy + amber theme** matching the app icon.
-- 📊 **Live download counters** — no backend. `script.js` fetches
-  `https://api.github.com/repos/9M2PJU/NA7Q-APRSDroid-9M2PJU-Mod/releases` client-side and
-  sums `download_count` across all assets of all releases. Shows per-release and total
-  counts. The GitHub API is CORS-enabled for unauthenticated requests (60 req/hour per IP).
+- 📊 **Live download counters** — no backend. Real GitHub release download counts.
 - ⬇️ **Download buttons** for every release APK, with file size and per-asset download count.
-- 🖼️ **Splash preview**, **features grid**, **build-from-source** snippet, **credits**.
+- 🖼️ **Splash preview**, **features grid**, **credits**.
 
 ### 🎯 **Core Features**
 - 📍 **Real-time Position Reporting** — Share your location with the APRS network
@@ -144,8 +125,8 @@ changed compared to the upstream NA7Q fork.
 - 🗺️ **Offline Maps with MBTiles** — Complete offline operation capability
 - 🆕 **MapsForge V3 Support** — Enhanced offline mapping with MapsForge
 - 🌍 **OpenStreetMap Integration** — Full OSM compatibility for mapping
-- ⚠️ **Note**: Google Maps is optional (build from source with your own API key); the mod
-  focuses on offline mapping for privacy and reduced dependencies
+- ⚠️ **Note**: Google Maps is not included by default; the mod focuses on offline
+  mapping (MBTiles + MapsForge V3) for privacy and reduced dependencies
 
 #### 📊 **Data & Compression**
 - 🗜️ **Mic-E Compression** — Efficient position encoding
@@ -231,85 +212,6 @@ downloading offline maps:
 
 ---
 
-## 🤖 **CI/CD**
-
-Signed release APKs are built automatically by [**GitHub Actions**](.github/workflows/build.yml):
-
-- **On every push to `master`** — builds a signed release APK, uploads it as a workflow artifact.
-- **On `v*` tags** — builds a signed release APK and publishes a GitHub Release titled
-  `<tag>-9M2PJU` with the APK `NA7Q-APRSDroid-<tag>-9M2PJU.apk` attached.
-- **Tests + lint** run before every build; reports are uploaded as artifacts.
-
-Signing keys are stored as GitHub Secrets (`RELEASE_KEYSTORE_BASE64`,
-`RELEASE_STORE_PASSWORD`, `RELEASE_KEY_ALIAS`, `RELEASE_KEY_PASSWORD`).
-
----
-
-## 🛠️ **Development & Compilation**
-
-### 🏗️ **Build Environment**
-APRSdroid is crafted in **Scala 2.11** using the
-[gradle-android-scala-plugin](https://github.com/AllBus/scala-plugin). Notes:
-- ⏱️ Full builds take approximately **3 minutes**
-- 🔄 Incremental builds may occasionally produce non-functional APKs — clean when in doubt
-- 🗺️ **Google Maps API key optional** — only if you want Google Maps support
-
-### 📋 **Prerequisites**
-- ☕ **Java 8 JDK** (JDK 17+ will *not* work — the Scala plugin requires JDK 8)
-- 🐙 **Git** for version control
-- 📦 **Android SDK** with `platforms;android-33` and `build-tools;33.0.2`
-- 🗺️ **Google Maps API Key** — *Optional*, only for Google Maps support
-
-### 📱 **Android SDK levels**
-| | API | Notes |
-| --- | --- | --- |
-| `minSdkVersion` | 14 | Android 4.0 (Ice Cream Sandwich) |
-| `compileSdkVersion` | 33 | Held at 33 — see note below |
-| `targetSdkVersion` | 35 | Android 15 — satisfies Google Play targetSdk floor |
-
-> **Why `compileSdk` is 33 while `targetSdk` is 35:** the
-> `gradle-android-scala-plugin` (AllBus fork, 3.5.1) only supports AGP 3.5.x, and no
-> maintained Scala plugin supports AGP 8.x+ as of 2026. AGP 3.5.x cannot compile
-> against API 36. `targetSdk 35` is still achievable and satisfies the Google Play
-> requirement; the app runs on Android 14/15 via platform compatibility behaviors.
-
-### 🗝️ **Important Notice: Google Maps**
-> ⚠️ **The mod focuses on offline mapping** (MBTiles + MapsForge) for privacy and reduced
-> dependencies. The Google Maps dependency is still present but uses a fallback restricted
-> key at runtime. To enable Google Maps, build from source and add your own API key to
-> `local.properties`.
-
-### 🚀 **Complete Build Instructions**
-
-```bash
-sudo apt-get install -y git openjdk-8-jdk vim-nox wget unzip
-
-cmdline_tool_file="commandlinetools-linux-6609375_latest.zip"
-export ANDROID_SDK_ROOT="$(pwd)/android"
-mkdir -p "${ANDROID_SDK_ROOT}"
-wget "https://dl.google.com/android/repository/${cmdline_tool_file}"
-unzip "${cmdline_tool_file}" -d "${ANDROID_SDK_ROOT}/cmdline-tools"
-rm -f "${cmdline_tool_file}"
-export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${PATH}"
-export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
-export PATH="${ANDROID_SDK_ROOT}/emulator:${PATH}"
-mkdir "${ANDROID_SDK_ROOT}/licenses"
-echo 24333f8a63b6825ea9c5514f83c2829b004d1fee > "${ANDROID_SDK_ROOT}/licenses/android-sdk-license"
-echo 84831b9409646a918e30573bab4c9c91346d8abd > "${ANDROID_SDK_ROOT}/licenses/android-sdk-preview-license"
-sdkmanager --install 'platforms;android-33' 'build-tools;33.0.2'
-
-git clone https://github.com/9M2PJU/NA7Q-APRSDroid-9M2PJU-Mod.git
-cd NA7Q-APRSDroid-9M2PJU-Mod
-git submodule update --init --recursive
-# optional: replace AI... with your Google Maps API key:
-echo "mapsApiKey=AI..." > local.properties
-# for a release build (unsigned without signing properties):
-./gradlew assembleRelease
-# to sign, pass -PRELEASE_STORE_FILE=... -PRELEASE_KEY_ALIAS=... etc.
-```
-
----
-
 ## 🌐 **Landing Page & Download Counters**
 
 A static landing page is published via GitHub Pages at
@@ -320,10 +222,6 @@ A static landing page is published via GitHub Pages at
 - **Live download counters** — per-release and total — fetched client-side from the
   public GitHub API (`download_count` per release asset). No backend, no separate
   counter service; the numbers are real GitHub release download counts.
-
-Source for the page lives in the [`docs/`](docs/) folder. Edit `docs/index.html`,
-`docs/style.css`, or `docs/script.js` and push to `master` — GitHub Pages rebuilds
-automatically.
 
 ---
 

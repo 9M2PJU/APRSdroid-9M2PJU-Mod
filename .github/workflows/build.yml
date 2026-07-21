@@ -35,13 +35,13 @@ jobs:
           java-version: '17'
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          packages: |
-            tools
-            platform-tools
-            build-tools;33.0.2
-            platforms;android-33
+        run: |
+          export ANDROID_SDK_ROOT="$ANDROID_HOME"
+          yes | sdkmanager --licenses >/dev/null 2>&1 || true
+          sdkmanager --install \
+            "platform-tools" \
+            "build-tools;33.0.2" \
+            "platforms;android-33"
 
       - name: Switch to JDK 8 (for Scala build)
         uses: actions/setup-java@v4

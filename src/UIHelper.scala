@@ -41,6 +41,19 @@ object UIHelper
 		file.toString()))
 	}
 
+	/**
+	 * Register a BroadcastReceiver with the appropriate flags for Android 14+
+	 * (API 34+). On older Android, the flags are ignored.
+	 * Uses RECEIVER_NOT_EXPORTED since all our receivers are for internal broadcasts.
+	 */
+	def safeRegisterReceiver(ctx : Context, receiver : BroadcastReceiver, filter : IntentFilter) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+			ctx.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
+		} else {
+			ctx.registerReceiver(receiver, filter)
+		}
+	}
+
 }
 
 trait UIHelper extends Activity

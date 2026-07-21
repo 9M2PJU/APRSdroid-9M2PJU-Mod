@@ -35,7 +35,7 @@ trait MapLoaderBase extends MapMenuHelper {
 
     def startLoading() {
         locReceiver.startTask(null)
-        registerReceiver(locReceiver, new IntentFilter(AprsService.UPDATE))
+        UIHelper.safeRegisterReceiver(this, locReceiver, new IntentFilter(AprsService.UPDATE))
     }
 
     def load_stations(i : Intent) = {

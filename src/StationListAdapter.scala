@@ -37,7 +37,7 @@ class StationListAdapter(context : Context, prefs : PrefsWrapper,
 	lazy val locReceiver = new LocationReceiver2(load_cursor,
 		replace_cursor, cancel_cursor)
 
-	context.registerReceiver(locReceiver, new IntentFilter(AprsService.UPDATE))
+	UIHelper.safeRegisterReceiver(context, locReceiver, new IntentFilter(AprsService.UPDATE))
 
 	private val DARK = Array(0xff, 0x80, 0x80, 0x50)
 	private val BRIGHT = Array(0xff, 0xff, 0xff, 0xe8)

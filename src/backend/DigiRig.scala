@@ -124,7 +124,7 @@ class DigiRig(service : AprsService, prefs : PrefsWrapper) extends AfskUploader(
 	override def start() = {
 		val filter = new IntentFilter(USB_PERM_ACTION)
 		filter.addAction(ACTION_USB_DETACHED)
-		service.registerReceiver(receiver, filter)
+		UIHelper.safeRegisterReceiver(service, receiver, filter)
 		alreadyRunning = true
 		if (ser == null)
 			requestPermissions()
@@ -136,7 +136,7 @@ class DigiRig(service : AprsService, prefs : PrefsWrapper) extends AfskUploader(
 			log(service.getString(R.string.afsk_info_sco_req))
 			service.getSystemService(Context.AUDIO_SERVICE)
 				.asInstanceOf[AudioManager].startBluetoothSco()
-			service.registerReceiver(btScoReceiver, new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_CHANGED))
+			UIHelper.safeRegisterReceiver(service, btScoReceiver, new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_CHANGED))
 			false
 		} else {
 			aw.start()

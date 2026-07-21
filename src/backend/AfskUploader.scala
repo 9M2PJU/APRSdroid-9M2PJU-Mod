@@ -55,7 +55,7 @@ class AfskUploader(service : AprsService, prefs : PrefsWrapper) extends AprsBack
 			log(service.getString(R.string.afsk_info_sco_req))
 			service.getSystemService(Context.AUDIO_SERVICE)
 				.asInstanceOf[AudioManager].startBluetoothSco()
-			service.registerReceiver(btScoReceiver, new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_CHANGED))
+			UIHelper.safeRegisterReceiver(service, btScoReceiver, new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_CHANGED))
 			false
 		} else {
 			aw.start()

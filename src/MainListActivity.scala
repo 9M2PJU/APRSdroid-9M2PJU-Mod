@@ -43,10 +43,10 @@ class MainListActivity(actname : String, menuid : Int) extends LoadingListActivi
 		// Check for app updates from GitHub Releases (at most once per day)
 		UpdateChecker.checkForUpdates(this)
 
-		registerReceiver(miclReceiver, new IntentFilter(AprsService.MICLEVEL))
-		registerReceiver(linkOnOffReceiver, new IntentFilter(AprsService.SERVICE_STOPPED))
-		registerReceiver(linkOnOffReceiver, new IntentFilter(AprsService.LINK_OFF))
-		registerReceiver(linkOnOffReceiver, new IntentFilter(AprsService.LINK_ON))
+		UIHelper.safeRegisterReceiver(this, miclReceiver, new IntentFilter(AprsService.MICLEVEL))
+		UIHelper.safeRegisterReceiver(this, linkOnOffReceiver, new IntentFilter(AprsService.SERVICE_STOPPED))
+		UIHelper.safeRegisterReceiver(this, linkOnOffReceiver, new IntentFilter(AprsService.LINK_OFF))
+		UIHelper.safeRegisterReceiver(this, linkOnOffReceiver, new IntentFilter(AprsService.LINK_ON))
 	}
 	override def onPause() {
 		super.onPause()

@@ -34,7 +34,7 @@ class FixedPosition(service : AprsService, prefs : PrefsWrapper) extends Locatio
 	override def start(singleShot : Boolean) = {
 		stop()
 
-		service.registerReceiver(receiver, new IntentFilter(ALARM_ACTION))
+		UIHelper.safeRegisterReceiver(service, receiver, new IntentFilter(ALARM_ACTION))
 		val periodic = prefs.getBoolean("periodicposition", true)
 		Log.d(TAG, "start: periodic=" + periodic + " single=" + singleShot)
 

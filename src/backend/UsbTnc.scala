@@ -81,7 +81,7 @@ class UsbTnc(service : AprsService, prefs : PrefsWrapper) extends AprsBackend(pr
 	def start() = {
 		val filter = new IntentFilter(USB_PERM_ACTION)
 		filter.addAction(ACTION_USB_DETACHED)
-		service.registerReceiver(receiver, filter)
+		UIHelper.safeRegisterReceiver(service, receiver, filter)
 		alreadyRunning = true
 		if (ser == null)
 			requestPermissions()

@@ -45,7 +45,7 @@ class LogActivity extends MainListActivity("log", R.id.log) {
 
 	override def onResume() {
 		super.onResume()
-		registerReceiver(locReceiver, new IntentFilter(AprsService.UPDATE))
+		UIHelper.safeRegisterReceiver(this, locReceiver, new IntentFilter(AprsService.UPDATE))
 		locReceiver.startTask(null)
 
 		postlist.requestFocus()

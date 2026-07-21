@@ -32,7 +32,7 @@ class MessageListAdapter(context : Context, prefs : PrefsWrapper,
 	lazy val locReceiver = new LocationReceiver2(load_cursor,
 		replace_cursor, cancel_cursor)
 
-	context.registerReceiver(locReceiver, new IntentFilter(AprsService.MESSAGE))
+	UIHelper.safeRegisterReceiver(context, locReceiver, new IntentFilter(AprsService.MESSAGE))
 
 	override def bindView(view : View, context : Context, cursor : Cursor) {
 		import StorageDatabase.Message._

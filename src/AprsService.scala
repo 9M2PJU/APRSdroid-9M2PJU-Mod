@@ -167,7 +167,7 @@ class AprsService extends Service {
 			startPoster()
 
 			// register for outgoing message notifications
-			registerReceiver(msgNotifier, new IntentFilter(AprsService.MESSAGETX))
+			UIHelper.safeRegisterReceiver(this, msgNotifier, new IntentFilter(AprsService.MESSAGETX))
 		} else
 			onPosterStarted()
 	}

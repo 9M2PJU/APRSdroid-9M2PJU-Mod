@@ -132,7 +132,7 @@ class MapAct extends MapActivity with MapMenuHelper {
         }
 
 	def startLoading() {
-		registerReceiver(locReceiver, new IntentFilter(AprsService.UPDATE))
+		UIHelper.safeRegisterReceiver(this, locReceiver, new IntentFilter(AprsService.UPDATE))
 		locReceiver.startTask(null)
 	}
 

@@ -29,7 +29,7 @@ class StationActivity extends StationHelper(R.string.app_sta)
 		onStartLoading()
 		setListAdapter(pla)
 		postlist.setAdapter(la)
-		registerReceiver(locReceiver, new IntentFilter(AprsService.UPDATE))
+		UIHelper.safeRegisterReceiver(this, locReceiver, new IntentFilter(AprsService.UPDATE))
 		locReceiver.startTask(null)
 
 		Array(R.id.map, R.id.qrzcom, R.id.aprsfi).foreach((id) => {

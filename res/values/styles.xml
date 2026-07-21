@@ -2,28 +2,6 @@
 <resources>
 
     <!-- ============================================================
-         SHAPE APPEARANCES — Material 3-style rounded corners
-         ============================================================ -->
-
-    <style name="ShapeAppearance.AppTheme.SmallComponent"
-           parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/shape_corner_small</item>
-    </style>
-
-    <style name="ShapeAppearance.AppTheme.MediumComponent"
-           parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/shape_corner_medium</item>
-    </style>
-
-    <style name="ShapeAppearance.AppTheme.LargeComponent"
-           parent="ShapeAppearance.MaterialComponents.LargeComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/shape_corner_large</item>
-    </style>
-
-    <!-- ============================================================
          BUTTONS
          ============================================================ -->
 
@@ -91,22 +69,6 @@
         <item name="cornerRadius">@dimen/corner_button</item>
         <item name="rippleColor">@color/md_accent</item>
         <item name="iconTint">@color/md_accent</item>
-    </style>
-
-    <!-- ============================================================
-         TEXT INPUT — outlined box (M3 style)
-         ============================================================ -->
-
-    <style name="Widget.AppTheme.TextInputLayout.OutlinedBox"
-           parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/md_accent</item>
-        <item name="boxBackgroundColor">@color/md_surface</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/corner_text_field</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/corner_text_field</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/corner_text_field</item>
-        <item name="boxCornerRadiusTopStart">@dimen/corner_text_field</item>
-        <item name="hintTextColor">@color/md_accent</item>
-        <item name="android:textColorHint">@color/md_text_hint</item>
     </style>
 
     <!-- ============================================================
@@ -178,18 +140,7 @@
 
     <style name="Widget.AppTheme.BottomSheet"
            parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="shapeAppearanceOverlay">
-            @style/ShapeAppearance.AppTheme.BottomSheet
-        </item>
         <item name="backgroundTint">@color/md_surface</item>
-    </style>
-
-    <style name="ShapeAppearance.AppTheme.BottomSheet">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopLeft">@dimen/shape_corner_large</item>
-        <item name="cornerSizeTopRight">@dimen/shape_corner_large</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
     <!-- ============================================================
@@ -255,7 +206,6 @@
         <item name="cardCornerRadius">@dimen/corner_card</item>
         <item name="cardElevation">@dimen/elevation_low</item>
         <item name="contentPadding">@dimen/space_md</item>
-        <item name="rippleColor">@color/md_surface_variant</item>
     </style>
 
     <!-- ============================================================

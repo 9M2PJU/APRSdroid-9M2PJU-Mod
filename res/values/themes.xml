@@ -33,21 +33,9 @@
         <item name="android:textColorTertiary">@color/md_text_hint</item>
         <item name="android:textColorHint">@color/md_text_hint</item>
 
-        <!-- ===== Shape theming (M3-style rounded corners) ===== -->
-        <item name="shapeAppearanceSmallComponent">
-            @style/ShapeAppearance.AppTheme.SmallComponent
-        </item>
-        <item name="shapeAppearanceMediumComponent">
-            @style/ShapeAppearance.AppTheme.MediumComponent
-        </item>
-        <item name="shapeAppearanceLargeComponent">
-            @style/ShapeAppearance.AppTheme.LargeComponent
-        </item>
-
         <!-- ===== Component styles ===== -->
         <item name="materialButtonStyle">@style/Widget.AppTheme.Button</item>
         <item name="borderlessButtonStyle">@style/Widget.AppTheme.Button.TextButton</item>
-        <item name="textInputStyle">@style/Widget.AppTheme.TextInputLayout.OutlinedBox</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.AppTheme.BottomSheetDialog</item>
 
         <!-- ===== Action bar as modern top app bar ===== -->

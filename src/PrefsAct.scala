@@ -61,6 +61,7 @@ class PrefsAct extends PreferenceActivity {
 	// PreferenceActivity, and when navigating to a PreferenceScreen
 	// sub-screen (e.g. Notifications), the ListView content is swapped
 	// and the first item (category title) would draw under the status bar.
+	var insetHeaderAdded = false
 	def applyPrefTopInset() {
 		val res = getResources()
 		val resId = res.getIdentifier("status_bar_height", "dimen", "android")
@@ -71,6 +72,7 @@ class PrefsAct extends PreferenceActivity {
 			if (root != null)
 				root.setPadding(root.getPaddingLeft, statusBarHeight,
 					root.getPaddingRight, root.getPaddingBottom)
+			// Also apply padding to the ListView with clipToPadding=false
 			val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
 			if (lv != null) {
 				lv.setPadding(lv.getPaddingLeft, statusBarHeight,
@@ -93,6 +95,16 @@ class PrefsAct extends PreferenceActivity {
 		super.onContentChanged()
 		applyPrefTopInset()
 		postApplyPrefTopInset()
+	}
+
+	// Called when the window focus changes. This fires after layout
+	// is complete, so padding set here won't be reset by the layout pass.
+	// This catches PreferenceScreen sub-screen navigation where the
+	// ListView content is swapped.
+	override def onWindowFocusChanged(hasFocus : Boolean) {
+		super.onWindowFocusChanged(hasFocus)
+		if (hasFocus)
+			applyPrefTopInset()
 	}
 
 	// Intercept clicks on PreferenceScreen items (sub-screens like

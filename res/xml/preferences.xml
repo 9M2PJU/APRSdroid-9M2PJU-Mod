@@ -76,16 +76,6 @@
 		android:title="@string/p_hwacceleration_title"
 		android:summary="@string/p_hwacceleration_summary"
 		android:defaultValue="true" />
-
-	<Preference
-		android:key="mapfile"
-		android:title="@string/p_mapfile_choose"
-		android:summary="@string/p_mapfile_summary" />
-
-	<Preference
-		android:key="themefile"
-		android:title="@string/p_themefile_choose"
-		android:summary="@string/p_themefile_summary" />
     </PreferenceCategory>
 
 

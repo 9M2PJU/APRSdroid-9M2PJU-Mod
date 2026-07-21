@@ -81,8 +81,6 @@ class PrefsAct extends PreferenceActivity {
 		}
 		// File pickers
 		fileChooserPreference("tilepath", 123456, R.string.p_mbtiles_file_picker_title)
-		fileChooserPreference("mapfile", 123460, R.string.p_mapfile_choose)
-		fileChooserPreference("themefile", 123457, R.string.p_themefile_choose)
 	}
 
 	def showRestartDialog() {
@@ -112,11 +110,6 @@ class PrefsAct extends PreferenceActivity {
 		if (tilepath != null && tilepath.nonEmpty) {
 			findPreference("tilepath").setSummary(tilepath)
 		}
-		// Show current map/theme file paths
-		val mapfile = prefs.getString("mapfile", android.os.Environment.getExternalStorageDirectory() + "/aprsdroid.map")
-		findPreference("mapfile").setSummary(mapfile)
-		val themefile = prefs.getString("themefile", android.os.Environment.getExternalStorageDirectory() + "/aprsdroid.xml")
-		findPreference("themefile").setSummary(themefile)
 	}
 
 	def openAllFilesAccessSettings() {
@@ -202,13 +195,6 @@ class PrefsAct extends PreferenceActivity {
 			}
 			finish()
 			startActivity(getIntent())
-		} else
-		if (resultCode == android.app.Activity.RESULT_OK && reqCode == 123460) {
-			// mapfile picker (MapsForge .map)
-			parseFilePickerResult(data, "mapfile", R.string.mapfile_error)
-		} else
-		if (resultCode == android.app.Activity.RESULT_OK && reqCode == 123457) {
-			parseFilePickerResult(data, "themefile", R.string.themefile_error)
 		} else
 		if (resultCode == android.app.Activity.RESULT_OK && reqCode == 123458) {
 			data.setClass(this, classOf[ProfileImportActivity])

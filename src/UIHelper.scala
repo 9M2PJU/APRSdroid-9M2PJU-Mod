@@ -306,19 +306,23 @@ trait UIHelper extends Activity
 						startActivity(new Intent(UIHelper.this, classOf[HubActivity])
 							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
 								Intent.FLAG_ACTIVITY_NO_ANIMATION))
+						overridePendingTransition(0, 0)
 						true
 					case R.id.nav_log =>
 						startActivity(new Intent(UIHelper.this, classOf[LogActivity])
 							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
 								Intent.FLAG_ACTIVITY_NO_ANIMATION))
+						overridePendingTransition(0, 0)
 						true
 					case R.id.nav_map =>
 						MapModes.startMap(UIHelper.this, prefs, "")
+						overridePendingTransition(0, 0)
 						true
 					case R.id.nav_messages =>
 						startActivity(new Intent(UIHelper.this, classOf[ConversationsActivity])
 							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
 								Intent.FLAG_ACTIVITY_NO_ANIMATION))
+						overridePendingTransition(0, 0)
 						true
 					case R.id.nav_menu =>
 						showOptionsMenuPopup(bn)

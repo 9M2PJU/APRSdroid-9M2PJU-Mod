@@ -11,8 +11,9 @@ class APRSdroid extends AppCompatActivity {
 
 	def replaceAct(act : Class[_]) {
 		val i = new Intent(this, act)
-		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION)
 		startActivity(i)
+		overridePendingTransition(0, 0)
 		finish()
 	}
 

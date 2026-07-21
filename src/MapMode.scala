@@ -53,6 +53,9 @@ object MapModes {
                         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 ctx.startActivity(intent)
+                if (ctx.isInstanceOf[android.app.Activity]) {
+                	ctx.asInstanceOf[android.app.Activity].overridePendingTransition(0, 0)
+                }
 	}
 
 	def setDefault(prefs : PrefsWrapper, tag : String) {

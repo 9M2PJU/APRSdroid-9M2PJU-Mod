@@ -19,7 +19,11 @@ class APRSdroid extends AppCompatActivity {
 
 	override def onCreate(savedInstanceState : Bundle) {
 		super.onCreate(savedInstanceState)
-		UIHelper.applySystemBarInsets(this)
+		// Do NOT call UIHelper.applySystemBarInsets(this) here —
+		// SplashTheme already sets solid black status/nav bars and
+		// windowLayoutInDisplayCutoutMode=never. Calling
+		// setDecorFitsSystemWindows(false) would enable edge-to-edge
+		// and let Android 16 override the nav bar color to white.
 		setContentView(R.layout.splash)
 		val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 

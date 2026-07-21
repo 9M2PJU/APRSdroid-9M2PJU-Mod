@@ -243,7 +243,7 @@ object UpdateChecker {
                 }
             }
 
-            override def onProgressUpdate(values : Array[Integer]) : Unit = {
+            override def onProgressUpdate1(values : Array[Integer]) : Unit = {
                 if (values != null && values.length > 0) {
                     progress.setProgress(values(0).intValue)
                 }

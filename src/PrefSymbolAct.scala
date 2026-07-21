@@ -2,7 +2,7 @@ package org.aprsdroid.app
 
 import _root_.android.app.Activity
 import _root_.android.content.Context
-import _root_.android.os.Bundle
+import _root_.android.os.{Build, Bundle}
 import _root_.android.text.{Editable, TextWatcher}
 import _root_.android.view.{View, ViewGroup}
 import _root_.android.util.TypedValue
@@ -40,8 +40,51 @@ class PrefSymbolAct extends Activity with TextWatcher with View.OnClickListener 
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
-		UIHelper.applySystemBarInsets(this)
+		// Opt out of edge-to-edge on Android 15+ (targetSdk 35) so the
+		// system bars don't overlap our content. setDecorFitsSystemWindows
+		// may be ignored by some OEM ROMs (MIUI/HyperOS), so we also set
+		// fitsSystemWindows="true" on the root layout (see prefsymbol.xml)
+		// and install an OnApplyWindowInsetsListener below as a fallback.
+		if (Build.VERSION.SDK_INT >= 30) {
+			getWindow().setDecorFitsSystemWindows(true)
+		} else {
+			WindowCompat.setDecorFitsSystemWindows(getWindow(), true)
+		}
 		setContentView(R.layout.prefsymbol)
+		// Apply WindowInsets to the root view so the GridView content is
+		// not clipped by the status bar (top) and the OK button is not
+		// clipped by the gesture/navigation bar (bottom) on Android 15/16.
+		val root = findViewById(R.id.prefsymbol_root).asInstanceOf[View]
+		if (root != null) {
+			root.setOnApplyWindowInsetsListener(
+				new View.OnApplyWindowInsetsListener() {
+					override def onApplyWindowInsets(v : View,
+							insets : android.view.WindowInsets
+							) : android.view.WindowInsets = {
+						var topPad = 0
+						var bottomPad = 0
+						var leftPad = 0
+						var rightPad = 0
+						if (Build.VERSION.SDK_INT >= 30) {
+							val status = insets.getInsets(
+								android.view.WindowInsets.Type.statusBars())
+							val nav = insets.getInsets(
+								android.view.WindowInsets.Type.navigationBars())
+							topPad = status.top
+							leftPad = status.left
+							rightPad = status.right
+							bottomPad = nav.bottom
+						} else {
+							topPad = insets.getSystemWindowInsetTop()
+							leftPad = insets.getSystemWindowInsetLeft()
+							rightPad = insets.getSystemWindowInsetRight()
+							bottomPad = insets.getSystemWindowInsetBottom()
+						}
+						v.setPadding(leftPad, topPad, rightPad, bottomPad)
+						insets
+					}
+				})
+		}
 		val gv = findViewById(R.id.gridview).asInstanceOf[GridView]
 		gv.setAdapter(new SymbolAdapter(this))
 		gv.setOnItemClickListener(new OnItemClickListener() {

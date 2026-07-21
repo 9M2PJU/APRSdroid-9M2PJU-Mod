@@ -72,22 +72,26 @@ class PrefsAct extends PreferenceActivity {
 	def applyPrefTopInset() {
 		val res = getResources()
 		val resId = res.getIdentifier("status_bar_height", "dimen", "android")
+		val navBarResId = res.getIdentifier("navigation_bar_height", "dimen", "android")
 		val statusBarHeight = if (resId > 0) res.getDimensionPixelSize(resId) else 0
+		val navBarHeight = if (navBarResId > 0) res.getDimensionPixelSize(navBarResId) else 0
 		if (statusBarHeight > 0) {
 			val root = getWindow.getDecorView.findViewById(
 				android.R.id.content).asInstanceOf[android.view.View]
-			if (root != null && root.getPaddingTop != statusBarHeight)
+			if (root != null && (root.getPaddingTop != statusBarHeight || root.getPaddingBottom != navBarHeight))
 				root.setPadding(root.getPaddingLeft, statusBarHeight,
-					root.getPaddingRight, root.getPaddingBottom)
+					root.getPaddingRight, navBarHeight)
 			// Apply padding to the ListView. Do NOT use clipToPadding=false
 			// because that allows children to draw in the padding area (under
 			// the status bar). We want the padding to clip so items stay
-			// below the status bar.
+			// below the status bar. Bottom padding ensures the last preference
+			// item is not clipped by the gesture/navigation bar on Android 15/16.
 			val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
 			if (lv != null) {
-				if (lv.getPaddingTop != statusBarHeight) {
+				lv.setFitsSystemWindows(true)
+				if (lv.getPaddingTop != statusBarHeight || lv.getPaddingBottom != navBarHeight) {
 					lv.setPadding(lv.getPaddingLeft, statusBarHeight,
-						lv.getPaddingRight, lv.getPaddingBottom)
+						lv.getPaddingRight, navBarHeight)
 				}
 			}
 		}

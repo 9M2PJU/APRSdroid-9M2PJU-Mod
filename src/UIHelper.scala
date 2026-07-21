@@ -148,31 +148,49 @@ object UIHelper
 								bl.getPaddingRight(),
 								bottomPad)
 						}
+
+						// PreferenceActivity: apply bottom padding to the
+						// built-in ListView (android.R.id.list) so the last
+						// preference item is not clipped by the gesture/nav
+						// bar on Android 15/16. Also set fitsSystemWindows
+						// so the ListView participates in inset dispatch.
+						val prefListIns = act.findViewById(
+							android.R.id.list).asInstanceOf[View]
+						if (prefListIns != null && bn == null && bbb == null) {
+							prefListIns.setFitsSystemWindows(true)
+							prefListIns.setPadding(prefListIns.getPaddingLeft(),
+								prefListIns.getPaddingTop(),
+								prefListIns.getPaddingRight(),
+								bottomPad)
+						}
 						insets
 					}
 				})
 
 		// Fallback for PreferenceActivity: the inset listener above may
 		// not be triggered reliably on Android 16 (edge-to-edge enforced).
-		// Directly read the status bar height from the system resource and
-		// apply it as top padding to BOTH the content view AND the
-		// PreferenceActivity's built-in ListView (android.R.id.list).
-		// The ListView padding is needed because when the user navigates
-		// into a PreferenceScreen sub-screen (e.g. Notifications), the
-		// ListView content is swapped but the root padding alone doesn't
-		// push the list items down — the ListView itself needs padding.
+		// Directly read the status bar AND navigation bar heights from the
+		// system resources and apply them as top/bottom padding to BOTH the
+		// content view AND the PreferenceActivity's built-in ListView
+		// (android.R.id.list). The ListView padding is needed because when
+		// the user navigates into a PreferenceScreen sub-screen (e.g.
+		// Notifications), the ListView content is swapped but the root
+		// padding alone doesn't push the list items down — the ListView
+		// itself needs padding. Bottom padding ensures the last preference
+		// item is not clipped by the gesture/navigation bar on Android 15/16.
 		val prefList = act.findViewById(android.R.id.list).asInstanceOf[View]
 		if (prefList != null) {
+			prefList.setFitsSystemWindows(true)
 			val res = act.getResources()
 			val resId = res.getIdentifier("status_bar_height", "dimen", "android")
-			if (resId > 0) {
-				val statusBarHeight = res.getDimensionPixelSize(resId)
-				if (statusBarHeight > 0) {
-					root.setPadding(root.getPaddingLeft(), statusBarHeight,
-						root.getPaddingRight(), root.getPaddingBottom())
-					prefList.setPadding(prefList.getPaddingLeft(), statusBarHeight,
-						prefList.getPaddingRight(), prefList.getPaddingBottom())
-				}
+			val navBarResId = res.getIdentifier("navigation_bar_height", "dimen", "android")
+			val statusBarHeight = if (resId > 0) res.getDimensionPixelSize(resId) else 0
+			val navBarHeight = if (navBarResId > 0) res.getDimensionPixelSize(navBarResId) else 0
+			if (statusBarHeight > 0) {
+				root.setPadding(root.getPaddingLeft(), statusBarHeight,
+					root.getPaddingRight(), navBarHeight)
+				prefList.setPadding(prefList.getPaddingLeft(), statusBarHeight,
+					prefList.getPaddingRight(), navBarHeight)
 			}
 		}
 		} // close if (root != null)

@@ -121,6 +121,10 @@ class PrefsAct extends PreferenceActivity {
 	// Intercept clicks on PreferenceScreen items (sub-screens like
 	// Notifications, Connection Preferences, etc.) to re-apply the
 	// top inset padding after the new screen content is loaded.
+	// PreferenceScreen sub-screens are shown as dialogs with their own
+	// window, so the activity's inset handling doesn't affect them.
+	// We use reflection to access the dialog and apply insets to its
+	// ListView.
 	override def onPreferenceTreeClick(preferenceScreen : android.preference.PreferenceScreen,
 			preference : android.preference.Preference) : Boolean = {
 		android.util.Log.d("PrefsAct", "onPreferenceTreeClick: " + preference)
@@ -132,7 +136,61 @@ class PrefsAct extends PreferenceActivity {
 		new android.os.Handler(getMainLooper).postDelayed(new Runnable {
 			override def run() : Unit = applyPrefTopInset()
 		}, 300)
+		// If the clicked preference is a PreferenceScreen, it opens a
+		// dialog sub-screen. Apply insets to the dialog's ListView.
+		if (preference.isInstanceOf[android.preference.PreferenceScreen]) {
+			applyDialogInsets(preference.asInstanceOf[android.preference.PreferenceScreen])
+		}
 		result
+	}
+
+	// Apply system bar insets to a PreferenceScreen dialog sub-screen.
+	// The dialog has its own window, so the activity's inset handling
+	// doesn't affect it. We use reflection to access the dialog's window
+	// and ListView, then apply top (status bar) and bottom (nav bar)
+	// padding to the ListView.
+	def applyDialogInsets(ps : android.preference.PreferenceScreen) {
+		val applyInsets = new Runnable {
+			override def run() : Unit = {
+				try {
+					// Use reflection to access the PreferenceScreen's
+					// private mDialog field.
+					val field = classOf[android.preference.PreferenceScreen]
+						.getDeclaredField("mDialog")
+					field.setAccessible(true)
+					val dialog = field.get(ps).asInstanceOf[android.app.Dialog]
+					if (dialog != null && dialog.isShowing()) {
+						android.util.Log.d("PrefsAct", "applyDialogInsets: dialog found")
+						val dwindow = dialog.getWindow()
+						// Enable edge-to-edge on the dialog's window
+						if (Build.VERSION.SDK_INT >= 30)
+							dwindow.setDecorFitsSystemWindows(false)
+						// Apply padding to the dialog's ListView
+						val lv = dialog.findViewById(android.R.id.list)
+							.asInstanceOf[android.view.View]
+						if (lv != null) {
+							val res = getResources()
+							val resId = res.getIdentifier("status_bar_height", "dimen", "android")
+							val navBarResId = res.getIdentifier("navigation_bar_height", "dimen", "android")
+							val statusBarHeight = if (resId > 0) res.getDimensionPixelSize(resId) else 0
+							val navBarHeight = if (navBarResId > 0) res.getDimensionPixelSize(navBarResId) else 0
+							lv.setPadding(lv.getPaddingLeft(), statusBarHeight,
+								lv.getPaddingRight(), navBarHeight)
+							android.util.Log.d("PrefsAct", "applyDialogInsets: padding applied " +
+								statusBarHeight + "/" + navBarHeight)
+						}
+					}
+				} catch {
+					case e : Exception =>
+						android.util.Log.e("PrefsAct", "applyDialogInsets failed", e)
+				}
+			}
+		}
+		// Post with increasing delays — the dialog may not be created
+		// immediately after onPreferenceTreeClick returns.
+		new android.os.Handler(getMainLooper).postDelayed(applyInsets, 100)
+		new android.os.Handler(getMainLooper).postDelayed(applyInsets, 300)
+		new android.os.Handler(getMainLooper).postDelayed(applyInsets, 500)
 	}
 
 	override def onCreate(savedInstanceState: Bundle) {

@@ -28,7 +28,6 @@
 
         <!-- ===== Surfaces ===== -->
         <item name="android:colorBackground">@color/md_background</item>
-        <item name="colorBackground">@color/md_background</item>
         <item name="android:textColorPrimary">@color/md_text_primary</item>
         <item name="android:textColorSecondary">@color/md_text_secondary</item>
         <item name="android:textColorTertiary">@color/md_text_hint</item>

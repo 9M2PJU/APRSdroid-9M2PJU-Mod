@@ -56,15 +56,41 @@ object UIHelper
 
 	/**
 	 * Opt out of edge-to-edge on Android 15+ (targetSdk 35). Call from
-	 * any Activity's onCreate or onResume. Uses the native Window API
-	 * on API 30+ for reliability.
+	 * any Activity's onCreate or onResume.
+	 *
+	 * Uses three approaches for maximum compatibility:
+	 *  1. setDecorFitsSystemWindows(true) — native API on API 30+
+	 *  2. ViewCompat.setOnApplyWindowInsetsListener — applies status bar
+	 *     height as top padding on the root view (works even when
+	 *     setDecorFitsSystemWindows is ignored, e.g. MIUI/HyperOS)
+	 *  3. fitsSystemWindows=true on root view via XML (fallback)
 	 */
 	def applySystemBarInsets(act : android.app.Activity) {
+		// Approach 1: opt out of edge-to-edge
 		if (Build.VERSION.SDK_INT >= 30) {
 			act.getWindow().setDecorFitsSystemWindows(true)
 		} else {
 			androidx.core.view.WindowCompat.setDecorFitsSystemWindows(
 				act.getWindow(), true)
+		}
+
+		// Approach 2: programmatic inset listener on the root view
+		val root = act.getWindow().getDecorView().findViewById(
+			android.R.id.content)
+		if (root != null) {
+			androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(
+				root,
+				new androidx.core.view.ViewCompat.OnApplyWindowInsetsListener() {
+					override def onApplyWindowInsets(v : View,
+							insets : androidx.core.view.WindowInsetsCompat
+							) : androidx.core.view.WindowInsetsCompat = {
+						val sysBars = insets.getInsets(
+							androidx.core.view.WindowInsetsCompat.Type.systemBars())
+						androidx.core.view.ViewCompat.setPaddingRelative(v,
+							sysBars.left, sysBars.top, sysBars.right, sysBars.bottom)
+						insets
+					}
+				})
 		}
 	}
 
@@ -310,17 +336,12 @@ trait UIHelper extends Activity
 	}
 
 	// Opt out of edge-to-edge on Android 15+ (targetSdk 35) so content
-	// doesn't go under the status / navigation bars. This restores the
-	// pre-API 35 behavior. Called from LoadingListActivity.onResume and
-	// from AppCompatActivity-based activities' onCreate.
+	// doesn't go under the status / navigation bars. Delegates to the
+	// static UIHelper.applySystemBarInsets(Activity) which uses both
+	// setDecorFitsSystemWindows and a ViewCompat inset listener for
+	// maximum compatibility (including MIUI/HyperOS).
 	def applySystemBarInsets() {
-		if (Build.VERSION.SDK_INT >= 30) {
-			// Use native API on Android 11+ — more reliable than WindowCompat
-			getWindow().setDecorFitsSystemWindows(true)
-		} else {
-			androidx.core.view.WindowCompat.setDecorFitsSystemWindows(
-				getWindow(), true)
-		}
+		UIHelper.applySystemBarInsets(this)
 	}
 
 	// for AFSK, set the right volume controls

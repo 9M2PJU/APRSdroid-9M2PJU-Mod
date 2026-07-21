@@ -73,10 +73,31 @@ object UIHelper
 	 * AndroidX dependency upgrade is needed.
 	 */
 	def applySystemBarInsets(act : android.app.Activity) {
-		// Enable edge-to-edge so the system does NOT auto-apply insets to
-		// the decor view. We apply insets manually via the listener below.
-		// Using setDecorFitsSystemWindows(true) here would cause double
-		// padding (system insets + our manual padding) on Android 15/16.
+		// Detect PreferenceActivity by looking for its built-in ListView.
+		// PreferenceActivity's internal layout has fitsSystemWindows="true"
+		// built in, so the system auto-applies the top (status bar) inset
+		// to an intermediate LinearLayout. If we also apply top padding
+		// manually, we get double padding. For PreferenceActivity, we let
+		// the system handle the top inset (setDecorFitsSystemWindows(true))
+		// and only add bottom (nav bar) padding to the ListView.
+		val is_pref_activity = act.findViewById(android.R.id.list) != null
+
+		if (is_pref_activity) {
+			// Let the system handle top inset via PreferenceActivity's
+			// internal layout fitsSystemWindows. We only need to add
+			// bottom padding for the gesture/nav bar.
+			if (Build.VERSION.SDK_INT >= 30) {
+				act.getWindow().setDecorFitsSystemWindows(true)
+			} else {
+				androidx.core.view.WindowCompat.setDecorFitsSystemWindows(
+					act.getWindow(), true)
+			}
+			applyPrefListBottomPadding(act)
+			return
+		}
+
+		// For non-PreferenceActivity: enable edge-to-edge and apply
+		// insets manually via the listener below.
 		if (Build.VERSION.SDK_INT >= 30) {
 			act.getWindow().setDecorFitsSystemWindows(false)
 		} else {
@@ -156,46 +177,25 @@ object UIHelper
 								bl.getPaddingRight(),
 								bottomPad)
 						}
-
-						// PreferenceActivity: apply bottom padding to the
-						// built-in ListView (android.R.id.list) so the last
-						// preference item is not clipped by the gesture/nav
-						// bar on Android 15/16.
-						val prefListIns = act.findViewById(
-							android.R.id.list).asInstanceOf[View]
-						if (prefListIns != null && bn == null && bbb == null) {
-							prefListIns.setPadding(prefListIns.getPaddingLeft(),
-								prefListIns.getPaddingTop(),
-								prefListIns.getPaddingRight(),
-								bottomPad)
-						}
 						insets
 					}
 				})
+		} // close if (root != null)
+	}
 
-		// Fallback for PreferenceActivity: the inset listener above may
-		// not be triggered reliably on Android 16 (edge-to-edge enforced).
-		// Directly read the status bar AND navigation bar heights from the
-		// system resources. Apply top padding (status bar) to the root
-		// content view ONLY — the ListView is a child of the content view,
-		// so the root padding already pushes it down. Applying top padding
-		// to both would double it. Apply only bottom padding (nav bar) to
-		// the ListView so the last item is not clipped by the gesture bar.
+	// Apply bottom (navigation bar) padding to the PreferenceActivity's
+	// built-in ListView so the last preference item is not clipped by
+	// the gesture bar on Android 15/16. The top (status bar) inset is
+	// handled by the system via PreferenceActivity's internal layout.
+	def applyPrefListBottomPadding(act : android.app.Activity) {
 		val prefList = act.findViewById(android.R.id.list).asInstanceOf[View]
 		if (prefList != null) {
 			val res = act.getResources()
-			val resId = res.getIdentifier("status_bar_height", "dimen", "android")
 			val navBarResId = res.getIdentifier("navigation_bar_height", "dimen", "android")
-			val statusBarHeight = if (resId > 0) res.getDimensionPixelSize(resId) else 0
 			val navBarHeight = if (navBarResId > 0) res.getDimensionPixelSize(navBarResId) else 0
-			if (statusBarHeight > 0) {
-				root.setPadding(root.getPaddingLeft(), statusBarHeight,
-					root.getPaddingRight(), navBarHeight)
-				prefList.setPadding(prefList.getPaddingLeft(), 0,
-					prefList.getPaddingRight(), navBarHeight)
-			}
+			prefList.setPadding(prefList.getPaddingLeft(), prefList.getPaddingTop(),
+				prefList.getPaddingRight(), navBarHeight)
 		}
-		} // close if (root != null)
 	}
 
 }

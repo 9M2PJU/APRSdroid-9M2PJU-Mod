@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive icon background — navy color matching the app theme.
+     This fills the entire launcher icon area behind the foreground logo,
+     so the icon looks "full" like WhatsApp on Android 13+. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#0D182D" />
+</shape>

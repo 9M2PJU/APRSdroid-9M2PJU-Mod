@@ -1,7 +1,7 @@
 package org.aprsdroid.app
 
-import android.content.Intent
-import android.location.Location
+import android.content.{Context, Intent}
+import android.location.{Location, LocationManager}
 import android.os.{Bundle, Handler}
 import android.util.Log
 import android.view.{Menu, MenuItem, View}
@@ -166,9 +166,35 @@ trait MapMenuHelper extends UIHelper with OnClickListener {
 	def loadMapViewPosition(lat : Float, lon : Float, zoom : Float)
 
 	def loadMapViewPosition() {
-		val lat = prefs.prefs.getFloat("map_lat", 52.5075f)
-		val lon = prefs.prefs.getFloat("map_lon", 13.39027f)
-		val zoom = prefs.prefs.getFloat("map_zoom", 12.0f)
+		// Default to the user's last known GPS location instead of a
+		// hardcoded fallback (Berlin). If no saved position and no GPS
+		// fix is available, fall back to Berlin as a last resort.
+		val defaultLat = 52.5075f
+		val defaultLon = 13.39027f
+		val savedLat = prefs.prefs.getFloat("map_lat", Float.NaN)
+		val savedLon = prefs.prefs.getFloat("map_lon", Float.NaN)
+		val (lat, lon) =
+			if (!savedLat.isNaN && !savedLon.isNaN) {
+				(savedLat, savedLon)
+			} else {
+				// Try to get last known GPS location
+				try {
+					val locMan = getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager]
+					val provider = PeriodicGPS.bestProvider(locMan)
+					if (provider != null) {
+						val loc = locMan.getLastKnownLocation(provider)
+						if (loc != null)
+							(loc.getLatitude.toFloat, loc.getLongitude.toFloat)
+						else
+							(defaultLat, defaultLon)
+					} else
+						(defaultLat, defaultLon)
+				} catch {
+					case _ : SecurityException => (defaultLat, defaultLon)
+					case _ : Throwable => (defaultLat, defaultLon)
+				}
+			}
+		val zoom = prefs.prefs.getFloat("map_zoom", 14.0f)
 		loadMapViewPosition(lat, lon, zoom)
 	}
 

@@ -226,6 +226,9 @@ trait UIHelper extends Activity
 						startActivity(new Intent(UIHelper.this, classOf[ConversationsActivity])
 							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
 						true
+					case R.id.nav_settings =>
+						startActivity(new Intent(UIHelper.this, classOf[PrefsAct]))
+						true
 					case _ => false
 				}
 			}

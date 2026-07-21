@@ -111,9 +111,8 @@ class PrefsAct extends PreferenceActivity {
 	// Called when the window focus changes. This fires after layout
 	// is complete, so padding set here won't be reset by the layout pass.
 	// This catches PreferenceScreen sub-screen navigation where the
-	// ListView content is swapped. Also handles PreferenceScreen dialog
-	// sub-screens: when the activity loses focus (dialog appeared), we
-	// apply insets to the dialog's ListView.
+	// ListView content is swapped. Also restores edge-to-edge mode
+	// (DecorFitsSystemWindows(false)) after a dialog sub-screen closes.
 	override def onWindowFocusChanged(hasFocus : Boolean) {
 		super.onWindowFocusChanged(hasFocus)
 		if (hasFocus) {
@@ -128,27 +127,34 @@ class PrefsAct extends PreferenceActivity {
 			}
 			applyPrefTopInset()
 		}
-		// When the dialog sub-screen appears, the activity loses focus.
-		// Set DecorFitsSystemWindows(true) so the dialog's content is
-		// pushed below the status bar.
-		if (pending_dialog_screen && !hasFocus) {
-			pending_dialog_screen = false
-			was_dialog_shown = true
-			applyDialogScreenInsets()
-		}
 	}
 
 	// Intercept clicks on PreferenceScreen items (sub-screens like
-	// Notifications, Connection Preferences, etc.) to re-apply the
-	// top inset padding after the new screen content is loaded.
-	// PreferenceScreen sub-screens are shown as dialogs with their own
-	// window. We can't access the dialog directly (Android 16 blocks
-	// reflection on hidden fields like PreferenceScreen.mDialog), so we
-	// set a flag and handle the dialog insets in onWindowFocusChanged,
-	// which fires when the dialog window gains focus.
+	// Notifications, Connection Preferences, etc.). PreferenceScreen
+	// sub-screens are shown as dialogs with their own window. On Android
+	// 16, we can't access the dialog directly (hidden API restrictions
+	// block reflection on PreferenceScreen.mDialog, getWindows(), etc.).
+	// Instead, set DecorFitsSystemWindows(true) on the activity's window
+	// BEFORE super.onPreferenceTreeClick() creates the dialog, so the
+	// dialog's window inherits the non-edge-to-edge setting and its
+	// content is pushed below the status bar automatically. When the
+	// dialog closes, onWindowFocusChanged restores edge-to-edge mode.
 	override def onPreferenceTreeClick(preferenceScreen : android.preference.PreferenceScreen,
 			preference : android.preference.Preference) : Boolean = {
 		android.util.Log.d("PrefsAct", "onPreferenceTreeClick: " + preference)
+		// If the clicked preference is a PreferenceScreen, it opens a
+		// dialog sub-screen. Set DecorFitsSystemWindows(true) BEFORE
+		// super.onPreferenceTreeClick() creates the dialog, so the
+		// dialog's window inherits the non-edge-to-edge setting and
+		// its content is pushed below the status bar automatically.
+		if (preference.isInstanceOf[android.preference.PreferenceScreen]) {
+			if (Build.VERSION.SDK_INT >= 30) {
+				getWindow().setDecorFitsSystemWindows(true)
+				was_dialog_shown = true
+				android.util.Log.d("PrefsAct", "onPreferenceTreeClick: " +
+					"set DecorFitsSystemWindows(true) before dialog")
+			}
+		}
 		val result = super.onPreferenceTreeClick(preferenceScreen, preference)
 		postApplyPrefTopInset()
 		new android.os.Handler(getMainLooper).postDelayed(new Runnable {
@@ -157,44 +163,13 @@ class PrefsAct extends PreferenceActivity {
 		new android.os.Handler(getMainLooper).postDelayed(new Runnable {
 			override def run() : Unit = applyPrefTopInset()
 		}, 300)
-		// If the clicked preference is a PreferenceScreen, it opens a
-		// dialog sub-screen. Set a flag so onWindowFocusChanged can
-		// apply insets to the dialog's ListView.
-		if (preference.isInstanceOf[android.preference.PreferenceScreen]) {
-			pending_dialog_screen = true
-		}
 		result
 	}
 
-	// Flag: a PreferenceScreen dialog sub-screen was just opened and
-	// needs inset padding applied when its window gains focus.
-	@volatile var pending_dialog_screen = false
 	// Flag: a dialog sub-screen was shown and we set
 	// DecorFitsSystemWindows(true) on the activity's window for it.
 	// When the dialog closes (hasFocus=true), we restore false.
 	@volatile var was_dialog_shown = false
-
-	// Apply insets to a PreferenceScreen dialog sub-screen by finding
-	// its ListView through the activity's window list. The dialog has
-	// its own window with android.R.id.list. We iterate through all
-	// windows to find the dialog's decor view, then find its ListView
-	// and apply top (status bar) + bottom (nav bar) padding.
-	def applyDialogScreenInsets() {
-		// Android 16 blocks reflection on hidden APIs (getWindows(),
-		// WindowManagerGlobal.getWindowViews(), PreferenceScreen.mDialog).
-		// The PreferenceScreen dialog creates its own Window which
-		// inherits the activity's DecorFitsSystemWindows setting.
-		// Set it to true BEFORE the dialog is shown so the dialog's
-		// content is pushed below the status bar automatically.
-		// After the dialog closes (onWindowFocusChanged with hasFocus=true),
-		// we switch back to edge-to-edge (false) for the activity's
-		// own content.
-		if (Build.VERSION.SDK_INT >= 30) {
-			getWindow().setDecorFitsSystemWindows(true)
-			android.util.Log.d("PrefsAct", "applyDialogScreenInsets: " +
-				"set DecorFitsSystemWindows(true) for dialog")
-		}
-	}
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)

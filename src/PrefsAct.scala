@@ -187,6 +187,30 @@ class PrefsAct extends PreferenceActivity {
 			dialog.getWindow(), true)
 		dialog.show()
 
+		// Preference.performClick() calls BOTH PreferenceScreen.onClick()
+		// (which creates the old broken edge-to-edge dialog) AND
+		// onPreferenceTreeClick() (which calls showSubScreenDialog).
+		// So the old dialog is created BEFORE our dialog, and ours shows
+		// on top. When the user presses back, our dialog dismisses and
+		// the old broken one is revealed underneath. Fix: dismiss the
+		// old dialog via getDialog() reflection after showing ours.
+		new android.os.Handler(getMainLooper).postDelayed(new Runnable {
+			override def run() : Unit = {
+				try {
+					val m = classOf[android.preference.PreferenceScreen]
+						.getMethod("getDialog")
+					val oldDialog = m.invoke(screen).asInstanceOf[android.app.Dialog]
+					if (oldDialog != null && oldDialog.isShowing) {
+						oldDialog.dismiss()
+						android.util.Log.d("PrefsAct", "Dismissed old PreferenceScreen dialog")
+					}
+				} catch {
+					case e : Exception =>
+						android.util.Log.e("PrefsAct", "Could not dismiss old dialog", e)
+				}
+			}
+		}, 50)
+
 		// Fallback: apply top padding for status bar in case
 		// setDecorFitsSystemWindows doesn't fully work on some ROMs.
 		val res = getResources()

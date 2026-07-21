@@ -151,6 +151,11 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
   color with white. Removed the edge-to-edge call so the splash theme's
   solid black bars are respected.
 
+### v2.0.8 — GitHub Pages cleanup
+
+- **Removed Kuala Lumpur, Malaysia from maintainer credit** on GitHub
+  Pages.
+
 ### Features inherited from NA7Q's fork
 
 - **Digipeater** — direct or full digipeating

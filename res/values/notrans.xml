@@ -6,7 +6,7 @@
 <string name="default_status">https://aprsdroid.hamradio.my</string>
 <string name="default_symbol">/$</string>
 
-<string name="passcode_url">https://aprsdroid.org/passcode/</string>
+<string name="passcode_url">https://pass.hamradio.my</string>
 
 <string name="sb_help_url">http://info.aprs.net/index.php?title=SmartBeaconing</string>
 <string name="kwd_help_url">https://aprsdroid.org/kenwood/</string>

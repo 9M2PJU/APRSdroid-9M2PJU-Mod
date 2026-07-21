@@ -167,24 +167,27 @@ class PrefsAct extends PreferenceActivity {
 		val applyInsets = new Runnable {
 			override def run() : Unit = {
 				try {
-					// Activity.getWindows() requires API 21+. Use
-					// reflection to call it (Scala compiler may not
-					// resolve it at compileSdkVersion 33).
-					if (Build.VERSION.SDK_INT < 21)
-						return
+					// Use WindowManagerGlobal to get all root views.
+					// Activity.getWindows() is blocked on Android 16
+					// (hidden API restriction). WindowManagerGlobal is
+					// a public class with a getInstance() method, and
+					// getWindowViews() returns all root View objects
+					// currently attached to the window manager.
+					val wmgClass = Class.forName(
+						"android.view.WindowManagerGlobal")
+					val getInstance = wmgClass.getMethod("getInstance")
+					val wmg = getInstance.invoke(null)
+					val getWindowViews = wmgClass.getMethod("getWindowViews")
+					val views = getWindowViews.invoke(wmg)
+						.asInstanceOf[java.util.List[android.view.View]]
+					android.util.Log.d("PrefsAct", "applyDialogScreenInsets: " +
+						views.size() + " root views")
 					val activity_list = findViewById(android.R.id.list)
 						.asInstanceOf[android.view.View]
 					val activity_decor = getWindow.getDecorView
-					val getWindows = classOf[android.app.Activity]
-						.getMethod("getWindows")
-					val roots = getWindows.invoke(PrefsAct.this)
-						.asInstanceOf[java.util.Collection[android.view.Window]]
-					android.util.Log.d("PrefsAct", "applyDialogScreenInsets: " +
-						roots.size() + " windows")
-					val it = roots.iterator()
+					val it = views.iterator()
 					while (it.hasNext()) {
-						val w = it.next()
-						val root = w.getDecorView()
+						val root = it.next()
 						if (root != activity_decor) {
 							val dl = root.findViewById(android.R.id.list)
 								.asInstanceOf[android.view.View]

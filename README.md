@@ -60,6 +60,15 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 - **GitHub Pages landing page** at <https://aprsdroid.hamradio.my/> with
   live download counters
 - **New app icon and logo** across all density buckets
+- **Map auto-zooms to GPS location** — on first open, the map centers on
+  the user's last known GPS position instead of a hardcoded default
+- **Restored OSM Maps preferences** — offline mapping toggle, MapsForge /
+  MBTiles file picker, storage permissions button, hardware acceleration
+  toggle
+- **About dialog with logo and full credits** — app logo, project lineage,
+  and credits to Bob Bruninga (WB4APR), Georg Lukas (DO1GL), NA7Q, and 9M2PJU
+- **Bottom navigation with Menu tab** — quick access to Preferences, Hub,
+  Log, Map, Messages, and more from any screen
 - **Version bumped** to `v2.0.0` (tocall `APDR20`)
 
 ### Features inherited from NA7Q's fork
@@ -101,11 +110,18 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 
 ### Maps
 
-The default map is **OpenStreetMap (online)**. To use offline maps:
+The default map is **OpenStreetMap (online)** and auto-zooms to your
+GPS location on first open. To use offline maps:
 
-1. Go to **Menu** (bottom nav) → **Preferences** → **Offline Map**
-2. Tap **"Choose map file"** and select your `.map` file
-3. Open **Map** — offline tiles will load without internet
+1. Go to **Menu** (bottom nav) → **Preferences** → **OSM Maps**
+2. Tap **"Select MapsforgeV3 or .mbtiles map"** and choose your `.map`
+   or `.mbtiles` file
+3. Enable **"Enable offline mapping"**
+4. (Optional) Tap **"Grant Storage Permissions"** if the file can't be
+   read
+5. (Optional) Toggle **"Enable Hardware Acceleration"** for smoother
+   map rendering (on by default)
+6. Open **Map** — offline tiles will load without internet
 
 #### Malaysia, Singapore & Brunei offline map
 
@@ -118,9 +134,10 @@ available as a GitHub release asset:
 **Installation:**
 1. Download and extract the zip file on your computer
 2. Copy `malaysia-singapore-brunei.map` to your phone (any folder)
-3. In APRSdroid: **Menu** → **Preferences** → **Offline Map** → **Choose map file**
+3. In APRSdroid: **Menu** → **Preferences** → **OSM Maps** → **Select MapsforgeV3 or .mbtiles map**
 4. Select the `.map` file you copied
-5. Open **Map** — the offline map loads without internet
+5. Enable **"Enable offline mapping"**
+6. Open **Map** — the offline map loads without internet
 
 #### Other map sources
 

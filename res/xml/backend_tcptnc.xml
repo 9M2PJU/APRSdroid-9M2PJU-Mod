@@ -11,7 +11,7 @@
 		android:title="@string/p_host"
 		android:summary="@string/p_tcptnc_server_summary"
 		android:hint="@string/p_host_hint"
-		android:defaultValue="euro.aprs2.net"
+		android:defaultValue="aprs.hamradio.my"
 		android:dialogTitle="@string/p_tcptnc_entry" />
 
 	<de.duenndns.EditTextPreferenceWithValue

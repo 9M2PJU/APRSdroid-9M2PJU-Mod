@@ -314,36 +314,70 @@
 
 <section id="about" class="section">
   <h2>About &amp; credits</h2>
-  <p>
-    APRSdroid 9M2PJU Mod is a fork of
-    <a href="https://github.com/na7q/aprsdroid" target="_blank" rel="noopener">NA7Q's enhanced APRSdroid</a>,
-    which is itself a fork of
-    <a href="https://aprsdroid.org/" target="_blank" rel="noopener">Georg Lukas's original APRSdroid</a>.
-    Licensed under the <a href="https://www.gnu.org/licenses/gpl-2.0.html" target="_blank" rel="noopener">GNU GPLv2</a>.
+
+  <p class="section-sub">
+    APRSdroid has a rich history of contributions from the amateur radio
+    community. This project stands on the shoulders of giants.
   </p>
 
   <div class="whatsnew-group">
-    <h3>What 9M2PJU contributed to this mod</h3>
+    <h3>Georg Lukas (ge0rg) — Original Author</h3>
+    <p>
+      <a href="https://aprsdroid.org/" target="_blank" rel="noopener">APRSdroid</a>
+      was created by <strong>Georg Lukas, ge0rg</strong> and has been the
+      premier APRS client for Android since 2010. Written in Scala with a
+      Java core, it supports TCP/IP, AFSK, Bluetooth TNCs, and USB TNCs.
+      Georg continues to maintain the upstream project and graciously
+      licenses it under the <a href="https://www.gnu.org/licenses/gpl-2.0.html" target="_blank" rel="noopener">GNU GPLv2</a>
+      so that the community can build on his work.
+    </p>
+  </div>
+
+  <div class="whatsnew-group">
+    <h3>NA7Q — Enhanced Fork</h3>
+    <p>
+      <a href="https://github.com/na7q/aprsdroid" target="_blank" rel="noopener">NA7Q's fork</a>
+      builds on Georg's original work with significant enhancements:
+    </p>
+    <ul>
+      <li>BLE TNC support for modern Bluetooth TNCs (Mobilinkd, DigiRig, etc.)</li>
+      <li>Digipeater and IGate functionality</li>
+      <li>Symbol overlay support</li>
+      <li>Mic-E decoding improvements</li>
+      <li>Various bug fixes and compatibility updates</li>
+    </ul>
+    <p>NA7Q's fork is the direct upstream of this mod.</p>
+  </div>
+
+  <div class="whatsnew-group">
+    <h3>9M2PJU — This Mod</h3>
+    <p>
+      This mod, maintained by <strong>9M2PJU</strong> (Kuala Lumpur, Malaysia),
+      builds on NA7Q's fork with a focus on modern Android compatibility,
+      UI/UX polish, and project infrastructure. Contributions include:
+    </p>
     <ul>
       <li><strong>New app icon and logo</strong> across all density buckets.</li>
-      <li><strong>Branded splash screen</strong> — 153 KB WebP, theme-based, shown on cold start.</li>
+      <li><strong>Branded splash screen</strong> with perfect-fit centerCrop rendering.</li>
       <li><strong>Modern Android support</strong> — <code>targetSdk 35</code>, foreground service types for Android 14+, Bluetooth permissions for Android 12+, storage permissions for Android 11+, <code>POST_NOTIFICATIONS</code> for Android 13+, edge-to-edge opt-out for Android 15+.</li>
-      <li><strong>Material 3-inspired UI design system</strong> — <code>Theme.MaterialComponents</code> with tonal navy/amber palette, shape theming, refined typography, modern component styles (buttons, text fields, dialogs, cards, bottom sheets), dark-only.</li>
+      <li><strong>Material 3-inspired UI design system</strong> — <code>Theme.MaterialComponents</code> with tonal navy/amber palette, shape theming, refined typography, modern component styles, bottom navigation bar, dark theme.</li>
       <li><strong>GitHub Actions CI/CD</strong> — signed release APK builds, automatic GitHub Releases on <code>v*</code> tags.</li>
       <li><strong>GitHub Pages landing page</strong> at <a href="https://aprsdroid.hamradio.my/">aprsdroid.hamradio.my</a> with live download counters.</li>
+      <li><strong>In-app update checker</strong> — download and install updates directly from GitHub Releases.</li>
       <li><strong>Version bumped</strong> to <code>v2.0.0</code> (tocall <code>APDR20</code>).</li>
-      <li><strong>Comprehensive README rewrite</strong> documenting all changes.</li>
+      <li><strong>Comprehensive README and documentation rewrite</strong>.</li>
     </ul>
   </div>
 
   <div class="whatsnew-group">
-    <h3>Credits</h3>
-    <ul>
-      <li><strong>Georg Lukas (ge0rg)</strong> — original <a href="https://aprsdroid.org/" target="_blank" rel="noopener">APRSdroid</a>.</li>
-      <li><strong>NA7Q</strong> — <a href="https://github.com/na7q/aprsdroid" target="_blank" rel="noopener">enhanced APRSdroid fork</a> that this mod builds on.</li>
-      <li><strong>9M2PJU</strong> — this mod (see contributions above).</li>
-      <li><strong>Bob Bruninga, WB4APR</strong> — creator of APRS.</li>
-    </ul>
+    <h3>Bob Bruninga, WB4APR — Creator of APRS</h3>
+    <p>
+      <strong>Bob Bruninga, WB4APR</strong> (1947–2022) created the Automatic
+      Packet Reporting System (APRS) in the 1980s. His vision of a real-time,
+      position-aware digital communications network for amateur radio lives on
+      in every APRS client, igate, and digipeater worldwide. Without Bob's
+      pioneering work, none of this would exist.
+    </p>
   </div>
 
   <p>

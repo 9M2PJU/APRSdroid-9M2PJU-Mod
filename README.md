@@ -239,20 +239,65 @@ Please open an issue or pull request at the
 
 ---
 
-## 🙏 **Credits**
+## 🙏 **About & Credits**
 
-- **Georg Lukas (ge0rg)** — original [APRSdroid](https://aprsdroid.org/)
-- **NA7Q** — [enhanced APRSdroid fork](https://github.com/na7q/aprsdroid) that this mod builds on
-- **9M2PJU** — this mod. Contributions include:
-  - 🎨 New app icon and logo across all density buckets
-  - 🖼️ Branded splash screen (153 KB WebP, theme-based)
-  - 📱 Modern Android support — `targetSdk 35`, foreground service types for Android 14+, Bluetooth permissions for Android 12+, storage permissions for Android 11+, `POST_NOTIFICATIONS` for Android 13+, edge-to-edge opt-out for Android 15+
-  - 🎨 Material 3-inspired UI design system — `Theme.MaterialComponents` with tonal navy/amber palette, shape theming, refined typography, modern component styles (buttons, text fields, dialogs, cards, bottom sheets), dark-only
-  - 🤖 GitHub Actions CI/CD — signed release APK builds, automatic GitHub Releases on `v*` tags
-  - 🌐 GitHub Pages landing page at <https://aprsdroid.hamradio.my/> with live download counters
-  - 🏷️ Version bumped to `v2.0.0` (tocall `APDR20`)
-  - 📝 Comprehensive README rewrite documenting all changes
-- **Bob Bruninga, WB4APR** — creator of APRS
+### The APRSdroid family tree
+
+APRSdroid has a rich history of contributions from the amateur radio
+community. This project stands on the shoulders of giants:
+
+#### Georg Lukas (ge0rg) — Original Author
+
+[APRSdroid](https://aprsdroid.org/) was created by **Georg Lukas,
+ge0rg** and has been the premier APRS client for Android since 2010.
+Written in Scala with a Java core, it supports TCP/IP, AFSK (AFSK
+modem), Bluetooth TNCs, and USB TNCs. Georg continues to maintain
+the upstream project and graciously licenses it under the GPLv2 so
+that the community can build on his work.
+
+#### NA7Q — Enhanced Fork
+
+[NA7Q's fork](https://github.com/na7q/aprsdroid) builds on Georg's
+original work with significant enhancements:
+- BLE TNC support for modern Bluetooth TNCs (Mobilinkd, DigiRig, etc.)
+- Digipeater and IGate functionality
+- Symbol overlay support
+- Mic-E decoding improvements
+- Various bug fixes and compatibility updates
+
+NA7Q's fork is the direct upstream of this mod.
+
+#### 9M2PJU — This Mod
+
+This mod, maintained by **9M2PJU** (Kuala Lumpur, Malaysia), builds on
+NA7Q's fork with a focus on modern Android compatibility, UI/UX
+polish, and project infrastructure. Contributions include:
+- 🎨 New app icon and logo across all density buckets
+- 🖼️ Branded splash screen with perfect-fit centerCrop rendering
+- 📱 Modern Android support — `targetSdk 35`, foreground service types
+  for Android 14+, Bluetooth permissions for Android 12+, storage
+  permissions for Android 11+, `POST_NOTIFICATIONS` for Android 13+,
+  edge-to-edge opt-out for Android 15+
+- 🎨 Material 3-inspired UI design system — `Theme.MaterialComponents`
+  with tonal navy/amber palette, shape theming, refined typography,
+  modern component styles (buttons, text fields, dialogs, cards, bottom
+  sheets), bottom navigation bar, dark theme
+- 🤖 GitHub Actions CI/CD — signed release APK builds, automatic
+  GitHub Releases on `v*` tags
+- 🌐 GitHub Pages landing page at <https://aprsdroid.hamradio.my/>
+  with live download counters
+- 🔄 In-app update checker — download and install updates directly
+  from GitHub Releases
+- 🏷️ Version bumped to `v2.0.0` (tocall `APDR20`)
+- 📝 Comprehensive README and documentation rewrite
+
+#### Bob Bruninga, WB4APR — Creator of APRS
+
+**Bob Bruninga, WB4APR** (1947–2022) created the Automatic Packet
+Reporting System (APRS) in the 1980s. His vision of a real-time,
+position-aware digital communications network for amateur radio
+lives on in every APRS client, igate, and digipeater worldwide.
+Without Bob's pioneering work, none of this would exist.
 
 APRS® is a registered trademark of Bob Bruninga, WB4APR.
 

@@ -39,6 +39,9 @@ class MainListActivity(actname : String, menuid : Int) extends LoadingListActivi
 		setupButtons(AprsService.running)
 		makeLaunchActivity(actname)
 
+		// Check for app updates from GitHub Releases (at most once per day)
+		UpdateChecker.checkForUpdates(this)
+
 		registerReceiver(miclReceiver, new IntentFilter(AprsService.MICLEVEL))
 		registerReceiver(linkOnOffReceiver, new IntentFilter(AprsService.SERVICE_STOPPED))
 		registerReceiver(linkOnOffReceiver, new IntentFilter(AprsService.LINK_OFF))

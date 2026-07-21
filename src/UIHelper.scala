@@ -351,7 +351,7 @@ trait UIHelper extends Activity
 			.setView(aboutview)
 			.setIcon(android.R.drawable.ic_dialog_info)
 			.setPositiveButton(android.R.string.ok, null)
-			.setNeutralButton(R.string.ad_homepage, new UrlOpener(this, "https://aprsdroid.org/"))
+			.setNeutralButton(R.string.ad_homepage, new UrlOpener(this, "https://aprsdroid.hamradio.my/"))
 			.create.show
 	}
 

@@ -45,12 +45,21 @@
 			android:text="@string/ad_thanks_4" />
 		<TextView
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:autoLink="web"
 			android:text="@string/ad_thanks_5" />
 		<TextView
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:autoLink="web"
 			android:text="@string/ad_thanks_6" />
+		<TextView
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:text="@string/ad_thanks_7" />
+		<TextView
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:autoLink="web"
+			android:text="@string/ad_thanks_8" />
+		<TextView
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:autoLink="web"
+			android:text="@string/ad_thanks_9" />
 		<TextView
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:textStyle="bold"

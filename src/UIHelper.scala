@@ -190,11 +190,12 @@ object UIHelper
 	//  1. Reads the top (status bar) and bottom (nav bar) insets
 	//  2. Applies them as top+bottom padding to the PreferenceActivity's
 	//     built-in ListView (android.R.id.list)
-	//  3. Sets clipToPadding(false) on the ListView so items scroll smoothly
-	//     underneath the status bar without clipping
-	//  4. Consumes the insets (returns consumed insets) so the internal
+	//  3. Consumes the insets (returns consumed insets) so the internal
 	//     LinearLayout's fitsSystemWindows doesn't also apply them — that
 	//     would cause double padding
+	//
+	// The ListView uses the default clipToPadding=true so items are clipped
+	// at the padding boundary and do NOT scroll under the status bar.
 	//
 	// A resource-based fallback is also applied for reliability on OEM ROMs
 	// where the inset listener may not fire reliably.
@@ -208,11 +209,10 @@ object UIHelper
 		}
 
 		val prefList = act.findViewById(android.R.id.list).asInstanceOf[View]
-		if (prefList != null) {
-			// clipToPadding=false so scrolled items look clean under the
-			// status bar padding area without being clipped.
-			prefList.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
-		}
+		// Note: do NOT set clipToPadding(false). The default clipToPadding=true
+		// ensures items are clipped at the padding boundary and do NOT scroll
+		// under the status bar. clipToPadding=false would let section headers
+		// (like "Incoming Messages") overlap with the status bar clock.
 
 		val content = act.getWindow().getDecorView().findViewById(
 			android.R.id.content).asInstanceOf[View]
@@ -256,12 +256,12 @@ object UIHelper
 	}
 
 	// Resource-based fallback: apply top (status bar) and bottom (nav bar)
-	// padding to the PreferenceActivity's ListView. Also sets
-	// clipToPadding=false for smooth scrolling.
+	// padding to the PreferenceActivity's ListView. Uses the default
+	// clipToPadding=true so items are clipped at the padding boundary
+	// and do NOT scroll under the status bar.
 	def applyPrefListPadding(act : android.app.Activity) {
 		val prefList = act.findViewById(android.R.id.list).asInstanceOf[View]
 		if (prefList != null) {
-			prefList.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
 			val res = act.getResources()
 			val resId = res.getIdentifier("status_bar_height", "dimen", "android")
 			val navBarResId = res.getIdentifier("navigation_bar_height", "dimen", "android")

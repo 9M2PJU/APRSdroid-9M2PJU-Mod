@@ -61,8 +61,8 @@ class PrefsAct extends PreferenceActivity {
 	// UIHelper.applyPrefActivityInsets. It is re-applied after sub-screen
 	// navigation (onContentChanged, onWindowFocusChanged, onPreDraw)
 	// because the ListView content is swapped and padding may be reset.
-	// clipToPadding=false allows items to scroll smoothly through the
-	// padding area without being clipped.
+	// Uses the default clipToPadding=true so items are clipped at the
+	// padding boundary and do NOT scroll under the status bar.
 	def applyPrefTopInset() {
 		val res = getResources()
 		val resId = res.getIdentifier("status_bar_height", "dimen", "android")
@@ -71,7 +71,6 @@ class PrefsAct extends PreferenceActivity {
 		val navBarHeight = if (navBarResId > 0) res.getDimensionPixelSize(navBarResId) else 0
 		val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
 		if (lv != null) {
-			lv.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
 			if (lv.getPaddingTop != statusBarHeight || lv.getPaddingBottom != navBarHeight) {
 				lv.setPadding(lv.getPaddingLeft, statusBarHeight,
 					lv.getPaddingRight, navBarHeight)

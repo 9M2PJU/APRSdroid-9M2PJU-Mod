@@ -243,14 +243,10 @@ trait UIHelper extends Activity
 	// on all screens (e.g. the map). Contains Preferences, Export, Clear,
 	// Start/Stop, About, and map-specific options.
 	def showOptionsMenuPopup(anchor : View) {
-		// Find the actual Menu item view inside the BottomNavigationView so
-		// the popup appears above it (right side) instead of the left edge.
-		val menu_view : View = anchor.asInstanceOf[android.view.ViewGroup]
-			.findViewById(R.id.nav_menu)
-		val popup_anchor = if (menu_view != null) menu_view else anchor
-		val popup = new PopupMenu(this, popup_anchor)
-		// On API 21+ use Gravity.END so the popup aligns to the right edge
-		// of the anchor (above the Menu button) instead of the left.
+		// Anchor the popup to the BottomNavigationView and use Gravity.END
+		// so it aligns to the right edge (above the Menu button, which is
+		// the rightmost item in the bottom nav).
+		val popup = new PopupMenu(this, anchor)
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 			popup.setGravity(android.view.Gravity.END)
 		val menu = popup.getMenu()

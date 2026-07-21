@@ -471,9 +471,13 @@ trait UIHelper extends Activity
 
 	def aboutDialog() {
 		val pi = getPackageManager().getPackageInfo(this.getPackageName(), 0)
-		val title = getString(R.string.ad_title, pi.versionName);
+		val title = getString(R.string.ad_title);
 		val inflater = getLayoutInflater()
 		val aboutview = inflater.inflate(R.layout.aboutview, null)
+		// Show the version (from package info, not hardcoded) below the app name
+		val versionView = aboutview.findViewById(R.id.about_version).asInstanceOf[android.widget.TextView]
+		if (versionView != null)
+			versionView.setText(pi.versionName)
 		new AlertDialog.Builder(this).setTitle(title)
 			.setView(aboutview)
 			.setIcon(android.R.drawable.ic_dialog_info)

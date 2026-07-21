@@ -186,7 +186,9 @@ trait UIHelper extends Activity
 	}
 	class HoneycombTitleSetter(t : String, st : String) {
 		UIHelper.this.setTitle(t)
-		UIHelper.this.getActionBar().setSubtitle(st)
+		val ab = UIHelper.this.getActionBar()
+		if (ab != null && st != null)
+			ab.setSubtitle(st)
 	}
 
 	// store the activity name for next APRSdroid launch

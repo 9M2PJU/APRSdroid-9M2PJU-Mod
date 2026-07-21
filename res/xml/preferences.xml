@@ -51,13 +51,23 @@
     </PreferenceCategory>
     
 	<PreferenceCategory
-	    android:title="@string/p_offlinemap">        
+	    android:title="@string/p_offlinemap">
 
 	<CheckBoxPreference
 		android:key="p.offlinemap"
 		android:title="@string/p_offlinemap_entry"
 		android:summary="@string/p_offlinemap_summary"
 		android:defaultValue="false" />
+
+	<Preference
+		android:key="mapfile"
+		android:title="@string/p_mapfile_choose"
+		android:summary="@string/p_mapfile_summary" />
+
+	<Preference
+		android:key="themefile"
+		android:title="@string/p_themefile_choose"
+		android:summary="@string/p_themefile_summary" />
     </PreferenceCategory>
 
 

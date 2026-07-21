@@ -52,14 +52,19 @@ class PrefsAct extends PreferenceActivity {
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
 		addPreferencesFromResource(R.xml.preferences)
-		//fileChooserPreference("mapfile", 123456, R.string.p_mapfile_choose)
-		//fileChooserPreference("themefile", 123457, R.string.p_themefile_choose)
+		fileChooserPreference("mapfile", 123456, R.string.p_mapfile_choose)
+		fileChooserPreference("themefile", 123457, R.string.p_themefile_choose)
 	}
 	override def onResume() {
 		super.onResume()
 		findPreference("p_connsetup").setSummary(prefs.getBackendName())
 		findPreference("p_location").setSummary(prefs.getLocationSourceName())
 		findPreference("p_symbol").setSummary(getString(R.string.p_symbol_summary) + ": " + prefs.getString("symbol", "/$"))
+		// Show current map/theme file paths, or default hint
+		val mapfile = prefs.getString("mapfile", android.os.Environment.getExternalStorageDirectory() + "/aprsdroid.map")
+		findPreference("mapfile").setSummary(mapfile)
+		val themefile = prefs.getString("themefile", android.os.Environment.getExternalStorageDirectory() + "/aprsdroid.xml")
+		findPreference("themefile").setSummary(themefile)
 	}
 
 	def resolveContentUri(uri : Uri) = {
@@ -112,13 +117,7 @@ class PrefsAct extends PreferenceActivity {
 	override def onActivityResult(reqCode : Int, resultCode : Int, data : Intent) {
 		android.util.Log.d("PrefsAct", "onActResult: request=" + reqCode + " result=" + resultCode + " " + data)
 		if (resultCode == android.app.Activity.RESULT_OK && reqCode == 123456) {
-			//parseFilePickerResult(data, "mapfile", R.string.mapfile_error)
-			val takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-			getContentResolver.takePersistableUriPermission(data.getData(), takeFlags)
-			PreferenceManager.getDefaultSharedPreferences(this)
-				//.edit().putString("mapfile", data.getDataString()).commit()
-			finish()
-			startActivity(getIntent())
+			parseFilePickerResult(data, "mapfile", R.string.mapfile_error)
 		} else
 		if (resultCode == android.app.Activity.RESULT_OK && reqCode == 123457) {
 			parseFilePickerResult(data, "themefile", R.string.themefile_error)

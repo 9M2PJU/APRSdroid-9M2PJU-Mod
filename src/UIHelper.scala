@@ -77,7 +77,7 @@ object UIHelper
 		// Approach 2: native inset listener on the root content view
 		// Uses the framework API (API 20+) so no AndroidX dependency needed
 		val root = act.getWindow().getDecorView().findViewById(
-			android.R.id.content)
+			android.R.id.content).asInstanceOf[View]
 		if (root != null) {
 			root.setOnApplyWindowInsetsListener(
 				new View.OnApplyWindowInsetsListener() {

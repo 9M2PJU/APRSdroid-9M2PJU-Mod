@@ -163,7 +163,7 @@ over LoRa radio without a phone data connection.
 #### Requirements
 
 - A LoRa APRS tracker board with BLE KISS TNC firmware (e.g.
-  [OE5HMC's LoRa APRS Tracker](https://github.com/oe5hmc/LoRa-APRS-Tracker))
+  [richonguzman's LoRa APRS Tracker](https://github.com/richonguzman/LoRa_APRS_Tracker))
 - Android phone with Bluetooth
 - APRSdroid 9M2PJU Mod installed
 
@@ -176,7 +176,7 @@ over LoRa radio without a phone data connection.
 3. **Pair the tracker with your phone:**
    - Go to Android **Settings** → **Bluetooth**
    - Find your tracker in the device list (e.g. "LoraTracker" or
-     "OE5HMC")
+     "LoRa_APRS")
    - Tap to pair
 4. **Configure APRSdroid:**
    - Open APRSdroid → **Menu** → **Preferences** → **Connection Setup**
@@ -207,7 +207,7 @@ GPS → Phone → APRSdroid → BLE → LoRa Tracker → LoRa Radio → APRS Net
 
 | Firmware | Boards | Link |
 |---|---|---|
-| OE5HMC LoRa APRS Tracker | TTGO T-Beam, Heltec, LilyGO | [GitHub](https://github.com/oe5hmc/LoRa-APRS-Tracker) |
+| richonguzman LoRa APRS Tracker | TTGO T-Beam, Heltec, LilyGO, T-Beam Supreme | [GitHub](https://github.com/richonguzman/LoRa_APRS_Tracker) |
 | SQ9MDD LoRa APRS | Various ESP32 + LoRa boards | [GitHub](https://github.com/SQ9MDD/LoRa-APRS) |
 | Mobilinkd TNC | Mobilinkd NucleoTNC, TNC3 | [mobilinkd.com](https://mobilinkd.com/) |
 

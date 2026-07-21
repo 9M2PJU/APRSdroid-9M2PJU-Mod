@@ -54,9 +54,44 @@ class PrefsAct extends PreferenceActivity {
 			}
 		});
 	}
+
+	// Apply top padding equal to the status bar height to the preference
+	// ListView. This is needed on Android 16 (edge-to-edge) because the
+	// OnApplyWindowInsetsListener may not fire reliably for
+	// PreferenceActivity, and when navigating to a PreferenceScreen
+	// sub-screen (e.g. Notifications), the ListView content is swapped
+	// and the first item (category title) would draw under the status bar.
+	def applyPrefTopInset() {
+		val res = getResources()
+		val resId = res.getIdentifier("status_bar_height", "dimen", "android")
+		if (resId > 0) {
+			val statusBarHeight = res.getDimensionPixelSize(resId)
+			if (statusBarHeight > 0) {
+				val root = getWindow.getDecorView.findViewById(android.R.id.content)
+				if (root != null)
+					root.setPadding(root.getPaddingLeft, statusBarHeight,
+						root.getPaddingRight, root.getPaddingBottom)
+				val lv = findViewById(android.R.id.list)
+				if (lv != null) {
+					lv.setPadding(lv.getPaddingLeft, statusBarHeight,
+						lv.getPaddingRight, lv.getPaddingBottom)
+					lv.setClipToPadding(false)
+				}
+			}
+		}
+	}
+
+	// Called when the preference list content changes (e.g. when navigating
+	// into a PreferenceScreen sub-screen). Re-apply the top inset padding.
+	override def onContentChanged() {
+		super.onContentChanged()
+		applyPrefTopInset()
+	}
+
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
 		UIHelper.applySystemBarInsets(this)
+		applyPrefTopInset()
 		addPreferencesFromResource(R.xml.preferences)
 
 		// Set up "Grant Storage Permissions" button

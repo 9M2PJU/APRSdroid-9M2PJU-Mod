@@ -56,18 +56,23 @@ object UIHelper
 
 	/**
 	 * Handle system bar insets on Android 15+ (targetSdk 35) where
-	 * edge-to-edge is enforced. Call from any Activity's onCreate.
+	 * edge-to-edge is enforced. Call from any Activity's onResume.
 	 *
-	 * Strategy: enable edge-to-edge (setDecorFitsSystemWindows(false)) so
-	 * the system does NOT auto-apply insets to the decor view, then apply
-	 * insets manually via an OnApplyWindowInsetsListener. Apply ONLY the
-	 * top (status bar) inset to the root content view, and apply the bottom
-	 * (nav bar) inset to the BottomNavigationView if present. This way the
-	 * bottom nav's background extends to the bottom edge of the screen
-	 * (no blank gap), while its icons stay above the system navigation bar.
+	 * Two strategies depending on activity type:
 	 *
-	 * Using setDecorFitsSystemWindows(true) would cause double padding
-	 * (system insets + our manual padding) on stock Android 15/16.
+	 * 1. PreferenceActivity (PrefsAct, BackendPrefs, LocationPrefs, etc.):
+	 *    Enable edge-to-edge, install an OnApplyWindowInsetsListener on the
+	 *    content view that applies top+bottom padding to the ListView and
+	 *    consumes the insets (so the internal LinearLayout's
+	 *    fitsSystemWindows doesn't double-apply). clipToPadding=false on
+	 *    the ListView allows smooth scrolling. A resource-based fallback
+	 *    is also applied for reliability.
+	 *
+	 * 2. Other Activities (LogActivity, HubActivity, MapAct, etc.):
+	 *    Enable edge-to-edge, apply top/left/right padding to the root
+	 *    content view, and apply bottom padding to the BottomNavigationView
+	 *    so its background extends to the screen edge while icons stay
+	 *    above the system nav bar.
 	 *
 	 * Uses the native View.OnApplyWindowInsetsListener (API 20+) so no
 	 * AndroidX dependency upgrade is needed.
@@ -76,25 +81,11 @@ object UIHelper
 		// Detect PreferenceActivity by type, NOT by looking for
 		// android.R.id.list — ListActivity-based screens (LogActivity,
 		// HubActivity, ConversationsActivity) also have android.R.id.list
-		// but are NOT PreferenceActivity. PreferenceActivity's internal
-		// layout has fitsSystemWindows="true" built in, so the system
-		// auto-applies the top (status bar) inset. If we also apply top
-		// padding manually, we get double padding. For PreferenceActivity,
-		// we let the system handle the top inset and only add bottom
-		// (nav bar) padding to the ListView.
+		// but are NOT PreferenceActivity.
 		val is_pref_activity = act.isInstanceOf[android.preference.PreferenceActivity]
 
 		if (is_pref_activity) {
-			// Let the system handle top inset via PreferenceActivity's
-			// internal layout fitsSystemWindows. We only need to add
-			// bottom padding for the gesture/nav bar.
-			if (Build.VERSION.SDK_INT >= 30) {
-				act.getWindow().setDecorFitsSystemWindows(true)
-			} else {
-				androidx.core.view.WindowCompat.setDecorFitsSystemWindows(
-					act.getWindow(), true)
-			}
-			applyPrefListBottomPadding(act)
+			applyPrefActivityInsets(act)
 			return
 		}
 
@@ -185,17 +176,98 @@ object UIHelper
 		} // close if (root != null)
 	}
 
-	// Apply bottom (navigation bar) padding to the PreferenceActivity's
-	// built-in ListView so the last preference item is not clipped by
-	// the gesture bar on Android 15/16. The top (status bar) inset is
-	// handled by the system via PreferenceActivity's internal layout.
-	def applyPrefListBottomPadding(act : android.app.Activity) {
+	// PreferenceActivity inset handling.
+	//
+	// PreferenceActivity's internal system layout has an intermediate
+	// LinearLayout with fitsSystemWindows="true" that auto-applies the
+	// status bar inset as padding. On Android 15/16 (edge-to-edge enforced),
+	// this can be unreliable — especially after navigating to a sub-screen
+	// and back, causing the first preference item to bleed under the status
+	// bar.
+	//
+	// Strategy: enable edge-to-edge (setDecorFitsSystemWindows(false)), then
+	// install an OnApplyWindowInsetsListener on the content view that:
+	//  1. Reads the top (status bar) and bottom (nav bar) insets
+	//  2. Applies them as top+bottom padding to the PreferenceActivity's
+	//     built-in ListView (android.R.id.list)
+	//  3. Sets clipToPadding(false) on the ListView so items scroll smoothly
+	//     underneath the status bar without clipping
+	//  4. Consumes the insets (returns consumed insets) so the internal
+	//     LinearLayout's fitsSystemWindows doesn't also apply them — that
+	//     would cause double padding
+	//
+	// A resource-based fallback is also applied for reliability on OEM ROMs
+	// where the inset listener may not fire reliably.
+	def applyPrefActivityInsets(act : android.app.Activity) {
+		// Enable edge-to-edge so the system does NOT auto-apply insets.
+		if (Build.VERSION.SDK_INT >= 30) {
+			act.getWindow().setDecorFitsSystemWindows(false)
+		} else {
+			androidx.core.view.WindowCompat.setDecorFitsSystemWindows(
+				act.getWindow(), false)
+		}
+
 		val prefList = act.findViewById(android.R.id.list).asInstanceOf[View]
 		if (prefList != null) {
+			// clipToPadding=false so scrolled items look clean under the
+			// status bar padding area without being clipped.
+			prefList.setClipToPadding(false)
+		}
+
+		val content = act.getWindow().getDecorView().findViewById(
+			android.R.id.content).asInstanceOf[View]
+		if (content != null && prefList != null) {
+			content.setOnApplyWindowInsetsListener(
+				new View.OnApplyWindowInsetsListener() {
+					override def onApplyWindowInsets(v : View,
+							insets : android.view.WindowInsets
+							) : android.view.WindowInsets = {
+						var topPad = 0
+						var bottomPad = 0
+						if (Build.VERSION.SDK_INT >= 30) {
+							val status = insets.getInsets(
+								android.view.WindowInsets.Type.statusBars())
+							val nav = insets.getInsets(
+								android.view.WindowInsets.Type.navigationBars())
+							topPad = status.top
+							bottomPad = nav.bottom
+						} else {
+							topPad = insets.getSystemWindowInsetTop()
+							bottomPad = insets.getSystemWindowInsetBottom()
+						}
+						// Apply top (status bar) and bottom (nav bar) padding
+						// directly to the ListView. clipToPadding=false lets
+						// items scroll smoothly through the padding area.
+						prefList.setPadding(prefList.getPaddingLeft(), topPad,
+							prefList.getPaddingRight(), bottomPad)
+						// Consume insets so PreferenceActivity's internal
+						// LinearLayout (fitsSystemWindows="true") doesn't
+						// also apply them — that would double the padding.
+						insets.consumeSystemWindowInsets()
+					}
+				})
+		}
+
+		// Fallback: read system bar heights from resources and apply
+		// directly. This handles cases where the inset listener doesn't
+		// fire reliably (some OEM ROMs, or timing issues after sub-screen
+		// navigation).
+		applyPrefListPadding(act)
+	}
+
+	// Resource-based fallback: apply top (status bar) and bottom (nav bar)
+	// padding to the PreferenceActivity's ListView. Also sets
+	// clipToPadding=false for smooth scrolling.
+	def applyPrefListPadding(act : android.app.Activity) {
+		val prefList = act.findViewById(android.R.id.list).asInstanceOf[View]
+		if (prefList != null) {
+			prefList.setClipToPadding(false)
 			val res = act.getResources()
+			val resId = res.getIdentifier("status_bar_height", "dimen", "android")
 			val navBarResId = res.getIdentifier("navigation_bar_height", "dimen", "android")
+			val statusBarHeight = if (resId > 0) res.getDimensionPixelSize(resId) else 0
 			val navBarHeight = if (navBarResId > 0) res.getDimensionPixelSize(navBarResId) else 0
-			prefList.setPadding(prefList.getPaddingLeft(), prefList.getPaddingTop(),
+			prefList.setPadding(prefList.getPaddingLeft(), statusBarHeight,
 				prefList.getPaddingRight(), navBarHeight)
 		}
 	}

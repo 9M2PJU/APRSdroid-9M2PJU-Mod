@@ -55,22 +55,27 @@ class PrefsAct extends PreferenceActivity {
 		});
 	}
 
-	// Apply bottom (navigation bar) padding to the preference ListView.
-	// The top (status bar) inset is handled by the system via
-	// setDecorFitsSystemWindows(true) and PreferenceActivity's internal
-	// layout fitsSystemWindows. We only need to add bottom padding so
-	// the last preference item is not clipped by the gesture bar on
-	// Android 15/16. This is also re-applied after sub-screen navigation
-	// (onContentChanged, onWindowFocusChanged, onPreDraw) because the
-	// ListView content is swapped and padding may be reset.
+	// Apply top (status bar) and bottom (nav bar) padding to the
+	// preference ListView. This is the resource-based fallback that
+	// complements the OnApplyWindowInsetsListener in
+	// UIHelper.applyPrefActivityInsets. It is re-applied after sub-screen
+	// navigation (onContentChanged, onWindowFocusChanged, onPreDraw)
+	// because the ListView content is swapped and padding may be reset.
+	// clipToPadding=false allows items to scroll smoothly through the
+	// padding area without being clipped.
 	def applyPrefTopInset() {
 		val res = getResources()
+		val resId = res.getIdentifier("status_bar_height", "dimen", "android")
 		val navBarResId = res.getIdentifier("navigation_bar_height", "dimen", "android")
+		val statusBarHeight = if (resId > 0) res.getDimensionPixelSize(resId) else 0
 		val navBarHeight = if (navBarResId > 0) res.getDimensionPixelSize(navBarResId) else 0
 		val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
-		if (lv != null && lv.getPaddingBottom != navBarHeight) {
-			lv.setPadding(lv.getPaddingLeft, lv.getPaddingTop(),
-				lv.getPaddingRight, navBarHeight)
+		if (lv != null) {
+			lv.setClipToPadding(false)
+			if (lv.getPaddingTop != statusBarHeight || lv.getPaddingBottom != navBarHeight) {
+				lv.setPadding(lv.getPaddingLeft, statusBarHeight,
+					lv.getPaddingRight, navBarHeight)
+			}
 		}
 	}
 

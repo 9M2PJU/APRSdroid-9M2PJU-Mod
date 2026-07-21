@@ -123,7 +123,7 @@ class ServiceNotifier {
 			// pass. We always need "location"; add "microphone" when
 			// RECORD_AUDIO is held (AFSK / DigiRig backends) and
 			// "connectedDevice" when BLUETOOTH_CONNECT is held (BT/BLE TNCs).
-			var fgsType = 2 // FOREGROUND_SERVICE_TYPE_LOCATION (API 34+)
+			var fgsType = 8 // FOREGROUND_SERVICE_TYPE_LOCATION = 1 << 3
 			if (ctx.checkSelfPermission(_root_.android.Manifest.permission.RECORD_AUDIO)
 					== PackageManager.PERMISSION_GRANTED)
 				fgsType |= 128 // FOREGROUND_SERVICE_TYPE_MICROPHONE (API 34+)

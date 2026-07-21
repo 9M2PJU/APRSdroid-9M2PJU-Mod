@@ -196,7 +196,7 @@ trait UIHelper extends Activity
 	// Set up the bottom navigation bar. Call from onContentViewLoaded()
 	// or onResume(). The current activity is highlighted based on menu_id.
 	def setupBottomNav() {
-		val nav = findViewById(R.id.bottom_nav)
+		val nav = findViewById(R.id.bottom_nav).asInstanceOf[View]
 		if (nav == null) return
 		val bn = nav.asInstanceOf[BottomNavigationView]
 		// Highlight the current tab

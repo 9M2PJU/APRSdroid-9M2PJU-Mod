@@ -35,7 +35,7 @@ class GoogleMapAct extends Activity with MapLoaderBase
                 setContentView(R.layout.googlemapview)
 
                 // Set up bottom navigation
-                val nav = findViewById(R.id.bottom_nav)
+                val nav = findViewById(R.id.bottom_nav).asInstanceOf[View]
                 if (nav != null) {
                         val bn = nav.asInstanceOf[BottomNavigationView]
                         bn.setSelectedItemId(R.id.nav_map)

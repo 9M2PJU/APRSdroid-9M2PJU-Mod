@@ -95,7 +95,7 @@ changed compared to the upstream NA7Q fork.
 > **Phase 2 (not yet done):** ListActivity → RecyclerView, PreferenceActivity →
 > PreferenceFragmentCompat, Material dialogs (`MaterialAlertDialogBuilder`), layout
 > hardcoded colors → `@color/` resources, dynamic color (Material You), core-splashscreen
-> API. See [`AGENTS.md`](AGENTS.md) §12c for the full Phase 2 list.
+> API.
 
 #### 🤖 **CI/CD — GitHub Actions**
 - 📝 **`.github/workflows/build.yml`** — signed release APK builds on every push to `master`
@@ -223,8 +223,7 @@ Signed release APKs are built automatically by [**GitHub Actions**](.github/work
 - **Tests + lint** run before every build; reports are uploaded as artifacts.
 
 Signing keys are stored as GitHub Secrets (`RELEASE_KEYSTORE_BASE64`,
-`RELEASE_STORE_PASSWORD`, `RELEASE_KEY_ALIAS`, `RELEASE_KEY_PASSWORD`). See
-[`AGENTS.md`](AGENTS.md) §8 for the full setup if you want to reproduce signing locally.
+`RELEASE_STORE_PASSWORD`, `RELEASE_KEY_ALIAS`, `RELEASE_KEY_PASSWORD`).
 
 ---
 
@@ -330,7 +329,15 @@ Please open an issue or pull request at the
 
 - **Georg Lukas (ge0rg)** — original [APRSdroid](https://aprsdroid.org/)
 - **NA7Q** — [enhanced APRSdroid fork](https://github.com/na7q/aprsdroid) that this mod builds on
-- **9M2PJU** — this mod's splash, icon, CI/CD, modern Android support, and landing page
+- **9M2PJU** — this mod. Contributions include:
+  - 🎨 New app icon and logo across all density buckets
+  - 🖼️ Branded splash screen (153 KB WebP, theme-based)
+  - 📱 Modern Android support — `targetSdk 35`, foreground service types for Android 14+, Bluetooth permissions for Android 12+, storage permissions for Android 11+, `POST_NOTIFICATIONS` for Android 13+, edge-to-edge opt-out for Android 15+
+  - 🎨 Material 3-inspired UI design system — `Theme.MaterialComponents.DayNight` with tonal navy/amber palette, shape theming, refined typography, modern component styles (buttons, text fields, dialogs, cards, bottom sheets), auto dark/light
+  - 🤖 GitHub Actions CI/CD — signed release APK builds, automatic GitHub Releases on `v*` tags
+  - 🌐 GitHub Pages landing page at <https://aprsdroid.hamradio.my/> with live download counters
+  - 🏷️ Version bumped to `v1.8` (tocall `APDR18`)
+  - 📝 Comprehensive README rewrite documenting all changes
 - **Bob Bruninga, WB4APR** — creator of APRS
 
 APRS® is a registered trademark of Bob Bruninga, WB4APR.

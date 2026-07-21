@@ -173,6 +173,7 @@ object UIHelper
 				}
 			}
 		}
+		} // close if (root != null)
 	}
 
 }

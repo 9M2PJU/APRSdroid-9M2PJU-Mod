@@ -139,6 +139,14 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
   every 2 seconds while active, so new log entries appear immediately
   when tracking starts. No need to switch tabs and back anymore.
 
+### v2.0.7 — Dark navigation bar on all screens
+
+- **Navigation bar always dark** — the navigation bar was transparent,
+  which let light content show through on the splash screen, Log, and
+  Hub screens. Now uses the app's navy background color so the nav bar
+  is consistently dark across all screens. Status bar stays transparent
+  for the seamless edge-to-edge look.
+
 ### Features inherited from NA7Q's fork
 
 - **Digipeater** — direct or full digipeating

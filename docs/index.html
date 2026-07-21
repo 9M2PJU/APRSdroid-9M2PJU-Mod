@@ -223,12 +223,17 @@
   <div class="whatsnew-group">
     <h3>UI/UX improvements (latest)</h3>
     <ul>
+      <li><strong>Adaptive launcher icon</strong> for Android 13+ — the app icon now fills the entire launcher slot with a navy background, matching how WhatsApp and other modern apps look. No more shrunken logo with a default border.</li>
+      <li><strong>Edge-to-edge fix for Android 15/16</strong> — content no longer draws under the status bar or behind the under-display camera. Proper system bar inset handling for all screens.</li>
+      <li><strong>Bottom navigation blank gap fixed</strong> — the bottom nav bar's background now extends to the screen edge on Android 16, with no blank area below the icons.</li>
+      <li><strong>No sliding animation between tabs</strong> — switching between Log, Hub, Map, and Messages is now instant. Activity transition animations disabled globally.</li>
+      <li><strong>Map recenter button repositioned</strong> — moved above the OSM zoom controls to avoid overlap.</li>
+      <li><strong>OSM Maps preferences reordered</strong> — the file picker now appears before the offline mapping toggle, with a note to select a map file before enabling offline mode.</li>
       <li><strong>Bottom navigation with Menu tab</strong> — quick access to Preferences, Hub, Log, Map, Messages, and more from any screen. Replaces the old 3-dot overflow menu.</li>
       <li><strong>Map auto-zooms to GPS location</strong> — on first open, the map centers on the user's last known GPS position instead of a hardcoded default (Berlin).</li>
-      <li><strong>Restored OSM Maps preferences</strong> — offline mapping toggle, MapsForge / MBTiles file picker, storage permissions button, and hardware acceleration toggle, matching NA7Q's fork.</li>
       <li><strong>About dialog with logo and full credits</strong> — app logo, project lineage, and credits to Bob Bruninga (WB4APR), Georg Lukas (DO1GL), NA7Q, and 9M2PJU.</li>
-      <li><strong>Donation popup</strong> — appears on page load with Malaysia e-wallet QR, Buy Me a Coffee, and Wise links. Auto-closes after 5 seconds.</li>
-      <li><strong>Crash fixes</strong> — MessageActivity null ActionBar crash fixed; map screen crash on Material Components theme fixed.</li>
+      <li><strong>Donation popup</strong> — appears on page load with Malaysia e-wallet QR, Buy Me a Coffee, and Wise links. Auto-closes after 5 seconds. Fixed to stay on-screen on mobile browsers.</li>
+      <li><strong>Crash fixes</strong> — Android 14+ <code>registerReceiver</code> SecurityException fixed; MessageActivity null ActionBar crash fixed; map screen crash on Material Components theme fixed.</li>
     </ul>
   </div>
 </section>
@@ -510,13 +515,16 @@
       UI/UX polish, and project infrastructure. Contributions include:
     </p>
     <ul>
+      <li><strong>Adaptive launcher icon</strong> for Android 13+ — full logo with navy background, matching modern app icons.</li>
       <li><strong>New app icon and logo</strong> across all density buckets.</li>
       <li><strong>Branded splash screen</strong> with perfect-fit centerCrop rendering.</li>
-      <li><strong>Modern Android support</strong> — <code>targetSdk 35</code>, foreground service types for Android 14+, Bluetooth permissions for Android 12+, storage permissions for Android 11+, <code>POST_NOTIFICATIONS</code> for Android 13+, edge-to-edge opt-out for Android 15+.</li>
-      <li><strong>Material 3-inspired UI design system</strong> — <code>Theme.MaterialComponents</code> with tonal navy/amber palette, shape theming, refined typography, modern component styles, bottom navigation bar, dark theme.</li>
-      <li><strong>GitHub Actions CI/CD</strong> — signed release APK builds, automatic GitHub Releases on <code>v*</code> tags.</li>
-      <li><strong>GitHub Pages landing page</strong> at <a href="https://aprsdroid.hamradio.my/">aprsdroid.hamradio.my</a> with live download counters.</li>
-      <li><strong>In-app update checker</strong> — download and install updates directly from GitHub Releases.</li>
+      <li><strong>Modern Android support</strong> — <code>targetSdk 35</code>, foreground service types for Android 14+, Bluetooth permissions for Android 12+, storage permissions for Android 11+, <code>POST_NOTIFICATIONS</code> for Android 13+, edge-to-edge opt-out with proper system bar inset handling for Android 15+.</li>
+      <li><strong>Material 3-inspired UI design system</strong> — <code>Theme.MaterialComponents</code> with tonal navy/amber palette, shape theming, refined typography, modern component styles, bottom navigation bar, dark theme, no sliding animations between screens.</li>
+      <li><strong>GitHub Actions CI/CD</strong> — signed release APK builds, automatic GitHub Releases on <code>v*</code> tags, auto-generated <code>version.json</code>.</li>
+      <li><strong>GitHub Pages landing page</strong> at <a href="https://aprsdroid.hamradio.my/">aprsdroid.hamradio.my</a> with live download counters, responsive for desktop and mobile.</li>
+      <li><strong>In-app update checker</strong> — download and install updates directly from GitHub Releases, with Cloudflare CDN fallback.</li>
+      <li><strong>Android 14+ crash fix</strong> — <code>RECEIVER_NOT_EXPORTED</code> flag for <code>registerReceiver</code>.</li>
+      <li><strong>App name and About dialog unified</strong> across all 52 locale files.</li>
       <li><strong>Version bumped</strong> to <code>v2.0.0</code> (tocall <code>APDR20</code>).</li>
       <li><strong>Comprehensive README and documentation rewrite</strong>.</li>
     </ul>

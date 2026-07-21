@@ -46,29 +46,39 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 
 ### What 9M2PJU added on top of NA7Q's fork
 
+- **Adaptive launcher icon** for Android 13+ — full logo with navy
+  background, no default border (matches WhatsApp-style icons)
 - **Modern Android support** — `targetSdk 35` (Android 15), foreground service
   types for Android 14+, Bluetooth permissions for Android 12+, storage
   permissions for Android 11+, `POST_NOTIFICATIONS` for Android 13+,
-  edge-to-edge opt-out for Android 15+
+  edge-to-edge opt-out for Android 15+ with proper system bar inset handling
+  (status bar, navigation bar, display cutout)
 - **Material Design dark theme** — `Theme.MaterialComponents` with navy/amber
   palette, bottom navigation bar, modern component styles
 - **Branded splash screen** — full-screen splash with centerCrop rendering
 - **In-app update checker** — download and install updates directly from
-  GitHub Releases
+  GitHub Releases, with Cloudflare CDN fallback when GitHub API is unreachable
 - **GitHub Actions CI/CD** — signed release APK builds, automatic GitHub
-  Releases on `v*` tags
+  Releases on `v*` tags, auto-generated `version.json` for the update checker
 - **GitHub Pages landing page** at <https://aprsdroid.hamradio.my/> with
-  live download counters
+  live download counters, responsive design for desktop and mobile browsers
 - **New app icon and logo** across all density buckets
 - **Map auto-zooms to GPS location** — on first open, the map centers on
   the user's last known GPS position instead of a hardcoded default
-- **Restored OSM Maps preferences** — offline mapping toggle, MapsForge /
-  MBTiles file picker, storage permissions button, hardware acceleration
-  toggle
+- **Map recenter button repositioned** — sits above the OSM zoom controls
+  to avoid overlap
+- **Restored OSM Maps preferences** — file picker first, then offline
+  mapping toggle (with guidance to select a map file before enabling),
+  MapsForge / MBTiles file picker, storage permissions button, hardware
+  acceleration toggle
 - **About dialog with logo and full credits** — app logo, project lineage,
   and credits to Bob Bruninga (WB4APR), Georg Lukas (DO1GL), NA7Q, and 9M2PJU
 - **Bottom navigation with Menu tab** — quick access to Preferences, Hub,
-  Log, Map, Messages, and more from any screen
+  Log, Map, Messages, and more from any screen, with no sliding animation
+  between tabs
+- **Android 14+ crash fix** — `RECEIVER_NOT_EXPORTED` flag for
+  `registerReceiver` (required by Android 14/Upside Down Cake)
+- **App name and About dialog unified** across all 52 locale files
 - **Version bumped** to `v2.0.0` (tocall `APDR20`)
 
 ### Features inherited from NA7Q's fork

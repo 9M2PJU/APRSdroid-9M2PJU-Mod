@@ -1,3 +1,30 @@
+2.0.3:
+* Adaptive launcher icon for Android 13+ (full logo, no background border)
+* Fix edge-to-edge display on Android 15/16 (content under status bar)
+* Fix blank area under bottom navigation on Android 16
+* Disable activity transition animations (no sliding between screens)
+* Move map recenter button above OSM zoom buttons
+* Reorder OSM Maps prefs: file picker before offline toggle
+* Fix donation popup off-screen on mobile browsers
+* Responsive GitHub Pages for desktop and mobile (safe-area insets)
+
+2.0.2:
+* Fallback update checker via Cloudflare CDN (aprsdroid.hamradio.my)
+* Auto-generated version.json on release
+* Fix Android 14+ registerReceiver SecurityException crash
+* Fix app name and About dialog across all 52 locales
+* Replace offline map asset (Malaysia-Singapore-Brunei.map)
+
+2.0.0:
+* NA7Q-APRSDroid-9M2PJU-Mod: Material Design dark theme (navy/amber)
+* NA7Q-APRSDroid-9M2PJU-Mod: bottom navigation bar with Menu tab
+* NA7Q-APRSDroid-9M2PJU-Mod: branded splash screen
+* NA7Q-APRSDroid-9M2PJU-Mod: in-app update checker from GitHub Releases
+* NA7Q-APRSDroid-9M2PJU-Mod: GitHub Actions CI/CD with signed release builds
+* NA7Q-APRSDroid-9M2PJU-Mod: GitHub Pages landing page at aprsdroid.hamradio.my
+* NA7Q-APRSDroid-9M2PJU-Mod: targetSdk 35, foreground service types, BLE perms
+* NA7Q-APRSDroid-9M2PJU-Mod: new app icon and logo
+
 1.8:
 * NA7Q-APRSDroid-9M2PJU-Mod: add launch splash screen
 * NA7Q-APRSDroid-9M2PJU-Mod: add GitHub Actions CI/CD (signed release builds)

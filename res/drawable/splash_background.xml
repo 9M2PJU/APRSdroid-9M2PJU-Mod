@@ -7,6 +7,6 @@
     <item>
         <bitmap
             android:src="@drawable/splash"
-            android:gravity="center_crop" />
+            android:gravity="fill" />
     </item>
 </layer-list>

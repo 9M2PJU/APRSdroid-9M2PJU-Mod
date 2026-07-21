@@ -58,15 +58,17 @@ object UIHelper
 	 * Opt out of edge-to-edge on Android 15+ (targetSdk 35). Call from
 	 * any Activity's onCreate or onResume.
 	 *
-	 * Uses three approaches for maximum compatibility:
-	 *  1. setDecorFitsSystemWindows(true) — native API on API 30+
-	 *  2. Native View.OnApplyWindowInsetsListener — applies status bar
-	 *     height as top padding on the root view (works even when
-	 *     setDecorFitsSystemWindows is ignored, e.g. MIUI/HyperOS)
-	 *  3. fitsSystemWindows=true on root view via XML (fallback)
+	 * Strategy: apply ONLY the top (status bar) inset to the root content
+	 * view, and apply the bottom (nav bar) inset to the BottomNavigationView
+	 * if present. This way the bottom nav's background extends to the bottom
+	 * edge of the screen (no blank gap), while its icons stay above the
+	 * system navigation bar.
+	 *
+	 * Uses the native View.OnApplyWindowInsetsListener (API 20+) so no
+	 * AndroidX dependency upgrade is needed.
 	 */
 	def applySystemBarInsets(act : android.app.Activity) {
-		// Approach 1: opt out of edge-to-edge
+		// Approach 1: opt out of edge-to-edge (may be ignored by MIUI/HyperOS)
 		if (Build.VERSION.SDK_INT >= 30) {
 			act.getWindow().setDecorFitsSystemWindows(true)
 		} else {
@@ -74,8 +76,10 @@ object UIHelper
 				act.getWindow(), true)
 		}
 
-		// Approach 2: native inset listener on the root content view
-		// Uses the framework API (API 20+) so no AndroidX dependency needed
+		// Approach 2: native inset listener on the root content view.
+		// Apply ONLY top padding (status bar) to the root. The bottom nav
+		// bar inset is applied to the BottomNavigationView so its background
+		// extends edge-to-edge while icons stay above the system nav bar.
 		val root = act.getWindow().getDecorView().findViewById(
 			android.R.id.content).asInstanceOf[View]
 		if (root != null) {
@@ -84,18 +88,40 @@ object UIHelper
 					override def onApplyWindowInsets(v : View,
 							insets : android.view.WindowInsets
 							) : android.view.WindowInsets = {
+						var topPad = 0
+						var bottomPad = 0
+						var leftPad = 0
+						var rightPad = 0
 						if (Build.VERSION.SDK_INT >= 30) {
-							val bars = insets.getInsets(
-								android.view.WindowInsets.Type.systemBars())
-							v.setPadding(bars.left, bars.top,
-								bars.right, bars.bottom)
+							val status = insets.getInsets(
+								android.view.WindowInsets.Type.statusBars())
+							val nav = insets.getInsets(
+								android.view.WindowInsets.Type.navigationBars())
+							topPad = status.top
+							leftPad = status.left
+							rightPad = status.right
+							bottomPad = nav.bottom
 						} else {
 							// API 20-29: use getSystemWindowInset*
-							v.setPadding(
-								insets.getSystemWindowInsetLeft(),
-								insets.getSystemWindowInsetTop(),
-								insets.getSystemWindowInsetRight(),
-								insets.getSystemWindowInsetBottom())
+							topPad = insets.getSystemWindowInsetTop()
+							leftPad = insets.getSystemWindowInsetLeft()
+							rightPad = insets.getSystemWindowInsetRight()
+							bottomPad = insets.getSystemWindowInsetBottom()
+						}
+						// Apply ONLY top/left/right padding to root.
+						// Bottom padding is applied to the BottomNavigationView
+						// below so its background extends to the screen edge.
+						v.setPadding(leftPad, topPad, rightPad, 0)
+
+						// Find the BottomNavigationView and apply bottom
+						// padding so its icons stay above the system nav bar
+						// while its background fills the full area.
+						val bn = act.findViewById(R.id.bottom_nav)
+						if (bn != null) {
+							bn.setPadding(bn.getPaddingLeft(),
+								bn.getPaddingTop(),
+								bn.getPaddingRight(),
+								bottomPad)
 						}
 						insets
 					}
@@ -278,18 +304,21 @@ trait UIHelper extends Activity
 				item.getItemId match {
 					case R.id.nav_hub =>
 						startActivity(new Intent(UIHelper.this, classOf[HubActivity])
-							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
+								Intent.FLAG_ACTIVITY_NO_ANIMATION))
 						true
 					case R.id.nav_log =>
 						startActivity(new Intent(UIHelper.this, classOf[LogActivity])
-							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
+								Intent.FLAG_ACTIVITY_NO_ANIMATION))
 						true
 					case R.id.nav_map =>
 						MapModes.startMap(UIHelper.this, prefs, "")
 						true
 					case R.id.nav_messages =>
 						startActivity(new Intent(UIHelper.this, classOf[ConversationsActivity])
-							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+							.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
+								Intent.FLAG_ACTIVITY_NO_ANIMATION))
 						true
 					case R.id.nav_menu =>
 						showOptionsMenuPopup(bn)

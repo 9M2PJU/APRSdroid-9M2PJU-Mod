@@ -126,6 +126,18 @@ jobs:
           echo "Signed APK: $apk"
           "$ANDROID_SDK_ROOT/build-tools/33.0.2/apksigner" verify --print-certs "$apk" | head -20
 
+      - name: Verify signer identity
+        run: |
+          apk=$(find build/outputs/apk/release -name '*.apk' ! -name '*-unsigned.apk' | head -1)
+          dn=$("$ANDROID_SDK_ROOT/build-tools/33.0.2/apksigner" verify --print-certs "$apk" \
+            | grep -i 'DN:' | head -1)
+          echo "Signer DN: $dn"
+          if echo "$dn" | grep -q "HamRadio.my"; then
+            echo "::notice::APK signed by HamRadio.my organization key"
+          else
+            echo "::warning::APK signer DN does not contain 'HamRadio.my': $dn"
+          fi
+
       - name: Stage release APK
         run: |
           mkdir -p artifacts

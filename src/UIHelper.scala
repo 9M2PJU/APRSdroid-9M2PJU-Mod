@@ -55,28 +55,36 @@ object UIHelper
 	}
 
 	/**
-	 * Opt out of edge-to-edge on Android 15+ (targetSdk 35). Call from
-	 * any Activity's onCreate or onResume.
+	 * Handle system bar insets on Android 15+ (targetSdk 35) where
+	 * edge-to-edge is enforced. Call from any Activity's onCreate.
 	 *
-	 * Strategy: apply ONLY the top (status bar) inset to the root content
-	 * view, and apply the bottom (nav bar) inset to the BottomNavigationView
-	 * if present. This way the bottom nav's background extends to the bottom
-	 * edge of the screen (no blank gap), while its icons stay above the
-	 * system navigation bar.
+	 * Strategy: enable edge-to-edge (setDecorFitsSystemWindows(false)) so
+	 * the system does NOT auto-apply insets to the decor view, then apply
+	 * insets manually via an OnApplyWindowInsetsListener. Apply ONLY the
+	 * top (status bar) inset to the root content view, and apply the bottom
+	 * (nav bar) inset to the BottomNavigationView if present. This way the
+	 * bottom nav's background extends to the bottom edge of the screen
+	 * (no blank gap), while its icons stay above the system navigation bar.
+	 *
+	 * Using setDecorFitsSystemWindows(true) would cause double padding
+	 * (system insets + our manual padding) on stock Android 15/16.
 	 *
 	 * Uses the native View.OnApplyWindowInsetsListener (API 20+) so no
 	 * AndroidX dependency upgrade is needed.
 	 */
 	def applySystemBarInsets(act : android.app.Activity) {
-		// Approach 1: opt out of edge-to-edge (may be ignored by MIUI/HyperOS)
+		// Enable edge-to-edge so the system does NOT auto-apply insets to
+		// the decor view. We apply insets manually via the listener below.
+		// Using setDecorFitsSystemWindows(true) here would cause double
+		// padding (system insets + our manual padding) on Android 15/16.
 		if (Build.VERSION.SDK_INT >= 30) {
-			act.getWindow().setDecorFitsSystemWindows(true)
+			act.getWindow().setDecorFitsSystemWindows(false)
 		} else {
 			androidx.core.view.WindowCompat.setDecorFitsSystemWindows(
-				act.getWindow(), true)
+				act.getWindow(), false)
 		}
 
-		// Approach 2: native inset listener on the root content view.
+		// Native inset listener on the root content view.
 		// Apply ONLY top padding (status bar) to the root. The bottom nav
 		// bar inset is applied to the BottomNavigationView so its background
 		// extends edge-to-edge while icons stay above the system nav bar.
@@ -152,12 +160,10 @@ object UIHelper
 						// PreferenceActivity: apply bottom padding to the
 						// built-in ListView (android.R.id.list) so the last
 						// preference item is not clipped by the gesture/nav
-						// bar on Android 15/16. Also set fitsSystemWindows
-						// so the ListView participates in inset dispatch.
+						// bar on Android 15/16.
 						val prefListIns = act.findViewById(
 							android.R.id.list).asInstanceOf[View]
 						if (prefListIns != null && bn == null && bbb == null) {
-							prefListIns.setFitsSystemWindows(true)
 							prefListIns.setPadding(prefListIns.getPaddingLeft(),
 								prefListIns.getPaddingTop(),
 								prefListIns.getPaddingRight(),
@@ -180,7 +186,6 @@ object UIHelper
 		// item is not clipped by the gesture/navigation bar on Android 15/16.
 		val prefList = act.findViewById(android.R.id.list).asInstanceOf[View]
 		if (prefList != null) {
-			prefList.setFitsSystemWindows(true)
 			val res = act.getResources()
 			val resId = res.getIdentifier("status_bar_height", "dimen", "android")
 			val navBarResId = res.getIdentifier("navigation_bar_height", "dimen", "android")
@@ -444,11 +449,10 @@ trait UIHelper extends Activity
 		}
 	}
 
-	// Opt out of edge-to-edge on Android 15+ (targetSdk 35) so content
+	// Handle system bar insets on Android 15+ (targetSdk 35) so content
 	// doesn't go under the status / navigation bars. Delegates to the
-	// static UIHelper.applySystemBarInsets(Activity) which uses both
-	// setDecorFitsSystemWindows and a ViewCompat inset listener for
-	// maximum compatibility (including MIUI/HyperOS).
+	// static UIHelper.applySystemBarInsets(Activity) which enables
+	// edge-to-edge and applies insets manually via an inset listener.
 	def applySystemBarInsets() {
 		UIHelper.applySystemBarInsets(this)
 	}

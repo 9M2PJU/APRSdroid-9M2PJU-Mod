@@ -40,15 +40,14 @@ class PrefSymbolAct extends Activity with TextWatcher with View.OnClickListener 
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
-		// Opt out of edge-to-edge on Android 15+ (targetSdk 35) so the
-		// system bars don't overlap our content. setDecorFitsSystemWindows
-		// may be ignored by some OEM ROMs (MIUI/HyperOS), so we also set
-		// fitsSystemWindows="true" on the root layout (see prefsymbol.xml)
-		// and install an OnApplyWindowInsetsListener below as a fallback.
+		// Enable edge-to-edge so the system does NOT auto-apply insets to
+		// the decor view. We apply insets manually via the listener below.
+		// Using setDecorFitsSystemWindows(true) would cause double padding
+		// (system insets + our manual padding) on stock Android 15/16.
 		if (Build.VERSION.SDK_INT >= 30) {
-			getWindow().setDecorFitsSystemWindows(true)
+			getWindow().setDecorFitsSystemWindows(false)
 		} else {
-			WindowCompat.setDecorFitsSystemWindows(getWindow(), true)
+			WindowCompat.setDecorFitsSystemWindows(getWindow(), false)
 		}
 		setContentView(R.layout.prefsymbol)
 		// Apply WindowInsets to the root view so the GridView content is

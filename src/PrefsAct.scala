@@ -88,7 +88,6 @@ class PrefsAct extends PreferenceActivity {
 			// item is not clipped by the gesture/navigation bar on Android 15/16.
 			val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
 			if (lv != null) {
-				lv.setFitsSystemWindows(true)
 				if (lv.getPaddingTop != statusBarHeight || lv.getPaddingBottom != navBarHeight) {
 					lv.setPadding(lv.getPaddingLeft, statusBarHeight,
 						lv.getPaddingRight, navBarHeight)

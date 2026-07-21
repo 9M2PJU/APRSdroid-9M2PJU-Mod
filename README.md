@@ -103,6 +103,24 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 - **Symbol picker inset handling** — the APRS symbol picker
   (`PrefSymbolAct`) now handles edge-to-edge insets properly.
 
+### v2.0.5 — PreferenceScreen dialog sub-screens fully fixed on Android 16
+
+- **PreferenceScreen dialog sub-screens now fully fixed** — the v2.0.4
+  theme-based approach didn't work on Android 16. The new fix intercepts
+  `onPreferenceTreeClick`, creates a custom `AlertDialog` with
+  `setDecorFitsSystemWindows(true)` on its window, and uses
+  `PreferenceScreen.getRootAdapter()` to populate the list. Section
+  headers like "Incoming Messages" are now properly pushed below the
+  status bar.
+- **Back button no longer shows old broken dialog** — the old
+  edge-to-edge dialog created by `PreferenceScreen.onClick()` is now
+  dismissed via `getDialog()` reflection after our custom dialog shows.
+- **Sub-screen activities (Connection, Digipeating, IGating, Messaging,
+  Compressed, Symbol, Location) correctly launch as separate activities**
+  — screens with `<intent>` tags fall through to `super` instead of
+  showing a dialog. All sub-activities have proper edge-to-edge inset
+  handling via `UIHelper.applySystemBarInsets()`.
+
 ### Features inherited from NA7Q's fork
 
 - **Digipeater** — direct or full digipeating

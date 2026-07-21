@@ -253,6 +253,15 @@
       <li><strong>Symbol picker inset handling</strong> — the APRS symbol picker now handles edge-to-edge insets properly on Android 15/16.</li>
     </ul>
   </div>
+
+  <div class="whatsnew-group">
+    <h3>v2.0.5 — PreferenceScreen dialog sub-screens fully fixed on Android 16</h3>
+    <ul>
+      <li><strong>PreferenceScreen dialog sub-screens now fully fixed</strong> — the v2.0.4 theme-based approach didn't work on Android 16. The new fix intercepts preference clicks, creates a custom dialog with <code>setDecorFitsSystemWindows(true)</code>, and uses <code>getRootAdapter()</code> to populate the list. Section headers like "Incoming Messages" are now properly pushed below the status bar.</li>
+      <li><strong>Back button no longer shows old broken dialog</strong> — the old edge-to-edge dialog created by <code>PreferenceScreen.onClick()</code> is now dismissed after our custom dialog shows.</li>
+      <li><strong>Sub-screen activities correctly launch as separate activities</strong> — Connection Preferences, Digipeating, IGating, Messaging, Compressed, Symbol, and Location all launch as full-screen activities with proper edge-to-edge inset handling.</li>
+    </ul>
+  </div>
 </section>
 
 <section id="features" class="section">

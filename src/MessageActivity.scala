@@ -57,6 +57,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	var botBtnPolice : Button = null
 	var botBtnHospital : Button = null
 	var botBtnFireStation : Button = null
+	var botBtnProp : Button = null
 
 	// APRSMY UI elements
 	var aprsmyButtons : View = null
@@ -482,6 +483,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		botBtnPolice = botButtons.findViewById(R.id.bot_btn_police).asInstanceOf[Button]
 		botBtnHospital = botButtons.findViewById(R.id.bot_btn_hospital).asInstanceOf[Button]
 		botBtnFireStation = botButtons.findViewById(R.id.bot_btn_fire_station).asInstanceOf[Button]
+		botBtnProp = botButtons.findViewById(R.id.bot_btn_prop).asInstanceOf[Button]
 
 		botBtnHelp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("help") })
 		botBtnToday.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("today") })
@@ -495,6 +497,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		botBtnPolice.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("police") })
 		botBtnHospital.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("hospital") })
 		botBtnFireStation.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("fire_station") })
+		botBtnProp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("prop") })
 
 		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
 		root.addView(botButtons, 0)

@@ -755,6 +755,7 @@
 <string name="bot_police">Police</string>
 <string name="bot_hospital">Hospital</string>
 <string name="bot_fire_station">Fire Stn</string>
+<string name="bot_prop">Prop</string>
 <string name="bot_posmsg_email">Email address for position report</string>
 <string name="bot_posmsg_email_hint">someone@email.com</string>
 <string name="bot_posmsg_message">Optional message (one line)</string>

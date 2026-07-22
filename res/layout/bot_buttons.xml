@@ -126,6 +126,13 @@ android:background="#1a2332" >
 			android:textSize="11sp"
 			android:minWidth="40dp" />
 
+			<Button android:id="@+id/bot_btn_prop"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/bot_prop"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
 		</LinearLayout>
 	</HorizontalScrollView>
 </LinearLayout>

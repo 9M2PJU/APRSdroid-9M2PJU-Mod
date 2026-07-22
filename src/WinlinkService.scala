@@ -112,8 +112,11 @@ class WinlinkService(s : AprsService) {
 	}
 
 	/**
-	 * Initiate Winlink login by sending "Start" to WLNK-1.
-	 * Called when user taps the Login button.
+	 * Initiate Winlink login.
+	 * APRSLink doesn't have a "Start" command — instead, you send any
+	 * valid command (we use "L" to list messages) and WLNK-1 responds
+	 * with a login challenge if you're not authenticated. Once you
+	 * respond to the challenge, WLNK-1 processes the original command.
 	 */
 	def login() {
 		val password = s.prefs.getWinlinkPassword()
@@ -130,9 +133,11 @@ class WinlinkService(s : AprsService) {
 			Log.w(TAG, "APRS service not running")
 			return
 		}
-		Log.i(TAG, "initiating Winlink login")
+		Log.i(TAG, "initiating Winlink login by sending L command")
 		setState(STATE_LOGIN_STARTED)
-		sendToWlnk("Start")
+		// Send "L" — WLNK-1 will respond with a login challenge
+		messageList.clear()
+		sendToWlnk("L")
 	}
 
 	/**
@@ -326,7 +331,8 @@ class WinlinkService(s : AprsService) {
 		state match {
 		case STATE_LOGIN_STARTED =>
 			// Expecting "Login [XXX]:" challenge
-			if (text.startsWith("Login [") || text.matches("(?i)login.*\\[\\d+\\].*")) {
+			// APRSLink sends something like "Login [123]:" with 3 digit positions
+			if (text.matches("(?i).*login.*\\[\\d+\\].*") || text.matches("(?i).*\\[\\d{3}\\].*")) {
 				handleChallenge(text)
 				true
 			} else if (text.toLowerCase.startsWith("hello")) {

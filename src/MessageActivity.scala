@@ -58,6 +58,16 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	var botBtnHospital : Button = null
 	var botBtnFireStation : Button = null
 
+	// APRSMY UI elements
+	var aprsmyButtons : View = null
+	var aprsmyBtnCheck : Button = null
+	var aprsmyBtnHelp : Button = null
+	var aprsmyBtnStatus : Button = null
+	var aprsmyBtnCount : Button = null
+	var aprsmyBtnLast : Button = null
+	var aprsmyBtnTop : Button = null
+	var aprsmyBtnMe : Button = null
+
 	// Broadcast receiver for live Winlink status updates
 	var winlinkStatusReceiver : BroadcastReceiver = null
 
@@ -69,6 +79,9 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 
 	def isBotConversation = targetcall != null &&
 		targetcall.equalsIgnoreCase("9M2PJU-4")
+
+	def isAprsmyConversation = targetcall != null &&
+		targetcall.equalsIgnoreCase("APRSMY")
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
@@ -94,6 +107,10 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		// Inflate APRS Bot buttons if this is a 9M2PJU-4 conversation
 		if (isBotConversation) {
 			setupBotUI()
+		}
+		// Inflate APRSMY buttons if this is an APRSMY conversation
+		if (isAprsmyConversation) {
+			setupAprsmyUI()
 		}
 
 		val message = getIntent().getStringExtra("message")
@@ -569,6 +586,41 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			})
 			.setNegativeButton(android.R.string.cancel, null)
 			.show()
+	}
+
+	// ===== APRSMY =====
+
+	def setupAprsmyUI() {
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE)
+				.asInstanceOf[LayoutInflater]
+		aprsmyButtons = inflater.inflate(R.layout.aprsmy_buttons, null, false)
+		aprsmyBtnCheck = aprsmyButtons.findViewById(R.id.aprsmy_btn_check).asInstanceOf[Button]
+		aprsmyBtnHelp = aprsmyButtons.findViewById(R.id.aprsmy_btn_help).asInstanceOf[Button]
+		aprsmyBtnStatus = aprsmyButtons.findViewById(R.id.aprsmy_btn_status).asInstanceOf[Button]
+		aprsmyBtnCount = aprsmyButtons.findViewById(R.id.aprsmy_btn_count).asInstanceOf[Button]
+		aprsmyBtnLast = aprsmyButtons.findViewById(R.id.aprsmy_btn_last).asInstanceOf[Button]
+		aprsmyBtnTop = aprsmyButtons.findViewById(R.id.aprsmy_btn_top).asInstanceOf[Button]
+		aprsmyBtnMe = aprsmyButtons.findViewById(R.id.aprsmy_btn_me).asInstanceOf[Button]
+
+		aprsmyBtnCheck.setOnClickListener(new OnClickListener { override def onClick(v : View) = onAprsmyCommand("CHECK") })
+		aprsmyBtnHelp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onAprsmyCommand("HELP") })
+		aprsmyBtnStatus.setOnClickListener(new OnClickListener { override def onClick(v : View) = onAprsmyCommand("STATUS") })
+		aprsmyBtnCount.setOnClickListener(new OnClickListener { override def onClick(v : View) = onAprsmyCommand("COUNT") })
+		aprsmyBtnLast.setOnClickListener(new OnClickListener { override def onClick(v : View) = onAprsmyCommand("LAST") })
+		aprsmyBtnTop.setOnClickListener(new OnClickListener { override def onClick(v : View) = onAprsmyCommand("TOP") })
+		aprsmyBtnMe.setOnClickListener(new OnClickListener { override def onClick(v : View) = onAprsmyCommand("ME") })
+
+		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
+		root.addView(aprsmyButtons, 0)
+	}
+
+	def onAprsmyCommand(command : String) {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		sendMessage(command)
+		Toast.makeText(this, R.string.aprsmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	override def onResume() {

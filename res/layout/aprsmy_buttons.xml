@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  APRSMY buttons — shown above the message list when the conversation
+  is with APRSMY. All commands are no-argument, sent directly.
+-->
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/aprsmy_buttons"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="#1a2332" >
+
+	<!-- Title row -->
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:padding="4dp" >
+
+		<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:layout_weight="1"
+		android:text="@string/p__aprsmy"
+		android:textColor="#ff9800"
+		android:textSize="12sp"
+		android:paddingLeft="6dp" />
+	</LinearLayout>
+
+	<!-- Scrollable command buttons -->
+	<HorizontalScrollView
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:scrollbars="none" >
+
+		<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:padding="4dp" >
+
+			<Button android:id="@+id/aprsmy_btn_check"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/aprsmy_check"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/aprsmy_btn_help"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/aprsmy_help"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/aprsmy_btn_status"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/aprsmy_status"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/aprsmy_btn_count"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/aprsmy_count"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/aprsmy_btn_last"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/aprsmy_last"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/aprsmy_btn_top"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/aprsmy_top"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/aprsmy_btn_me"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/aprsmy_me"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+		</LinearLayout>
+	</HorizontalScrollView>
+</LinearLayout>

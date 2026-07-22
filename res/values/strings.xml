@@ -768,4 +768,15 @@
 <string name="bot_no_callsign">Enter a callsign.</string>
 <string name="bot_no_satname">Enter a satellite name.</string>
 
+<!-- APRSMY -->
+<string name="p__aprsmy">APRSMY</string>
+<string name="aprsmy_check">Check</string>
+<string name="aprsmy_help">Help</string>
+<string name="aprsmy_status">Status</string>
+<string name="aprsmy_count">Count</string>
+<string name="aprsmy_last">Last</string>
+<string name="aprsmy_top">Top</string>
+<string name="aprsmy_me">Me</string>
+<string name="aprsmy_sent">Command sent to APRSMY.</string>
+
 </resources>

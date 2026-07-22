@@ -9,7 +9,7 @@ import _root_.android.text.{ClipboardManager, Editable, TextWatcher}
 import _root_.android.util.Log
 import _root_.android.view.{ContextMenu, LayoutInflater, KeyEvent, Menu, MenuItem, View, Window}
 import _root_.android.view.View.{OnClickListener, OnKeyListener}
-import _root_.android.widget.{Button, EditText, LinearLayout, ListView, TextView, Toast}
+import _root_.android.widget.{ArrayAdapter, Button, EditText, LinearLayout, ListView, Spinner, TextView, Toast}
 import _root_.android.widget.AdapterView.AdapterContextMenuInfo
 
 class MessageActivity extends StationHelper(R.string.app_messages)
@@ -78,16 +78,6 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	var mailmyBtnCancel : Button = null
 	var mailmyBtnHelp : Button = null
 
-	// GAMEMY UI elements
-	var gamemyButtons : View = null
-	var gamemyBtnStart : Button = null
-	var gamemyBtnHint : Button = null
-	var gamemyBtnSkip : Button = null
-	var gamemyBtnScore : Button = null
-	var gamemyBtnTop : Button = null
-	var gamemyBtnStop : Button = null
-	var gamemyBtnHelp : Button = null
-
 	// CALLMY UI elements
 	var callmyButtons : View = null
 	var callmyBtnCallsign : Button = null
@@ -101,6 +91,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	var bbsmyBtnSend : Button = null
 	var bbsmyBtnPosturgent : Button = null
 	var bbsmyBtnHelp : Button = null
+
+	// REPEAT UI elements
+	var repeatButtons : View = null
+	var repeatBtnNearest : Button = null
+	var repeatBtnHelp : Button = null
 
 	// Broadcast receiver for live Winlink status updates
 	var winlinkStatusReceiver : BroadcastReceiver = null
@@ -120,14 +115,14 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	def isMailmyConversation = targetcall != null &&
 		targetcall.equalsIgnoreCase("MAILMY")
 
-	def isGamemyConversation = targetcall != null &&
-		targetcall.equalsIgnoreCase("GAMEMY")
-
 	def isCallmyConversation = targetcall != null &&
 		targetcall.equalsIgnoreCase("CALLMY")
 
 	def isBbsmyConversation = targetcall != null &&
 		targetcall.equalsIgnoreCase("BBSMY")
+
+	def isRepeatConversation = targetcall != null &&
+		targetcall.equalsIgnoreCase("REPEAT")
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
@@ -162,10 +157,6 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		if (isMailmyConversation) {
 			setupMailmyUI()
 		}
-		// Inflate GAMEMY buttons if this is a GAMEMY conversation
-		if (isGamemyConversation) {
-			setupGamemyUI()
-		}
 		// Inflate CALLMY buttons if this is a CALLMY conversation
 		if (isCallmyConversation) {
 			setupCallmyUI()
@@ -173,6 +164,10 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		// Inflate BBSMY buttons if this is a BBSMY conversation
 		if (isBbsmyConversation) {
 			setupBbsmyUI()
+		}
+		// Inflate REPEAT buttons if this is a REPEAT conversation
+		if (isRepeatConversation) {
+			setupRepeatUI()
 		}
 
 		val message = getIntent().getStringExtra("message")
@@ -795,40 +790,6 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			.show()
 	}
 
-	// ===== GAMEMY =====
-
-	def setupGamemyUI() {
-		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
-		gamemyButtons = inflater.inflate(R.layout.gamemy_buttons, null, false)
-		gamemyBtnStart = gamemyButtons.findViewById(R.id.gamemy_btn_start).asInstanceOf[Button]
-		gamemyBtnHint = gamemyButtons.findViewById(R.id.gamemy_btn_hint).asInstanceOf[Button]
-		gamemyBtnSkip = gamemyButtons.findViewById(R.id.gamemy_btn_skip).asInstanceOf[Button]
-		gamemyBtnScore = gamemyButtons.findViewById(R.id.gamemy_btn_score).asInstanceOf[Button]
-		gamemyBtnTop = gamemyButtons.findViewById(R.id.gamemy_btn_top).asInstanceOf[Button]
-		gamemyBtnStop = gamemyButtons.findViewById(R.id.gamemy_btn_stop).asInstanceOf[Button]
-		gamemyBtnHelp = gamemyButtons.findViewById(R.id.gamemy_btn_help).asInstanceOf[Button]
-
-		gamemyBtnStart.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("S") })
-		gamemyBtnHint.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("H") })
-		gamemyBtnSkip.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("K") })
-		gamemyBtnScore.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("C") })
-		gamemyBtnTop.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("T") })
-		gamemyBtnStop.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("P") })
-		gamemyBtnHelp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("?") })
-
-		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
-		root.addView(gamemyButtons, 0)
-	}
-
-	def onGamemyCommand(command : String) {
-		if (!AprsService.running) {
-			showStartTrackingDialog()
-			return
-		}
-		sendMessage(command)
-		Toast.makeText(this, R.string.gamemy_sent, Toast.LENGTH_SHORT).show()
-	}
-
 	// ===== CALLMY =====
 
 	def setupCallmyUI() {
@@ -985,6 +946,99 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					}
 					sendMessage("S %s %s".format(call, text))
 					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// ===== REPEAT (Repeater lookup) =====
+
+	def setupRepeatUI() {
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		repeatButtons = inflater.inflate(R.layout.repeat_buttons, null, false)
+		repeatBtnNearest = repeatButtons.findViewById(R.id.repeat_btn_nearest).asInstanceOf[Button]
+		repeatBtnHelp = repeatButtons.findViewById(R.id.repeat_btn_help).asInstanceOf[Button]
+
+		repeatBtnNearest.setOnClickListener(new OnClickListener { override def onClick(v : View) = onRepeatNearest() })
+		repeatBtnHelp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onRepeatCommand("help") })
+
+		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
+		root.addView(repeatButtons, 0)
+	}
+
+	def onRepeatCommand(command : String) {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		sendMessage(command)
+		Toast.makeText(this, R.string.repeat_sent, Toast.LENGTH_SHORT).show()
+	}
+
+	// n [Num] [Band] [+Filter]
+	def onRepeatNearest() {
+		if (!AprsService.running) { showStartTrackingDialog(); return }
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.repeat_dialog, null, false)
+		val numField = view.findViewById(R.id.repeat_num_field).asInstanceOf[EditText]
+		val bandSpinner = view.findViewById(R.id.repeat_band_spinner).asInstanceOf[Spinner]
+		val filtersField = view.findViewById(R.id.repeat_filters_field).asInstanceOf[EditText]
+
+		// Band options — default 2m (index 0)
+		val bands = Array[CharSequence](
+			getString(R.string.repeat_band_2m),
+			getString(R.string.repeat_band_70cm),
+			getString(R.string.repeat_band_6m),
+			getString(R.string.repeat_band_10m),
+			getString(R.string.repeat_band_1_25m),
+			getString(R.string.repeat_band_33cm),
+			getString(R.string.repeat_band_23cm)
+		)
+		val adapter = new ArrayAdapter[CharSequence](this,
+			android.R.layout.simple_spinner_item, bands)
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+		bandSpinner.setAdapter(adapter)
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.repeat_nearest)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val numStr = numField.getText().toString.trim
+					val band = bands(bandSpinner.getSelectedItemPosition).toString
+					val filters = filtersField.getText().toString.trim
+
+					// Build command: n [Num] [Band] [+Filter]
+					val sb = new StringBuilder("n")
+					if (!numStr.isEmpty) {
+						try {
+							val n = numStr.toInt
+							if (n < 1 || n > 10) {
+								Toast.makeText(MessageActivity.this, R.string.repeat_no_num,
+									Toast.LENGTH_SHORT).show()
+								return
+							}
+							sb.append(" ").append(n)
+						} catch {
+							case e : Exception =>
+								Toast.makeText(MessageActivity.this, R.string.repeat_no_num,
+									Toast.LENGTH_SHORT).show()
+								return
+						}
+					}
+					// Only append band if not default 2m (or if num was specified)
+					if (band != "2m") {
+						sb.append(" ").append(band)
+					} else if (!numStr.isEmpty) {
+						// num specified + default band — still append band for clarity
+						sb.append(" ").append(band)
+					}
+					if (!filters.isEmpty) {
+						sb.append(" ").append(filters)
+					}
+					sendMessage(sb.toString)
+					Toast.makeText(MessageActivity.this, R.string.repeat_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dialog for REPEAT nearest command: n [Num] [Band] [+Filter] -->
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="10dp">
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="@string/repeat_num"
+android:textStyle="bold" />
+
+<EditText android:id="@+id/repeat_num_field"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:hint="@string/repeat_num_hint"
+android:singleLine="true"
+android:inputType="number" />
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
+android:text="@string/repeat_band"
+android:textStyle="bold" />
+
+<Spinner android:id="@+id/repeat_band_spinner"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content" />
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
+android:text="@string/repeat_filters"
+android:textStyle="bold" />
+
+<EditText android:id="@+id/repeat_filters_field"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:hint="@string/repeat_filters_hint"
+android:singleLine="true"
+android:inputType="text" />
+
+</LinearLayout>

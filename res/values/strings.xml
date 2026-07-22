@@ -801,17 +801,6 @@
 <string name="mailmy_no_addr">Enter an email address.</string>
 <string name="mailmy_no_msg">Enter a message.</string>
 
-<!-- GAMEMY -->
-<string name="p__gamemy">GAMEMY</string>
-<string name="gamemy_start">Start</string>
-<string name="gamemy_hint">Hint</string>
-<string name="gamemy_skip">Skip</string>
-<string name="gamemy_score">Score</string>
-<string name="gamemy_top">Top</string>
-<string name="gamemy_stop">Stop</string>
-<string name="gamemy_help">Help</string>
-<string name="gamemy_sent">Command sent to GAMEMY.</string>
-
 <!-- CALLMY -->
 <string name="p__callmy">CALLMY</string>
 <string name="callmy_callsign">Callsign</string>
@@ -819,6 +808,7 @@
 <string name="callmy_callsign_prompt">Enter callsign to look up</string>
 <string name="callmy_sent">Command sent to CALLMY.</string>
 <string name="callmy_no_callsign">Enter a callsign.</string>
+<string name="callmy_help">Help</string>
 
 <!-- BBSMY -->
 <string name="p__bbsmy">BBSMY</string>
@@ -837,5 +827,24 @@
 <string name="bbsmy_sent">Command sent to BBSMY.</string>
 <string name="bbsmy_no_text">Enter a message.</string>
 <string name="bbsmy_no_callsign">Enter a callsign.</string>
+
+<!-- REPEAT -->
+<string name="p__repeat">REPEATER</string>
+<string name="repeat_nearest">Nearest</string>
+<string name="repeat_help">Help</string>
+<string name="repeat_num">Number of repeaters (1-10, default 1)</string>
+<string name="repeat_num_hint">1</string>
+<string name="repeat_band">Frequency band</string>
+<string name="repeat_filters">Capability filters (e.g. +echolink +dstar)</string>
+<string name="repeat_filters_hint">+echolink</string>
+<string name="repeat_sent">Command sent to REPEAT.</string>
+<string name="repeat_no_num">Enter a number between 1 and 10.</string>
+<string name="repeat_band_2m">2m</string>
+<string name="repeat_band_70cm">70cm</string>
+<string name="repeat_band_6m">6m</string>
+<string name="repeat_band_10m">10m</string>
+<string name="repeat_band_23cm">23cm</string>
+<string name="repeat_band_33cm">33cm</string>
+<string name="repeat_band_1_25m">1.25m</string>
 
 </resources>

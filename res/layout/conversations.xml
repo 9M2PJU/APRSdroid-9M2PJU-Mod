@@ -93,12 +93,12 @@
 			android:padding="4dp"
 			/>
 		<Button
-			android:id="@+id/gamemy_conversation"
+			android:id="@+id/repeat_conversation"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			app:layout_columnWeight="1"
 			app:layout_gravity="fill_horizontal"
-			android:text="@string/p__gamemy"
+			android:text="@string/p__repeat"
 			android:textSize="11sp"
 			android:padding="4dp"
 			/>

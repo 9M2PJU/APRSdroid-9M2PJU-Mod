@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/callmy_buttons"
+android:id="@+id/repeat_buttons"
 android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:orientation="vertical"
@@ -17,8 +17,8 @@ android:background="#222" >
 		android:layout_height="wrap_content"
 		android:layout_gravity="center_vertical"
 		android:layout_weight="1"
-		android:text="@string/p__callmy"
-		android:textColor="#00bcd4"
+		android:text="@string/p__repeat"
+		android:textColor="#ff9800"
 		android:textSize="12sp"
 		android:paddingLeft="6dp" />
 	</LinearLayout>
@@ -32,8 +32,8 @@ android:background="#222" >
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		android:padding="4dp" >
-			<Button android:id="@+id/callmy_btn_callsign" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/callmy_callsign" android:textSize="11sp" android:minWidth="40dp" />
-			<Button android:id="@+id/callmy_btn_help" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/callmy_help" android:textSize="11sp" android:minWidth="40dp" />
+			<Button android:id="@+id/repeat_btn_nearest" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/repeat_nearest" android:textSize="11sp" android:minWidth="40dp" />
+			<Button android:id="@+id/repeat_btn_help" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/repeat_help" android:textSize="11sp" android:minWidth="40dp" />
 		</LinearLayout>
 	</HorizontalScrollView>
 </LinearLayout>

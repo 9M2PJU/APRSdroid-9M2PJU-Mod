@@ -17,14 +17,14 @@
 		android:layout_marginTop="1sp"
 		android:layout_marginBottom="1sp"
 		/>
-		<TextView
+		<androidx.appcompat.widget.AppCompatTextView
 		android:id="@+id/station_call"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginRight="3sp"
 		android:textColor="#b0b080"
 		android:textSize="23sp"
-		android:typeface="monospace"
+		android:fontFamily="@font/roboto_mono"
 		/>
 		<TextView
 		android:id="@+id/station_distage"
@@ -37,23 +37,23 @@
 		android:textColor="#d0d0b0"
 		android:textSize="13sp"
 		/>
-		<TextView
+		<androidx.appcompat.widget.AppCompatTextView
 		android:id="@+id/station_qrg"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginRight="5sp"
 		android:textColor="#b0b080"
 		android:textSize="23sp"
-		android:typeface="monospace"
+		android:fontFamily="@font/roboto_mono"
 		/>
 	</LinearLayout>
-	<TextView
+	<androidx.appcompat.widget.AppCompatTextView
 	android:id="@+id/listmessage"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:textColor="#8080b0"
 	android:textSize="17sp"
-	android:typeface="monospace"
+	android:fontFamily="@font/roboto_mono"
 	android:focusable="false"
 	/>
 </LinearLayout>

@@ -231,6 +231,10 @@
 <string name="show_hub">Show Hub</string>
 <string name="show_map">Show Map</string>
 <string name="show_log">Show Log</string>
+<!-- bottom navigation labels (short) -->
+<string name="nav_log">Logs</string>
+<string name="nav_hub">Hub</string>
+<string name="nav_map">Maps</string>
 <string name="export_log">Export Log</string>
 <string name="export_empty">Nothing to export</string>
 <string name="clear_log">Clear Log</string>

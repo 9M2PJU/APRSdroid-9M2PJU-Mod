@@ -3,15 +3,15 @@
     <item
         android:id="@+id/nav_log"
         android:icon="@drawable/ic_nav_log"
-        android:title="@string/show_log" />
+        android:title="@string/nav_log" />
     <item
         android:id="@+id/nav_hub"
         android:icon="@drawable/ic_nav_hub"
-        android:title="@string/show_hub" />
+        android:title="@string/nav_hub" />
     <item
         android:id="@+id/nav_map"
         android:icon="@drawable/ic_nav_map"
-        android:title="@string/show_map" />
+        android:title="@string/nav_map" />
     <item
         android:id="@+id/nav_messages"
         android:icon="@drawable/ic_nav_messages"

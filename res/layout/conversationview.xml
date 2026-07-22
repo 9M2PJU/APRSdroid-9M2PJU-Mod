@@ -8,7 +8,7 @@
 		android:layout_height="wrap_content"
 		android:gravity="center"
 		android:orientation="horizontal">
-		<TextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/call"
 			android:layout_width="20sp"
 			android:layout_weight="0.4"
@@ -17,7 +17,7 @@
 			android:textColor="#b0b080"
 			android:textSize="24sp"
 			android:ellipsize="marquee"
-			android:typeface="monospace"
+			android:fontFamily="@font/roboto_mono"
 			/>
 		<LinearLayout
 			android:layout_width="30sp"
@@ -32,13 +32,13 @@
 				android:textColor="#b0b0b0"
 				android:textSize="16sp"
 				/>
-			<TextView
+			<androidx.appcompat.widget.AppCompatTextView
 				android:id="@+id/message"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:textColor="#8080b0"
 				android:textSize="16sp"
-				android:typeface="monospace"
+				android:fontFamily="@font/roboto_mono"
 				android:focusable="false"
 				android:ellipsize="marquee"
 				android:singleLine="true"

@@ -784,4 +784,21 @@
 <string name="aprsmy_me">Me</string>
 <string name="aprsmy_sent">Command sent to APRSMY.</string>
 
+<!-- MAILMY -->
+<string name="p__mailmy">MAILMY</string>
+<string name="mailmy_email">Email</string>
+<string name="mailmy_send">Send</string>
+<string name="mailmy_sendloc">SendLoc</string>
+<string name="mailmy_status">Status</string>
+<string name="mailmy_cancel">Cancel</string>
+<string name="mailmy_help">Help</string>
+<string name="mailmy_email_addr">Email address</string>
+<string name="mailmy_email_addr_hint">someone@email.com</string>
+<string name="mailmy_email_msg">Message (one line)</string>
+<string name="mailmy_email_msg_hint">Your message text</string>
+<string name="mailmy_sendloc_addr">Email address to send your position to</string>
+<string name="mailmy_sent">Command sent to MAILMY.</string>
+<string name="mailmy_no_addr">Enter an email address.</string>
+<string name="mailmy_no_msg">Enter a message.</string>
+
 </resources>

@@ -69,6 +69,15 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	var aprsmyBtnTop : Button = null
 	var aprsmyBtnMe : Button = null
 
+	// MAILMY UI elements
+	var mailmyButtons : View = null
+	var mailmyBtnEmail : Button = null
+	var mailmyBtnSend : Button = null
+	var mailmyBtnSendloc : Button = null
+	var mailmyBtnStatus : Button = null
+	var mailmyBtnCancel : Button = null
+	var mailmyBtnHelp : Button = null
+
 	// Broadcast receiver for live Winlink status updates
 	var winlinkStatusReceiver : BroadcastReceiver = null
 
@@ -83,6 +92,9 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 
 	def isAprsmyConversation = targetcall != null &&
 		targetcall.equalsIgnoreCase("APRSMY")
+
+	def isMailmyConversation = targetcall != null &&
+		targetcall.equalsIgnoreCase("MAILMY")
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
@@ -112,6 +124,10 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		// Inflate APRSMY buttons if this is an APRSMY conversation
 		if (isAprsmyConversation) {
 			setupAprsmyUI()
+		}
+		// Inflate MAILMY buttons if this is a MAILMY conversation
+		if (isMailmyConversation) {
+			setupMailmyUI()
 		}
 
 		val message = getIntent().getStringExtra("message")
@@ -644,6 +660,94 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		}
 		sendMessage(command)
 		Toast.makeText(this, R.string.aprsmy_sent, Toast.LENGTH_SHORT).show()
+	}
+
+	// ===== MAILMY =====
+
+	def setupMailmyUI() {
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		mailmyButtons = inflater.inflate(R.layout.mailmy_buttons, null, false)
+		mailmyBtnEmail = mailmyButtons.findViewById(R.id.mailmy_btn_email).asInstanceOf[Button]
+		mailmyBtnSend = mailmyButtons.findViewById(R.id.mailmy_btn_send).asInstanceOf[Button]
+		mailmyBtnSendloc = mailmyButtons.findViewById(R.id.mailmy_btn_sendloc).asInstanceOf[Button]
+		mailmyBtnStatus = mailmyButtons.findViewById(R.id.mailmy_btn_status).asInstanceOf[Button]
+		mailmyBtnCancel = mailmyButtons.findViewById(R.id.mailmy_btn_cancel).asInstanceOf[Button]
+		mailmyBtnHelp = mailmyButtons.findViewById(R.id.mailmy_btn_help).asInstanceOf[Button]
+
+		mailmyBtnEmail.setOnClickListener(new OnClickListener { override def onClick(v : View) = onMailmyEmail() })
+		mailmyBtnSend.setOnClickListener(new OnClickListener { override def onClick(v : View) = onMailmySimple("SEND") })
+		mailmyBtnSendloc.setOnClickListener(new OnClickListener { override def onClick(v : View) = onMailmySendloc() })
+		mailmyBtnStatus.setOnClickListener(new OnClickListener { override def onClick(v : View) = onMailmySimple("STATUS") })
+		mailmyBtnCancel.setOnClickListener(new OnClickListener { override def onClick(v : View) = onMailmySimple("CANCEL") })
+		mailmyBtnHelp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onMailmySimple("HELP") })
+
+		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
+		root.addView(mailmyButtons, 0)
+	}
+
+	def onMailmySimple(command : String) {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		sendMessage(command)
+		Toast.makeText(this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
+	}
+
+	// email <addr> <msg> — start draft
+	def onMailmyEmail() {
+		if (!AprsService.running) { showStartTrackingDialog(); return }
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.mailmy_email, null, false)
+		val addrField = view.findViewById(R.id.mailmy_email_addr_field).asInstanceOf[EditText]
+		val msgField = view.findViewById(R.id.mailmy_email_msg_field).asInstanceOf[EditText]
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.mailmy_email)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val addr = addrField.getText().toString.trim
+					val msg = msgField.getText().toString.trim
+					if (addr.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.mailmy_no_addr, Toast.LENGTH_SHORT).show()
+						return
+					}
+					if (msg.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.mailmy_no_msg, Toast.LENGTH_SHORT).show()
+						return
+					}
+					sendMessage("email %s %s".format(addr, msg))
+					Toast.makeText(MessageActivity.this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// SENDLOC <addr> — email your position
+	def onMailmySendloc() {
+		if (!AprsService.running) { showStartTrackingDialog(); return }
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.mailmy_sendloc, null, false)
+		val addrField = view.findViewById(R.id.mailmy_sendloc_addr_field).asInstanceOf[EditText]
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.mailmy_sendloc)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val addr = addrField.getText().toString.trim
+					if (addr.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.mailmy_no_addr, Toast.LENGTH_SHORT).show()
+						return
+					}
+					sendMessage("SENDLOC %s".format(addr))
+					Toast.makeText(MessageActivity.this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
 	}
 
 	override def onResume() {

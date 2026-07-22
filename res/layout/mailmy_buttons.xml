@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  MAILMY buttons — shown above the message list when the conversation
+  is with MAILMY. Email-to-APRS gateway.
+  Commands: email(E), SEND(S), SENDLOC(L), STATUS(ST), CANCEL(C), HELP(H)
+-->
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/mailmy_buttons"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="#222" >
+
+	<!-- Title row -->
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:padding="4dp" >
+
+		<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:layout_weight="1"
+		android:text="@string/p__mailmy"
+		android:textColor="#e91e63"
+		android:textSize="12sp"
+		android:paddingLeft="6dp" />
+	</LinearLayout>
+
+	<!-- Scrollable command buttons -->
+	<HorizontalScrollView
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:scrollbars="none" >
+
+		<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:padding="4dp" >
+
+			<Button android:id="@+id/mailmy_btn_email"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/mailmy_email"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/mailmy_btn_send"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/mailmy_send"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/mailmy_btn_sendloc"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/mailmy_sendloc"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/mailmy_btn_status"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/mailmy_status"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/mailmy_btn_cancel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/mailmy_cancel"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/mailmy_btn_help"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/mailmy_help"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+		</LinearLayout>
+	</HorizontalScrollView>
+</LinearLayout>

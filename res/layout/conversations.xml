@@ -52,6 +52,12 @@
 		android:layout_height="wrap_content"
 		android:text="@string/p__aprsmy"
 		/>
+	<Button
+		android:id="@+id/mailmy_conversation"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/p__mailmy"
+		/>
 	<com.google.android.material.bottomnavigation.BottomNavigationView
 		android:id="@+id/bottom_nav"
 		android:layout_width="match_parent"

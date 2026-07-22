@@ -32,8 +32,17 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	var winlinkBtnCompose : Button = null
 	var winlinkBtnLogout : Button = null
 
+	// WTSAPP UI elements (only inflated when talking to WTSAPP)
+	var wtsappButtons : View = null
+	var wtsappBtnSend : Button = null
+	var wtsappBtnSetAlias : Button = null
+	var wtsappBtnRemoveAlias : Button = null
+
 	def isWinlinkConversation = targetcall != null &&
 		(targetcall.equalsIgnoreCase("WLNK-1") || targetcall.equalsIgnoreCase("WLNK"))
+
+	def isWtsappConversation = targetcall != null &&
+		targetcall.equalsIgnoreCase("WTSAPP")
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
@@ -51,6 +60,10 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		// Inflate Winlink buttons if this is a WLNK-1 conversation
 		if (isWinlinkConversation) {
 			setupWinlinkUI()
+		}
+		// Inflate WTSAPP buttons if this is a WTSAPP conversation
+		if (isWtsappConversation) {
+			setupWtsappUI()
 		}
 
 		val message = getIntent().getStringExtra("message")
@@ -190,6 +203,136 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 						case None =>
 							Toast.makeText(MessageActivity.this, R.string.winlink_not_logged_in, Toast.LENGTH_LONG).show()
 					}
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// ===== WTSAPP (APRS to WhatsApp Gateway) =====
+
+	def setupWtsappUI() {
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE)
+				.asInstanceOf[LayoutInflater]
+		wtsappButtons = inflater.inflate(R.layout.wtsapp_buttons, null, false)
+		wtsappBtnSend = wtsappButtons.findViewById(R.id.wtsapp_btn_send).asInstanceOf[Button]
+		wtsappBtnSetAlias = wtsappButtons.findViewById(R.id.wtsapp_btn_set_alias).asInstanceOf[Button]
+		wtsappBtnRemoveAlias = wtsappButtons.findViewById(R.id.wtsapp_btn_remove_alias).asInstanceOf[Button]
+
+		wtsappBtnSend.setOnClickListener(new OnClickListener {
+			override def onClick(v : View) : Unit = onWtsappSend()
+		})
+		wtsappBtnSetAlias.setOnClickListener(new OnClickListener {
+			override def onClick(v : View) : Unit = onWtsappSetAlias()
+		})
+		wtsappBtnRemoveAlias.setOnClickListener(new OnClickListener {
+			override def onClick(v : View) : Unit = onWtsappRemoveAlias()
+		})
+
+		// Insert the WTSAPP buttons at the top of the message activity
+		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
+		root.addView(wtsappButtons, 0)
+	}
+
+	// Send a WhatsApp message: formats as "@<recipient> <message>"
+	def onWtsappSend() {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE)
+				.asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.wtsapp_compose, null, false)
+		val recipientField = view.findViewById(R.id.wtsapp_recipient_field).asInstanceOf[EditText]
+		val messageField = view.findViewById(R.id.wtsapp_message_field).asInstanceOf[EditText]
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.wtsapp_send)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val recipient = recipientField.getText().toString.trim
+					val message = messageField.getText().toString.trim
+					if (recipient.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_recipient, Toast.LENGTH_SHORT).show()
+						return
+					}
+					if (message.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_message, Toast.LENGTH_SHORT).show()
+						return
+					}
+					// Format: @<recipient> <message>
+					val formatted = "@%s %s".format(recipient, message)
+					sendMessage(formatted)
+					Toast.makeText(MessageActivity.this, R.string.wtsapp_sent, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// Set an alias: formats as "#SET <alias> <phone>"
+	def onWtsappSetAlias() {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE)
+				.asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.wtsapp_alias, null, false)
+		val aliasField = view.findViewById(R.id.wtsapp_alias_field).asInstanceOf[EditText]
+		val phoneField = view.findViewById(R.id.wtsapp_phone_field).asInstanceOf[EditText]
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.wtsapp_set_alias)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val alias = aliasField.getText().toString.trim
+					val phone = phoneField.getText().toString.trim
+					if (alias.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_alias, Toast.LENGTH_SHORT).show()
+						return
+					}
+					if (phone.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_phone, Toast.LENGTH_SHORT).show()
+						return
+					}
+					// Format: #SET <alias> <phone>
+					val formatted = "#SET %s %s".format(alias, phone)
+					sendMessage(formatted)
+					Toast.makeText(MessageActivity.this, R.string.wtsapp_alias_set, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// Remove an alias: formats as "#RM <alias>"
+	def onWtsappRemoveAlias() {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE)
+				.asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.wtsapp_remove, null, false)
+		val aliasField = view.findViewById(R.id.wtsapp_remove_alias_field).asInstanceOf[EditText]
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.wtsapp_remove_alias)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val alias = aliasField.getText().toString.trim
+					if (alias.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_alias, Toast.LENGTH_SHORT).show()
+						return
+					}
+					// Format: #RM <alias>
+					val formatted = "#RM %s".format(alias)
+					sendMessage(formatted)
+					Toast.makeText(MessageActivity.this, R.string.wtsapp_alias_removed, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)

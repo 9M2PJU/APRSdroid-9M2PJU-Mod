@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  WTSAPP action buttons — shown above the message list when the
+  conversation is with WTSAPP (APRS to WhatsApp Gateway).
+  Inflated by MessageActivity when targetcall is WTSAPP.
+-->
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/wtsapp_buttons"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:padding="4dp"
+android:background="#1a472a" >
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_gravity="center_vertical"
+android:layout_weight="1"
+android:text="@string/p__wtsapp"
+android:textColor="#25D366"
+android:textSize="12sp"
+android:paddingLeft="6dp" />
+
+<Button android:id="@+id/wtsapp_btn_send"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="@string/wtsapp_send"
+android:textSize="12sp"
+android:minWidth="48dp" />
+
+<Button android:id="@+id/wtsapp_btn_set_alias"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="@string/wtsapp_set_alias"
+android:textSize="12sp"
+android:minWidth="48dp" />
+
+<Button android:id="@+id/wtsapp_btn_remove_alias"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="@string/wtsapp_remove_alias"
+android:textSize="12sp"
+android:minWidth="48dp" />
+
+</LinearLayout>

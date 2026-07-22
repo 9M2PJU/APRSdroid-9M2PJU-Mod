@@ -695,4 +695,25 @@
 <string name="winlink_delete">Delete</string>
 <string name="winlink_pending">Pending: %1$d</string>
 
+<!-- WTSAPP (APRS to WhatsApp Gateway) -->
+<string name="p__wtsapp">WTSAPP</string>
+<string name="wtsapp_send">Send WhatsApp</string>
+<string name="wtsapp_set_alias">Set Alias</string>
+<string name="wtsapp_remove_alias">Remove Alias</string>
+<string name="wtsapp_recipient">Phone number or alias</string>
+<string name="wtsapp_recipient_hint">+1234567890 or alias name</string>
+<string name="wtsapp_message">Message</string>
+<string name="wtsapp_message_hint">Type your message…</string>
+<string name="wtsapp_alias">Alias name</string>
+<string name="wtsapp_alias_hint">me</string>
+<string name="wtsapp_phone">Phone number (international format)</string>
+<string name="wtsapp_phone_hint">+1234567890</string>
+<string name="wtsapp_sent">WhatsApp message sent.</string>
+<string name="wtsapp_alias_set">Alias set.</string>
+<string name="wtsapp_alias_removed">Alias removed.</string>
+<string name="wtsapp_no_recipient">Enter a phone number or alias.</string>
+<string name="wtsapp_no_message">Enter a message.</string>
+<string name="wtsapp_no_alias">Enter an alias name.</string>
+<string name="wtsapp_no_phone">Enter a phone number.</string>
+
 </resources>

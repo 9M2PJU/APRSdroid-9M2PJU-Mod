@@ -490,8 +490,8 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		botBtnWhereami.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("whereami") })
 		botBtnRiseset.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("riseset") })
 		botBtnSatpass.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotSatpass() })
-		botBtnSota.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("sota") })
-		botBtnPota.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("pota") })
+		botBtnSota.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotSotaOrPota("sota", R.string.bot_sota_or_alerts) })
+		botBtnPota.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotSotaOrPota("pota", R.string.bot_pota_or_alerts) })
 		botBtnPolice.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("police") })
 		botBtnHospital.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("hospital") })
 		botBtnFireStation.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBotCommand("fire_station") })
@@ -581,6 +581,29 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 						return
 					}
 					sendMessage("satpass %s".format(name))
+					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// sota/pota — choose spots or alerts
+	def onBotSotaOrPota(command : String, titleId : Int) {
+		if (!AprsService.running) { showStartTrackingDialog(); return }
+		new AlertDialog.Builder(this)
+			.setTitle(titleId)
+			.setItems(Array[CharSequence](
+				getString(R.string.bot_spots),
+				getString(R.string.bot_alerts)
+			), new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val sub = which match {
+						case 0 => "spots"
+						case 1 => "alerts"
+						case _ => "spots"
+					}
+					sendMessage("%s %s".format(command, sub))
 					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})

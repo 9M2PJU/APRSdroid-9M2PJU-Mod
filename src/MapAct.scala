@@ -197,12 +197,18 @@ class MapAct extends MapActivity with MapMenuHelper {
 	// Helper: load online OSM tiles
 	def loadOnlineMap() {
 		try {
-			if (mapview.getMapFile == null) {
-				val map_source = MapGeneratorInternal.MAPNIK
-				val map_gen = OsmTileDownloader.create(this)
-				map_gen.setUserAgent(getString(R.string.build_version))
-				mapview.setMapGenerator(map_gen)
-			}
+			// Always install the online OSM tile generator when called -- the
+			// caller (reloadMapAndTheme) has already decided that online mode
+			// is wanted (either offline mode is off, or the offline map file
+			// is invalid/missing). Guarding on `mapview.getMapFile == null`
+			// is wrong: if a map file was set in a previous session while
+			// offline mode was enabled, getMapFile stays non-null and the
+			// online generator is never installed, so the map keeps rendering
+			// from the stale offline file even after the user disabled
+			// offline mode.
+			val map_gen = OsmTileDownloader.create(this)
+			map_gen.setUserAgent(getString(R.string.build_version))
+			mapview.setMapGenerator(map_gen)
 		} catch {
 			case _ : UnsupportedOperationException =>  /* ignore */
 		}

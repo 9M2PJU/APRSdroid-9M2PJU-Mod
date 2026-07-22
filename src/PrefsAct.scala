@@ -162,14 +162,12 @@ class PrefsAct extends PreferenceActivity {
 				}
 			})
 		}
-		// Warn user to restart app when offline map is toggled
+		// Warn user to restart app when offline map is toggled (enable or disable)
 		val offlineMapPref = findPreference("p.offlinemap")
 		if (offlineMapPref != null) {
 			offlineMapPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				def onPreferenceChange(preference : Preference, newValue : Object) : Boolean = {
-					val enabled = newValue.asInstanceOf[Boolean]
-					if (enabled)
-						showRestartDialog()
+					showRestartDialog(newValue.asInstanceOf[Boolean])
 					true
 				}
 			})
@@ -178,10 +176,11 @@ class PrefsAct extends PreferenceActivity {
 		fileChooserPreference("tilepath", 123456, R.string.p_mbtiles_file_picker_title)
 	}
 
-	def showRestartDialog() {
+	def showRestartDialog(enabled : Boolean) {
 		new AlertDialog.Builder(this)
 			.setTitle(R.string.restart_required_title)
-			.setMessage(R.string.restart_required_body)
+			.setMessage(if (enabled) R.string.restart_required_body_enable
+				else R.string.restart_required_body_disable)
 			.setPositiveButton(R.string.restart_now, new DialogInterface.OnClickListener() {
 				override def onClick(d : DialogInterface, which : Int) {
 					val pm = getPackageManager().getLaunchIntentForPackage(getPackageName())

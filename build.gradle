@@ -102,6 +102,16 @@ android {
 		sourceCompatibility JavaVersion.VERSION_1_8
 		targetCompatibility JavaVersion.VERSION_1_8
 	}
+	// Fork javac to a newer JDK if available -- JDK 8's javac crashes on
+	// annotations that use ElementType.MODULE (introduced in JDK 9) which
+	// appear in newer transitive dependencies. This is a local build fix
+	// and is skipped when the property is not set.
+	if (project.hasProperty("javacForkHome")) {
+		tasks.withType(JavaCompile) {
+			options.fork = true
+			options.forkOptions.javaHome = file(project.property("javacForkHome"))
+		}
+	}
 	packagingOptions {
 		exclude 'META-INF/com.android.tools/proguard/coroutines.pro'
 		exclude 'META-INF/proguard/coroutines.pro'

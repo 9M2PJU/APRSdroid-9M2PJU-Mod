@@ -78,6 +78,10 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
   between tabs
 - **Android 14+ crash fix** — `RECEIVER_NOT_EXPORTED` flag for
   `registerReceiver` (required by Android 14/Upside Down Cake)
+- **APRS messaging bots &amp; services** — one-tap access to 9 APRS-based
+  services: Winlink (WLNK-1), WTSAPP, 9M2PJU-4 BOT, APRSMY Net, MAILMY,
+  REPEATER, CALLMY, BBSMY, and GAMEMY — each with quick-action buttons
+  that send correctly formatted APRS commands
 - **App name and About dialog unified** across all 52 locale files
 - **Version bumped** to `v2.0.0` (tocall `APDR20`)
 
@@ -103,6 +107,96 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 - **TCP/IP connectivity** to APRS-IS
 - **AFSK modem** for audio-based TNC
 - **USB TNC support**
+
+---
+
+## APRS Messaging Bots &amp; Services
+
+The **Messages** screen provides one-tap access to a growing suite of
+APRS-based bots and gateway services. Each service is a remote callsign
+you can converse with using quick-action buttons — no need to memorize
+commands. Just open a conversation, tap a button, and the app sends the
+correctly formatted APRS message for you.
+
+### Conversations screen layout
+
+```
++-----------------------------------------+
+|          Send message to...             |  ← start a new conversation
++-----------+-----------+-----------+
+|  Winlink  |  WTSAPP   |9M2PJU-4..|  ← row 1
++-----------+-----------+-----------+
+| APRSMY Net|  MAILMY   | REPEATER  |  ← row 2
++-----------+-----------+-----------+
+|  CALLMY   |  BBSMY    |  GAMEMY   |  ← row 3
++-----------+-----------+-----------+
+```
+
+### Service reference
+
+| Service | Callsign | Type | Buttons | Description |
+|---|---|---|---|---|
+| **Winlink** | `WLNK-1` | Stateful | 9 | Send/receive Winlink email via APRSLink. Login with password challenge, list/read/reply/forward/kill messages, compose multi-line emails. |
+| **WTSAPP** | `WTSAPP` | Stateless | 3 | WhatsApp gateway — send WhatsApp messages via APRS. Manage aliases, compose messages, remove aliases. |
+| **9M2PJU-4 BOT** | `9M2PJU-4` | Stateless | 13 | Multi-function APRS bot: weather (Today), position messaging (PosMsg), location lookup (WhereIs, WhereAmI), satellite info (RiseSet, SatPass), SOTA/POTA spots &amp; alerts, nearby Police/Hospital/Fire stations, HF propagation forecast (Prop), and Help. |
+| **APRSMY Net** | `APRSMY` | Stateless | 7 | Malaysian APRS network service. Check in, get net info, list check-ins, and more. |
+| **MAILMY** | `MAILMY` | Stateless | 6 | Lightweight email gateway. Send email with optional position, check delivery status, cancel pending sends. |
+| **REPEATER** | `REPEAT` | Stateless | 2 | Find nearby amateur radio repeaters. Specify number, band (2m/70cm/6m/10m/1.25m/33cm/23cm), and optional capability filters (echolink, dstar, ares, etc.). |
+| **CALLMY** | `CALLMY` | Stateless | 2 | Check Malaysian amateur radio callsign info and license expiry. Enter any Malaysian callsign to get registration and expiry details. |
+| **BBSMY** | `BBSMY` | Stateless | 6 | APRS BBS (bulletin board system). List messages, read by number, post public bulletins, send private messages, post urgent notices. |
+| **GAMEMY** | `GAMEMY` | Stateless | 7 | APRS trivia game. Start a game, get hints, skip questions, check your score, view the leaderboard, and stop the game. |
+
+### Winlink (WLNK-1) — APRSLink email gateway
+
+Winlink integration uses the [APRSLink](https://winlink.org/APRSLink)
+protocol to send and receive Winlink email via APRS messages addressed
+to `WLNK-1`. The app handles the full login handshake automatically:
+
+1. **Login** — sends a command to WLNK-1, receives a password challenge,
+   computes the response from your Winlink password, and sends it back.
+2. Once logged in, you can **List** pending messages, **Read** by number,
+   **Reply**, **Compose** new emails (multi-line, auto-split into 67-char
+   APRS messages), **Forward** to another address, and **Kill** (delete)
+   messages.
+3. **Logout** sends the `B` command to end the session.
+
+> **Setup:** Set your callsign and Winlink password in
+> **Preferences → Messaging** before using Winlink. Enable **Auto-login**
+> to automatically log in when the APRS service starts.
+
+### 9M2PJU-4 BOT — Multi-function APRS bot
+
+The 9M2PJU-4 BOT is a multi-purpose APRS information service operated by
+9M2PJU. It provides 13 quick-access commands:
+
+| Button | Command | Function |
+|---|---|---|
+| Help | `help` | List available commands |
+| Today | `today` | Today's weather summary |
+| PosMsg | `posmsg` | Send position message to email |
+| WhereIs | `whereis` | Look up a location |
+| WhereAmI | `whereami` | Report your current location |
+| RiseSet | `riseset` | Sunrise/sunset times |
+| SatPass | `satpass` | Satellite pass predictions |
+| SOTA | `sota spots` / `sota alerts` | SOTA (Summits on the Air) spots or alerts |
+| POTA | `pota spots` / `pota alerts` | POTA (Parks on the Air) spots or alerts |
+| Police | `police` | Nearby police stations |
+| Hospital | `hospital` | Nearby hospitals |
+| Fire Stn | `fire` | Nearby fire stations |
+| Prop | `prop` | HF propagation forecast |
+
+### REPEATER (REPEAT) — Repeater lookup
+
+Find nearby amateur radio repeaters using the REPEAT protocol. The
+**Nearest** dialog lets you specify:
+
+- **Number** — how many repeaters to return (1–10, default 1)
+- **Band** — 2m, 70cm, 6m, 10m, 1.25m, 33cm, or 23cm (default 2m)
+- **Filters** — optional capability filters like `+echolink`, `+dstar`,
+  `+ares`, `+fusion`, `+dmr`, etc.
+
+The app sends the command `n [Num] [Band] [+Filter]` to `REPEAT` and
+displays the response in the conversation.
 
 ---
 

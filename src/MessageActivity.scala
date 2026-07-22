@@ -97,6 +97,16 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	var repeatBtnNearest : Button = null
 	var repeatBtnHelp : Button = null
 
+	// GAMEMY UI elements
+	var gamemyButtons : View = null
+	var gamemyBtnStart : Button = null
+	var gamemyBtnHint : Button = null
+	var gamemyBtnSkip : Button = null
+	var gamemyBtnScore : Button = null
+	var gamemyBtnTop : Button = null
+	var gamemyBtnStop : Button = null
+	var gamemyBtnHelp : Button = null
+
 	// Broadcast receiver for live Winlink status updates
 	var winlinkStatusReceiver : BroadcastReceiver = null
 
@@ -123,6 +133,9 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 
 	def isRepeatConversation = targetcall != null &&
 		targetcall.equalsIgnoreCase("REPEAT")
+
+	def isGamemyConversation = targetcall != null &&
+		targetcall.equalsIgnoreCase("GAMEMY")
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
@@ -168,6 +181,10 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		// Inflate REPEAT buttons if this is a REPEAT conversation
 		if (isRepeatConversation) {
 			setupRepeatUI()
+		}
+		// Inflate GAMEMY buttons if this is a GAMEMY conversation
+		if (isGamemyConversation) {
+			setupGamemyUI()
 		}
 
 		val message = getIntent().getStringExtra("message")
@@ -1043,6 +1060,40 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			})
 			.setNegativeButton(android.R.string.cancel, null)
 			.show()
+	}
+
+	// ===== GAMEMY =====
+
+	def setupGamemyUI() {
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		gamemyButtons = inflater.inflate(R.layout.gamemy_buttons, null, false)
+		gamemyBtnStart = gamemyButtons.findViewById(R.id.gamemy_btn_start).asInstanceOf[Button]
+		gamemyBtnHint = gamemyButtons.findViewById(R.id.gamemy_btn_hint).asInstanceOf[Button]
+		gamemyBtnSkip = gamemyButtons.findViewById(R.id.gamemy_btn_skip).asInstanceOf[Button]
+		gamemyBtnScore = gamemyButtons.findViewById(R.id.gamemy_btn_score).asInstanceOf[Button]
+		gamemyBtnTop = gamemyButtons.findViewById(R.id.gamemy_btn_top).asInstanceOf[Button]
+		gamemyBtnStop = gamemyButtons.findViewById(R.id.gamemy_btn_stop).asInstanceOf[Button]
+		gamemyBtnHelp = gamemyButtons.findViewById(R.id.gamemy_btn_help).asInstanceOf[Button]
+
+		gamemyBtnStart.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("S") })
+		gamemyBtnHint.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("H") })
+		gamemyBtnSkip.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("K") })
+		gamemyBtnScore.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("C") })
+		gamemyBtnTop.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("T") })
+		gamemyBtnStop.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("P") })
+		gamemyBtnHelp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("?") })
+
+		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
+		root.addView(gamemyButtons, 0)
+	}
+
+	def onGamemyCommand(command : String) {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		sendMessage(command)
+		Toast.makeText(this, R.string.gamemy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	override def onResume() {

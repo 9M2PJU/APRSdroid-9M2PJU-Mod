@@ -29,6 +29,7 @@ class ConversationsActivity extends LoadingListActivity
 	lazy val callmyConversationBtn = findViewById(R.id.callmy_conversation).asInstanceOf[Button]
 	lazy val bbsmyConversationBtn = findViewById(R.id.bbsmy_conversation).asInstanceOf[Button]
 	lazy val repeatConversationBtn = findViewById(R.id.repeat_conversation).asInstanceOf[Button]
+	lazy val gamemyConversationBtn = findViewById(R.id.gamemy_conversation).asInstanceOf[Button]
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class ConversationsActivity extends LoadingListActivity
 		callmyConversationBtn.setOnClickListener(this);
 		bbsmyConversationBtn.setOnClickListener(this);
 		repeatConversationBtn.setOnClickListener(this);
+		gamemyConversationBtn.setOnClickListener(this);
 		setupBottomNav()
 
 		getListView().setOnCreateContextMenuListener(this);
@@ -85,6 +87,8 @@ class ConversationsActivity extends LoadingListActivity
 			openMessaging("BBSMY")
 		case R.id.repeat_conversation =>
 			openMessaging("REPEAT")
+		case R.id.gamemy_conversation =>
+			openMessaging("GAMEMY")
 		}
 	}
 

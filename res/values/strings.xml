@@ -802,6 +802,17 @@
 <string name="mailmy_no_msg">Enter a message.</string>
 
 <!-- CALLMY -->
+<string name="p__gamemy">GAMEMY</string>
+<string name="gamemy_start">Start</string>
+<string name="gamemy_hint">Hint</string>
+<string name="gamemy_skip">Skip</string>
+<string name="gamemy_score">Score</string>
+<string name="gamemy_top">Top</string>
+<string name="gamemy_stop">Stop</string>
+<string name="gamemy_help">Help</string>
+<string name="gamemy_sent">Command sent to GAMEMY.</string>
+
+<!-- CALLMY -->
 <string name="p__callmy">CALLMY</string>
 <string name="callmy_callsign">Callsign</string>
 <string name="callmy_callsign_hint">9M2PJU</string>

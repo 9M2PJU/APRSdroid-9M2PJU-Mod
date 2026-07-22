@@ -77,7 +77,7 @@
 			
 			app:layout_gravity="fill_horizontal"
 			android:text="@string/p__bot"
-			android:textSize="10sp"
+			android:textSize="11sp"
 			android:maxLines="1"
 			android:ellipsize="end"
 			android:padding="4dp"

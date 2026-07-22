@@ -202,8 +202,15 @@ class AprsService extends Service {
 
 		// Auto-login to Winlink if enabled and password is set
 		if (prefs.isWinlinkAutoLogin() && prefs.getWinlinkPassword().nonEmpty) {
-			Log.i(TAG, "auto-login to Winlink enabled, initiating")
-			winlinkService.login()
+			if (winlinkService.isLoggedIn) {
+				Log.d(TAG, "already logged in to Winlink, skipping auto-login")
+			} else if (winlinkService.getState == WinlinkService.STATE_LOGIN_STARTED ||
+				   winlinkService.getState == WinlinkService.STATE_CHALLENGE) {
+				Log.d(TAG, "Winlink login already in progress, skipping")
+			} else {
+				Log.i(TAG, "auto-login to Winlink enabled, initiating")
+				winlinkService.login()
+			}
 		}
 
 		sendBroadcast(new Intent(SERVICE_STARTED)

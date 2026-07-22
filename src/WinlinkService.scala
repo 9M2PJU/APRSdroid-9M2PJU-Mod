@@ -47,6 +47,9 @@ object WinlinkService {
 	val COMPOSE_SP_SENT     = 1  // SP line sent, sending body lines
 	val COMPOSE_DONE        = 2  // /EX sent, waiting for confirmation
 
+	// Login timeout: 2 minutes (if no response from WLNK-1, reset)
+	val LOGIN_TIMEOUT_MS = 2L * 60 * 1000
+
 	// Session timeout: 2 hours (per Winlink spec)
 	val SESSION_TIMEOUT_MS = 2L * 60 * 60 * 1000
 }
@@ -59,6 +62,7 @@ class WinlinkService(s : AprsService) {
 	private var state : Int = STATE_LOGGED_OUT
 	private var composeState : Int = COMPOSE_IDLE
 	private var loginTime : Long = 0
+	private var loginStartTime : Long = 0
 	private var lastChallengeTime : Long = 0
 	private var challengeAnswer : String = ""
 
@@ -77,8 +81,20 @@ class WinlinkService(s : AprsService) {
 	// Callback to update UI (set by MessageActivity when it's active)
 	@volatile var statusCallback : (Int => Unit) = null
 
-	def getState = state
-	def isLoggedIn = state == STATE_LOGGED_IN
+	def getState = {
+		// Check for login timeout — if stuck in LOGIN_STARTED or CHALLENGE
+		// for too long, reset to LOGGED_OUT so buttons work again
+		if (state == STATE_LOGIN_STARTED || state == STATE_CHALLENGE) {
+			if (loginStartTime > 0 &&
+			    (System.currentTimeMillis - loginStartTime) > LOGIN_TIMEOUT_MS) {
+				Log.w(TAG, "login timed out after %dms, resetting to logged out".format(
+					System.currentTimeMillis - loginStartTime))
+				setState(STATE_LOGGED_OUT)
+			}
+		}
+		state
+	}
+	def isLoggedIn = getState == STATE_LOGGED_IN
 	def isComposing = composeState != COMPOSE_IDLE
 
 	private def setState(newState : Int) {
@@ -134,6 +150,7 @@ class WinlinkService(s : AprsService) {
 			return
 		}
 		Log.i(TAG, "initiating Winlink login by sending L command")
+		loginStartTime = System.currentTimeMillis()
 		setState(STATE_LOGIN_STARTED)
 		// Send "L" — WLNK-1 will respond with a login challenge
 		messageList.clear()
@@ -444,6 +461,7 @@ class WinlinkService(s : AprsService) {
 	private def handleLoginSuccess(text : String) {
 		Log.i(TAG, "login success: " + text)
 		loginTime = System.currentTimeMillis()
+		loginStartTime = 0
 		setState(STATE_LOGGED_IN)
 		storeFromWlnk(text, null)
 	}
@@ -503,6 +521,7 @@ class WinlinkService(s : AprsService) {
 		messageList.clear()
 		readBuffer.clear()
 		loginTime = 0
+		loginStartTime = 0
 		challengeAnswer = ""
 	}
 }

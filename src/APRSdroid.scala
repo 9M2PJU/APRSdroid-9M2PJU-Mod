@@ -1,8 +1,9 @@
 package org.aprsdroid.app
 
 import _root_.android.content.Intent
-import _root_.android.os.{Bundle, Handler}
+import _root_.android.os.{Build, Bundle, Handler}
 import _root_.android.preference.PreferenceManager
+import _root_.android.view.{View, WindowInsets, WindowInsetsController}
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 
@@ -10,11 +11,42 @@ class APRSdroid extends AppCompatActivity {
 	val SPLASH_DELAY_MS = 2000
 
 	def replaceAct(act : Class[_]) {
+		// Restore system bars before navigating away
+		showSystemBars()
 		val i = new Intent(this, act)
 		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION)
 		startActivity(i)
 		overridePendingTransition(0, 0)
 		finish()
+	}
+
+	def hideSystemBars() {
+		if (Build.VERSION.SDK_INT >= 30) {
+			val controller = getWindow().getInsetsController()
+			if (controller != null) {
+				controller.hide(WindowInsets.Type.navigationBars())
+				controller.setSystemBarsBehavior(
+					WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)
+			}
+		} else {
+			getWindow().getDecorView().setSystemUiVisibility(
+				View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+				View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+				View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+				View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+				View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+		}
+	}
+
+	def showSystemBars() {
+		if (Build.VERSION.SDK_INT >= 30) {
+			val controller = getWindow().getInsetsController()
+			if (controller != null) {
+				controller.show(WindowInsets.Type.navigationBars())
+			}
+		} else {
+			getWindow().getDecorView().setSystemUiVisibility(0)
+		}
 	}
 
 	override def onCreate(savedInstanceState : Bundle) {
@@ -28,6 +60,8 @@ class APRSdroid extends AppCompatActivity {
 		// extends behind the nav bar, keeping it dark.
 		getWindow().setDecorFitsSystemWindows(false)
 		setContentView(R.layout.splash)
+		// Hide the navigation bar for a true full-screen splash
+		hideSystemBars()
 		val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
 		// if this is a USB device, auto-launch the service

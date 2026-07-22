@@ -5,4 +5,7 @@
 	<item android:id="@+id/profile_export"
 		android:title="@string/profile_export"
 		android:icon="@android:drawable/ic_menu_save" />
+	<item android:id="@+id/language"
+		android:title="@string/p_language"
+		android:icon="@android:drawable/ic_menu_preferences" />
 </menu>

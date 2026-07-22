@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Locales supported by APRSdroid. Used by Android 13+ (API 33+) to populate
+  Settings -> System -> App languages -> APRSdroid, and by AppCompat's
+  AppCompatDelegate.setApplicationLocales() for the in-app language picker
+  (which works back to minSdk 19).
+
+  Folder names in res/values-* use the legacy ISO 639-1 codes "in" (Indonesian)
+  and "iw" (Hebrew); here we declare the modern BCP-47 codes ("id", "he") and
+  Android resolves them to the legacy resource folders automatically.
+
+  Default (omitted below) is English (US) — res/values/strings.xml.
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="af"    /> <!-- Afrikaans -->
+    <locale android:name="ar"    /> <!-- Arabic -->
+    <locale android:name="bg"    /> <!-- Bulgarian -->
+    <locale android:name="br"    /> <!-- Breton -->
+    <locale android:name="bs"    /> <!-- Bosnian -->
+    <locale android:name="ca"    /> <!-- Catalan -->
+    <locale android:name="ceb"   /> <!-- Cebuano -->
+    <locale android:name="cs"    /> <!-- Czech -->
+    <locale android:name="da"    /> <!-- Danish -->
+    <locale android:name="de"    /> <!-- German -->
+    <locale android:name="el"    /> <!-- Greek -->
+    <locale android:name="en-AU" /> <!-- English (Australia) -->
+    <locale android:name="en-GB" /> <!-- English (UK) -->
+    <locale android:name="es"    /> <!-- Spanish -->
+    <locale android:name="et"    /> <!-- Estonian -->
+    <locale android:name="fi"    /> <!-- Finnish -->
+    <locale android:name="fr"    /> <!-- French -->
+    <locale android:name="fr-CA" /> <!-- French (Canada) -->
+    <locale android:name="gl"    /> <!-- Galician -->
+    <locale android:name="hi"    /> <!-- Hindi -->
+    <locale android:name="hr"    /> <!-- Croatian -->
+    <locale android:name="hu"    /> <!-- Hungarian -->
+    <locale android:name="ia"    /> <!-- Interlingua -->
+    <locale android:name="id"    /> <!-- Indonesian (res/values-in) -->
+    <locale android:name="is"    /> <!-- Icelandic -->
+    <locale android:name="it"    /> <!-- Italian -->
+    <locale android:name="he"    /> <!-- Hebrew (res/values-iw) -->
+    <locale android:name="ja"    /> <!-- Japanese -->
+    <locale android:name="kab"   /> <!-- Kabyle -->
+    <locale android:name="ko"    /> <!-- Korean -->
+    <locale android:name="ku"    /> <!-- Kurdish -->
+    <locale android:name="lb"    /> <!-- Luxembourgish -->
+    <locale android:name="lij"   /> <!-- Ligurian -->
+    <locale android:name="ms"    /> <!-- Malay -->
+    <locale android:name="nan"   /> <!-- Min Nan Chinese -->
+    <locale android:name="nb"    /> <!-- Norwegian Bokmål -->
+    <locale android:name="ne"    /> <!-- Nepali -->
+    <locale android:name="nl"    /> <!-- Dutch -->
+    <locale android:name="oc"    /> <!-- Occitan -->
+    <locale android:name="pl"    /> <!-- Polish -->
+    <locale android:name="pt"    /> <!-- Portuguese -->
+    <locale android:name="pt-BR" /> <!-- Portuguese (Brazil) -->
+    <locale android:name="ro"    /> <!-- Romanian -->
+    <locale android:name="ru"    /> <!-- Russian -->
+    <locale android:name="sk"    /> <!-- Slovak -->
+    <locale android:name="sl"    /> <!-- Slovenian -->
+    <locale android:name="sr"    /> <!-- Serbian -->
+    <locale android:name="sv"    /> <!-- Swedish -->
+    <locale android:name="th"    /> <!-- Thai -->
+    <locale android:name="tr"    /> <!-- Turkish -->
+    <locale android:name="uk"    /> <!-- Ukrainian -->
+    <locale android:name="zh-CN" /> <!-- Chinese (Simplified) -->
+    <locale android:name="zh-HK" /> <!-- Chinese (Hong Kong) -->
+    <locale android:name="zh-TW" /> <!-- Chinese (Traditional) -->
+</locale-config>

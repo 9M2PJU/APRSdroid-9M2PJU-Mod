@@ -41,6 +41,7 @@
 	    android:usesCleartextTraffic="true"
 	    android:requestLegacyExternalStorage="true"
 	    android:allowBackup="true"
+	    android:localeConfig="@xml/locales_config"
 	    android:theme="@style/AppTheme" >
 
 	<meta-data

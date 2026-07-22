@@ -11,6 +11,7 @@ import _root_.android.preference.Preference.OnPreferenceClickListener
 import _root_.android.preference.{PreferenceActivity, PreferenceManager}
 import _root_.android.view.{Menu, MenuItem}
 import _root_.android.widget.Toast
+import _root_.java.util.Locale
 import java.text.SimpleDateFormat
 import java.io.{File, PrintWriter}
 import java.util.Date
@@ -18,6 +19,8 @@ import android.provider.{Settings, DocumentsContract, MediaStore}
 
 import org.json.JSONObject
 import androidx.core.view.WindowCompat
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 
 class PrefsAct extends PreferenceActivity {
 	lazy val db = StorageDatabase.open(this)
@@ -310,7 +313,77 @@ class PrefsAct extends PreferenceActivity {
 		case R.id.profile_export =>
 			exportPrefs()
 			true
+		case R.id.language =>
+			showLanguageDialog()
+			true
 		case _ => super.onOptionsItemSelected(mi)
 		}
+	}
+
+	// BCP-47 language tags supported by APRSdroid. Must match the entries in
+	// res/xml/locales_config.xml. Order is alphabetical by tag; the dialog
+	// sorts by display name at runtime. Legacy folder names "in"/"iw" are
+	// declared with their modern equivalents "id"/"he" — Android resolves
+	// them to res/values-in and res/values-iw automatically.
+	lazy val supportedLocales : Array[String] = Array(
+		"af", "ar", "bg", "br", "bs", "ca", "ceb", "cs", "da", "de",
+		"el", "en-AU", "en-GB", "es", "et", "fi", "fr", "fr-CA", "gl",
+		"hi", "hr", "hu", "ia", "id", "is", "it", "he", "ja", "kab",
+		"ko", "ku", "lb", "lij", "ms", "nan", "nb", "ne", "nl", "oc",
+		"pl", "pt", "pt-BR", "ro", "ru", "sk", "sl", "sr", "sv", "th",
+		"tr", "uk", "zh-CN", "zh-HK", "zh-TW"
+	)
+
+	// Returns the BCP-47 tag of the currently applied app locale, or null
+	// if the app is following the system default (no override set).
+	def getCurrentLocaleTag() : String = {
+		val applied = AppCompatDelegate.getApplicationLocales()
+		if (applied == null || applied.isEmpty) null
+		else applied.get(0).toLanguageTag()
+	}
+
+	def showLanguageDialog() {
+		// Build the list of labels: "System default" first, then one entry
+		// per supported locale, displayed in that locale's own language so
+		// users can recognise their language even if the UI is currently in
+		// a language they don't read.
+		val systemLabel = getString(R.string.p_language_system_default)
+		val sortedLocales = supportedLocales.sortBy { tag =>
+			Locale.forLanguageTag(tag).getDisplayName(
+				Locale.forLanguageTag(tag)).toLowerCase
+		}
+		val finalTags : Array[String] = "" +: sortedLocales
+		val finalLabels : Array[String] = systemLabel +: sortedLocales.map { tag =>
+			val loc = Locale.forLanguageTag(tag)
+			val name = loc.getDisplayName(loc)
+			if (name.nonEmpty) name else tag
+		}
+
+		val currentTag = getCurrentLocaleTag()
+		val checkedItem = if (currentTag == null) 0
+			else finalTags.indexOf(currentTag)
+		// AlertDialog.Builder.setSingleChoiceItems takes Array[CharSequence],
+		// and Array is invariant in Scala, so we convert element-wise.
+		val labelsCS : Array[CharSequence] = finalLabels.map(x => x : CharSequence)
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.p_language)
+			.setSingleChoiceItems(labelsCS, checkedItem,
+				new DialogInterface.OnClickListener() {
+					override def onClick(d : DialogInterface, which : Int) {
+						val tag = finalTags(which)
+						if (tag.isEmpty)
+							AppCompatDelegate.setApplicationLocales(
+								LocaleListCompat.getEmptyLocaleList())
+						else
+							AppCompatDelegate.setApplicationLocales(
+								LocaleListCompat.forLanguageTags(tag))
+						d.dismiss()
+						// Recreate so the new locale is applied immediately.
+						recreate()
+					}
+				})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
 	}
 }

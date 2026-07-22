@@ -801,4 +801,41 @@
 <string name="mailmy_no_addr">Enter an email address.</string>
 <string name="mailmy_no_msg">Enter a message.</string>
 
+<!-- GAMEMY -->
+<string name="p__gamemy">GAMEMY</string>
+<string name="gamemy_start">Start</string>
+<string name="gamemy_hint">Hint</string>
+<string name="gamemy_skip">Skip</string>
+<string name="gamemy_score">Score</string>
+<string name="gamemy_top">Top</string>
+<string name="gamemy_stop">Stop</string>
+<string name="gamemy_help">Help</string>
+<string name="gamemy_sent">Command sent to GAMEMY.</string>
+
+<!-- CALLMY -->
+<string name="p__callmy">CALLMY</string>
+<string name="callmy_callsign">Callsign</string>
+<string name="callmy_callsign_hint">9M2PJU</string>
+<string name="callmy_callsign_prompt">Enter callsign to look up</string>
+<string name="callmy_sent">Command sent to CALLMY.</string>
+<string name="callmy_no_callsign">Enter a callsign.</string>
+
+<!-- BBSMY -->
+<string name="p__bbsmy">BBSMY</string>
+<string name="bbsmy_list">List</string>
+<string name="bbsmy_msg">Msg</string>
+<string name="bbsmy_post">Post</string>
+<string name="bbsmy_send">Send</string>
+<string name="bbsmy_posturgent">PostUrgent</string>
+<string name="bbsmy_help">Help</string>
+<string name="bbsmy_post_text">Bulletin text</string>
+<string name="bbsmy_post_hint">Your bulletin message</string>
+<string name="bbsmy_send_callsign">Recipient callsign</string>
+<string name="bbsmy_send_callsign_hint">9M2PJU</string>
+<string name="bbsmy_send_text">Message text</string>
+<string name="bbsmy_send_text_hint">Your private message</string>
+<string name="bbsmy_sent">Command sent to BBSMY.</string>
+<string name="bbsmy_no_text">Enter a message.</string>
+<string name="bbsmy_no_callsign">Enter a callsign.</string>
+
 </resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/bbsmy_buttons"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="#222" >
+
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:padding="4dp" >
+		<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:layout_weight="1"
+		android:text="@string/p__bbsmy"
+		android:textColor="#ff5722"
+		android:textSize="12sp"
+		android:paddingLeft="6dp" />
+	</LinearLayout>
+
+	<HorizontalScrollView
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:scrollbars="none" >
+		<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:padding="4dp" >
+			<Button android:id="@+id/bbsmy_btn_list" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bbsmy_list" android:textSize="11sp" android:minWidth="40dp" />
+			<Button android:id="@+id/bbsmy_btn_msg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bbsmy_msg" android:textSize="11sp" android:minWidth="40dp" />
+			<Button android:id="@+id/bbsmy_btn_post" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bbsmy_post" android:textSize="11sp" android:minWidth="40dp" />
+			<Button android:id="@+id/bbsmy_btn_send" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bbsmy_send" android:textSize="11sp" android:minWidth="40dp" />
+			<Button android:id="@+id/bbsmy_btn_posturgent" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bbsmy_posturgent" android:textSize="11sp" android:minWidth="40dp" />
+			<Button android:id="@+id/bbsmy_btn_help" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bbsmy_help" android:textSize="11sp" android:minWidth="40dp" />
+		</LinearLayout>
+	</HorizontalScrollView>
+</LinearLayout>

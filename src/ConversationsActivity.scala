@@ -26,6 +26,9 @@ class ConversationsActivity extends LoadingListActivity
 	lazy val botConversationBtn = findViewById(R.id.bot_conversation).asInstanceOf[Button]
 	lazy val aprsmyConversationBtn = findViewById(R.id.aprsmy_conversation).asInstanceOf[Button]
 	lazy val mailmyConversationBtn = findViewById(R.id.mailmy_conversation).asInstanceOf[Button]
+	lazy val gamemyConversationBtn = findViewById(R.id.gamemy_conversation).asInstanceOf[Button]
+	lazy val callmyConversationBtn = findViewById(R.id.callmy_conversation).asInstanceOf[Button]
+	lazy val bbsmyConversationBtn = findViewById(R.id.bbsmy_conversation).asInstanceOf[Button]
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
@@ -38,6 +41,9 @@ class ConversationsActivity extends LoadingListActivity
 		botConversationBtn.setOnClickListener(this);
 		aprsmyConversationBtn.setOnClickListener(this);
 		mailmyConversationBtn.setOnClickListener(this);
+		gamemyConversationBtn.setOnClickListener(this);
+		callmyConversationBtn.setOnClickListener(this);
+		bbsmyConversationBtn.setOnClickListener(this);
 		setupBottomNav()
 
 		getListView().setOnCreateContextMenuListener(this);
@@ -73,6 +79,12 @@ class ConversationsActivity extends LoadingListActivity
 			openMessaging("APRSMY")
 		case R.id.mailmy_conversation =>
 			openMessaging("MAILMY")
+		case R.id.gamemy_conversation =>
+			openMessaging("GAMEMY")
+		case R.id.callmy_conversation =>
+			openMessaging("CALLMY")
+		case R.id.bbsmy_conversation =>
+			openMessaging("BBSMY")
 		}
 	}
 

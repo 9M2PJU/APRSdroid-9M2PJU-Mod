@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="10dp">
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="@string/bbsmy_post_text"
+android:textStyle="bold" />
+
+<EditText android:id="@+id/bbsmy_post_text_field"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:hint="@string/bbsmy_post_hint"
+android:singleLine="true"
+android:maxLength="67"
+android:inputType="textShortMessage|textCapSentences" />
+
+</LinearLayout>

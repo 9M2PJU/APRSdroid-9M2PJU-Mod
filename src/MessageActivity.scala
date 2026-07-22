@@ -78,6 +78,30 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	var mailmyBtnCancel : Button = null
 	var mailmyBtnHelp : Button = null
 
+	// GAMEMY UI elements
+	var gamemyButtons : View = null
+	var gamemyBtnStart : Button = null
+	var gamemyBtnHint : Button = null
+	var gamemyBtnSkip : Button = null
+	var gamemyBtnScore : Button = null
+	var gamemyBtnTop : Button = null
+	var gamemyBtnStop : Button = null
+	var gamemyBtnHelp : Button = null
+
+	// CALLMY UI elements
+	var callmyButtons : View = null
+	var callmyBtnCallsign : Button = null
+	var callmyBtnHelp : Button = null
+
+	// BBSMY UI elements
+	var bbsmyButtons : View = null
+	var bbsmyBtnList : Button = null
+	var bbsmyBtnMsg : Button = null
+	var bbsmyBtnPost : Button = null
+	var bbsmyBtnSend : Button = null
+	var bbsmyBtnPosturgent : Button = null
+	var bbsmyBtnHelp : Button = null
+
 	// Broadcast receiver for live Winlink status updates
 	var winlinkStatusReceiver : BroadcastReceiver = null
 
@@ -95,6 +119,15 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 
 	def isMailmyConversation = targetcall != null &&
 		targetcall.equalsIgnoreCase("MAILMY")
+
+	def isGamemyConversation = targetcall != null &&
+		targetcall.equalsIgnoreCase("GAMEMY")
+
+	def isCallmyConversation = targetcall != null &&
+		targetcall.equalsIgnoreCase("CALLMY")
+
+	def isBbsmyConversation = targetcall != null &&
+		targetcall.equalsIgnoreCase("BBSMY")
 
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
@@ -128,6 +161,18 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		// Inflate MAILMY buttons if this is a MAILMY conversation
 		if (isMailmyConversation) {
 			setupMailmyUI()
+		}
+		// Inflate GAMEMY buttons if this is a GAMEMY conversation
+		if (isGamemyConversation) {
+			setupGamemyUI()
+		}
+		// Inflate CALLMY buttons if this is a CALLMY conversation
+		if (isCallmyConversation) {
+			setupCallmyUI()
+		}
+		// Inflate BBSMY buttons if this is a BBSMY conversation
+		if (isBbsmyConversation) {
+			setupBbsmyUI()
 		}
 
 		val message = getIntent().getStringExtra("message")
@@ -744,6 +789,202 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					}
 					sendMessage("SENDLOC %s".format(addr))
 					Toast.makeText(MessageActivity.this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// ===== GAMEMY =====
+
+	def setupGamemyUI() {
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		gamemyButtons = inflater.inflate(R.layout.gamemy_buttons, null, false)
+		gamemyBtnStart = gamemyButtons.findViewById(R.id.gamemy_btn_start).asInstanceOf[Button]
+		gamemyBtnHint = gamemyButtons.findViewById(R.id.gamemy_btn_hint).asInstanceOf[Button]
+		gamemyBtnSkip = gamemyButtons.findViewById(R.id.gamemy_btn_skip).asInstanceOf[Button]
+		gamemyBtnScore = gamemyButtons.findViewById(R.id.gamemy_btn_score).asInstanceOf[Button]
+		gamemyBtnTop = gamemyButtons.findViewById(R.id.gamemy_btn_top).asInstanceOf[Button]
+		gamemyBtnStop = gamemyButtons.findViewById(R.id.gamemy_btn_stop).asInstanceOf[Button]
+		gamemyBtnHelp = gamemyButtons.findViewById(R.id.gamemy_btn_help).asInstanceOf[Button]
+
+		gamemyBtnStart.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("S") })
+		gamemyBtnHint.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("H") })
+		gamemyBtnSkip.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("K") })
+		gamemyBtnScore.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("C") })
+		gamemyBtnTop.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("T") })
+		gamemyBtnStop.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("P") })
+		gamemyBtnHelp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onGamemyCommand("?") })
+
+		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
+		root.addView(gamemyButtons, 0)
+	}
+
+	def onGamemyCommand(command : String) {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		sendMessage(command)
+		Toast.makeText(this, R.string.gamemy_sent, Toast.LENGTH_SHORT).show()
+	}
+
+	// ===== CALLMY =====
+
+	def setupCallmyUI() {
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		callmyButtons = inflater.inflate(R.layout.callmy_buttons, null, false)
+		callmyBtnCallsign = callmyButtons.findViewById(R.id.callmy_btn_callsign).asInstanceOf[Button]
+		callmyBtnHelp = callmyButtons.findViewById(R.id.callmy_btn_help).asInstanceOf[Button]
+
+		callmyBtnCallsign.setOnClickListener(new OnClickListener { override def onClick(v : View) = onCallmyCallsign() })
+		callmyBtnHelp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onCallmyCommand("HELP") })
+
+		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
+		root.addView(callmyButtons, 0)
+	}
+
+	def onCallmyCommand(command : String) {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		sendMessage(command)
+		Toast.makeText(this, R.string.callmy_sent, Toast.LENGTH_SHORT).show()
+	}
+
+	// callsign <CALL>
+	def onCallmyCallsign() {
+		if (!AprsService.running) { showStartTrackingDialog(); return }
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.callmy_callsign, null, false)
+		val callField = view.findViewById(R.id.callmy_callsign_field).asInstanceOf[EditText]
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.callmy_callsign)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val call = callField.getText().toString.trim
+					if (call.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.callmy_no_callsign, Toast.LENGTH_SHORT).show()
+						return
+					}
+					sendMessage("callsign %s".format(call))
+					Toast.makeText(MessageActivity.this, R.string.callmy_sent, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// ===== BBSMY =====
+
+	def setupBbsmyUI() {
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		bbsmyButtons = inflater.inflate(R.layout.bbsmy_buttons, null, false)
+		bbsmyBtnList = bbsmyButtons.findViewById(R.id.bbsmy_btn_list).asInstanceOf[Button]
+		bbsmyBtnMsg = bbsmyButtons.findViewById(R.id.bbsmy_btn_msg).asInstanceOf[Button]
+		bbsmyBtnPost = bbsmyButtons.findViewById(R.id.bbsmy_btn_post).asInstanceOf[Button]
+		bbsmyBtnSend = bbsmyButtons.findViewById(R.id.bbsmy_btn_send).asInstanceOf[Button]
+		bbsmyBtnPosturgent = bbsmyButtons.findViewById(R.id.bbsmy_btn_posturgent).asInstanceOf[Button]
+		bbsmyBtnHelp = bbsmyButtons.findViewById(R.id.bbsmy_btn_help).asInstanceOf[Button]
+
+		bbsmyBtnList.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBbsmyCommand("L") })
+		bbsmyBtnMsg.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBbsmyCommand("M") })
+		bbsmyBtnPost.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBbsmyPost() })
+		bbsmyBtnSend.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBbsmySend() })
+		bbsmyBtnPosturgent.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBbsmyPostUrgent() })
+		bbsmyBtnHelp.setOnClickListener(new OnClickListener { override def onClick(v : View) = onBbsmyCommand("H") })
+
+		val root = findViewById(R.id.message_act).asInstanceOf[LinearLayout]
+		root.addView(bbsmyButtons, 0)
+	}
+
+	def onBbsmyCommand(command : String) {
+		if (!AprsService.running) {
+			showStartTrackingDialog()
+			return
+		}
+		sendMessage(command)
+		Toast.makeText(this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
+	}
+
+	// POST <text>
+	def onBbsmyPost() {
+		if (!AprsService.running) { showStartTrackingDialog(); return }
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.bbsmy_post, null, false)
+		val textField = view.findViewById(R.id.bbsmy_post_text_field).asInstanceOf[EditText]
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.bbsmy_post)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val text = textField.getText().toString.trim
+					if (text.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_SHORT).show()
+						return
+					}
+					sendMessage("P %s".format(text))
+					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// POST urgent: PU <text>
+	def onBbsmyPostUrgent() {
+		if (!AprsService.running) { showStartTrackingDialog(); return }
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.bbsmy_post, null, false)
+		val textField = view.findViewById(R.id.bbsmy_post_text_field).asInstanceOf[EditText]
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.bbsmy_posturgent)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val text = textField.getText().toString.trim
+					if (text.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_SHORT).show()
+						return
+					}
+					sendMessage("PU %s".format(text))
+					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	// SEND <callsign> <text>
+	def onBbsmySend() {
+		if (!AprsService.running) { showStartTrackingDialog(); return }
+		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
+		val view = inflater.inflate(R.layout.bbsmy_send, null, false)
+		val callField = view.findViewById(R.id.bbsmy_send_callsign_field).asInstanceOf[EditText]
+		val textField = view.findViewById(R.id.bbsmy_send_text_field).asInstanceOf[EditText]
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.bbsmy_send)
+			.setView(view)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				override def onClick(d : DialogInterface, which : Int) {
+					val call = callField.getText().toString.trim
+					val text = textField.getText().toString.trim
+					if (call.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_callsign, Toast.LENGTH_SHORT).show()
+						return
+					}
+					if (text.isEmpty) {
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_SHORT).show()
+						return
+					}
+					sendMessage("S %s %s".format(call, text))
+					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)

@@ -584,15 +584,21 @@
     <ul>
       <li><strong>Adaptive launcher icon</strong> for Android 13+ -- full logo with navy background, matching modern app icons.</li>
       <li><strong>New app icon and logo</strong> across all density buckets.</li>
-      <li><strong>Branded splash screen</strong> with perfect-fit centerCrop rendering.</li>
+      <li><strong>Branded full-screen splash screen</strong> with centerCrop rendering and hidden navigation bar on Android 16 for a true immersive splash.</li>
       <li><strong>Modern Android support</strong> -- <code>targetSdk 35</code>, foreground service types for Android 14+, Bluetooth permissions for Android 12+, storage permissions for Android 11+, <code>POST_NOTIFICATIONS</code> for Android 13+, edge-to-edge opt-out with proper system bar inset handling for Android 15+.</li>
       <li><strong>Material 3-inspired UI design system</strong> -- <code>Theme.MaterialComponents</code> with tonal navy/amber palette, shape theming, refined typography, modern component styles, bottom navigation bar, dark theme, no sliding animations between screens.</li>
+      <li><strong>APRS messaging bots &amp; services</strong> -- one-tap access to 9 APRS-based services: Winlink (WLNK-1), WTSAPP, 9M2PJU-4 BOT, APRSMY Net, MAILMY, REPEATER, CALLMY, BBSMY, and GAMEMY. See the <a href="#messaging">Messaging Services</a> section for full details.</li>
+      <li><strong>Winlink APRSLink integration</strong> -- full email gateway with automatic password challenge/response, session management, auto-login, login timeout recovery, and multi-line email composition.</li>
+      <li><strong>Android 16 navigation bar fixes</strong> -- dark nav bar on splash and map screens, full-screen splash with hidden nav bar using <code>WindowInsetsController</code>.</li>
+      <li><strong>Conversations grid layout</strong> -- 3x3 grid of service buttons with a full-width "Send message to..." button on top.</li>
+      <li><strong>SQLite timestamp fix</strong> -- replaced unsupported <code>strftime('%y')</code> with <code>substr()</code> for proper DD/MM/YY formatting.</li>
+      <li><strong>Bottom nav highlighting fix</strong> -- correct tab highlighting with <code>FLAG_ACTIVITY_REORDER_TO_FRONT</code> across all activities.</li>
       <li><strong>GitHub Actions CI/CD</strong> -- signed release APK builds, automatic GitHub Releases on <code>v*</code> tags, auto-generated <code>version.json</code>.</li>
       <li><strong>GitHub Pages landing page</strong> at <a href="https://aprsdroid.hamradio.my/">aprsdroid.hamradio.my</a> with live download counters, responsive for desktop and mobile.</li>
       <li><strong>In-app update checker</strong> -- download and install updates directly from GitHub Releases, with Cloudflare CDN fallback.</li>
       <li><strong>Android 14+ crash fix</strong> -- <code>RECEIVER_NOT_EXPORTED</code> flag for <code>registerReceiver</code>.</li>
       <li><strong>App name and About dialog unified</strong> across all 52 locale files.</li>
-      <li><strong>Version bumped</strong> to <code>v2.0.0</code> (tocall <code>APDR20</code>).</li>
+      <li><strong>Version bumped</strong> to <code>v2.0.10</code> (tocall <code>APDR20</code>).</li>
       <li><strong>Comprehensive README and documentation rewrite</strong>.</li>
     </ul>
   </div>

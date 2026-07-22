@@ -55,7 +55,8 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
   (status bar, navigation bar, display cutout)
 - **Material Design dark theme** -- `Theme.MaterialComponents` with navy/amber
   palette, bottom navigation bar, modern component styles
-- **Branded splash screen** -- full-screen splash with centerCrop rendering
+- **Branded full-screen splash screen** -- centerCrop rendering with hidden
+  navigation bar on Android 16 for a true immersive splash
 - **In-app update checker** -- download and install updates directly from
   GitHub Releases, with Cloudflare CDN fallback when GitHub API is unreachable
 - **GitHub Actions CI/CD** -- signed release APK builds, automatic GitHub
@@ -81,9 +82,23 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 - **APRS messaging bots &amp; services** -- one-tap access to 9 APRS-based
   services: Winlink (WLNK-1), WTSAPP, 9M2PJU-4 BOT, APRSMY Net, MAILMY,
   REPEATER, CALLMY, BBSMY, and GAMEMY -- each with quick-action buttons
-  that send correctly formatted APRS commands
+  that send correctly formatted APRS commands. See the
+  [APRS Messaging Bots &amp; Services](#aprs-messaging-bots--services)
+  section below for full details.
+- **Winlink APRSLink integration** -- full email gateway with automatic
+  password challenge/response, session management, auto-login, login
+  timeout recovery, and multi-line email composition
+- **Android 16 navigation bar fixes** -- dark nav bar on splash and map
+  screens, full-screen splash with hidden nav bar using
+  `WindowInsetsController`
+- **Conversations grid layout** -- 3x3 grid of service buttons with a
+  full-width "Send message to..." button on top
+- **SQLite timestamp fix** -- replaced unsupported `strftime('%y')` with
+  `substr()` for proper DD/MM/YY formatting on Android's SQLite
+- **Bottom nav highlighting fix** -- correct tab highlighting with
+  `FLAG_ACTIVITY_REORDER_TO_FRONT` across all activities
 - **App name and About dialog unified** across all 52 locale files
-- **Version bumped** to `v2.0.0` (tocall `APDR20`)
+- **Version bumped** to `v2.0.10` (tocall `APDR20`)
 
 > **Changelog:** Per-version release notes are now maintained on the
 > [GitHub Releases](https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases)

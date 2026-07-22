@@ -91,11 +91,13 @@ class WinlinkService(s : AprsService) {
 
 	// Send a message to WLNK-1 via the APRS pipeline.
 	// Stores it in the DB as TYPE_WINLINK_OUT and triggers TX.
+	// Uses a proper APRS message number so WLNK-1 can ACK it.
 	private def sendToWlnk(text : String) {
 		Log.d(TAG, "TX to WLNK-1: " + text)
-		s.db.addWinlinkMessage(WLNK_CALL, text,
-			StorageDatabase.Message.TYPE_WINLINK_OUT, null)
-		val msg = s.newPacket(new MessagePacket(WLNK_CALL, text, ""))
+		val msgid = s.db.createMsgId(WLNK_CALL)
+		s.db.addWinlinkMessageWithId(WLNK_CALL, text,
+			StorageDatabase.Message.TYPE_WINLINK_OUT, null, msgid)
+		val msg = s.newPacket(new MessagePacket(WLNK_CALL, text, msgid.toString))
 		s.sendPacket(msg)
 		// Notify UI
 		s.sendBroadcast(AprsService.MSG_PRIV_INTENT)
@@ -378,6 +380,9 @@ class WinlinkService(s : AprsService) {
 	 * Response = those 3 password chars + 3 random chars, all shuffled.
 	 */
 	private def handleChallenge(text : String) {
+		// Store the challenge text so the user sees it in the conversation
+		storeFromWlnk(text, null)
+
 		// Extract digits from "Login [XXX]:" or similar
 		val digits = text.filter(_.isDigit)
 		if (digits.length < 3) {

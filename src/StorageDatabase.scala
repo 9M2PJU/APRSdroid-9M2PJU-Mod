@@ -443,12 +443,16 @@ class StorageDatabase(context : Context) extends
 	}
 
 	def addWinlinkMessage(call : String, text : String, msgType : Int, subject : String) {
+		addWinlinkMessageWithId(call, text, msgType, subject, "")
+	}
+
+	def addWinlinkMessageWithId(call : String, text : String, msgType : Int, subject : String, msgid : Any) {
 		import Message._
 		val cv = new ContentValues()
 		cv.put(TS, System.currentTimeMillis.asInstanceOf[java.lang.Long])
 		cv.put(RETRYCNT, 0.asInstanceOf[java.lang.Integer])
 		cv.put(CALL, call)
-		cv.put(MSGID, "")
+		cv.put(MSGID, msgid.toString)
 		cv.put(TYPE, msgType.asInstanceOf[java.lang.Integer])
 		cv.put(TEXT, text)
 		if (subject != null && subject.nonEmpty)

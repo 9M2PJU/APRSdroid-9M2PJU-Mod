@@ -49,6 +49,9 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	var wtsappBtnSetAlias : Button = null
 	var wtsappBtnRemoveAlias : Button = null
 
+	// Broadcast receiver for live Winlink status updates
+	var winlinkStatusReceiver : BroadcastReceiver = null
+
 	def isWinlinkConversation = targetcall != null &&
 		(targetcall.equalsIgnoreCase("WLNK-1") || targetcall.equalsIgnoreCase("WLNK"))
 
@@ -525,7 +528,41 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	override def onResume() {
 		super.onResume()
 		ServiceNotifier.instance.cancelMessage(this, targetcall)
-		if (isWinlinkConversation) updateWinlinkStatus()
+		if (isWinlinkConversation) {
+			updateWinlinkStatus()
+			// Set up live status callback so UI updates when state changes
+			getWinlinkService match {
+				case Some(ws) => ws.statusCallback = (state : Int) => runOnUiThread(new Runnable {
+					override def run() : Unit = updateWinlinkStatus()
+				})
+				case None =>
+			}
+			// Register receiver for MSG_PRIV broadcasts (new messages / state changes)
+			winlinkStatusReceiver = new BroadcastReceiver {
+				override def onReceive(context : Context, intent : Intent) {
+					runOnUiThread(new Runnable {
+						override def run() : Unit = updateWinlinkStatus()
+					})
+				}
+			}
+			UIHelper.safeRegisterReceiver(this, winlinkStatusReceiver, new IntentFilter(AprsService.MESSAGE))
+		}
+	}
+
+	override def onPause() {
+		super.onPause()
+		// Clear status callback so we don't update a dead UI
+		getWinlinkService match {
+			case Some(ws) => ws.statusCallback = null
+			case None =>
+		}
+		// Unregister receiver
+		if (winlinkStatusReceiver != null) {
+			scala.util.control.Exception.ignoring(classOf[IllegalArgumentException]) {
+				unregisterReceiver(winlinkStatusReceiver)
+			}
+			winlinkStatusReceiver = null
+		}
 	}
 
 	override def onDestroy() {

@@ -19,7 +19,26 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="hero">
+<nav class="topnav" id="topnav">
+  <a href="#top" class="topnav-brand">
+    <img src="assets/icon-256.png" alt="" class="topnav-logo" width="28" height="28">
+    <span>APRSdroid <span class="mod">9M2PJU Mod</span></span>
+  </a>
+  <button class="topnav-toggle" id="topnav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+  <div class="topnav-links" id="topnav-links">
+    <a href="#download">Download</a>
+    <a href="#setup">Setup</a>
+    <a href="#features">Features</a>
+    <a href="#enhanced">Enhanced</a>
+    <a href="#maps">Maps</a>
+    <a href="#lora">LoRa</a>
+    <a href="#screenshots">Screenshots</a>
+    <a href="#about">About</a>
+    <a href="#download" class="topnav-cta">Get the app ↓</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
   <div class="hero-inner">
     <img src="assets/icon-512.webp" alt="APRSdroid 9M2PJU Mod logo" class="hero-logo" width="128" height="128">
     <h1>APRSdroid <span class="mod">9M2PJU Mod</span></h1>
@@ -115,34 +134,34 @@
       </thead>
       <tbody>
         <tr>
-          <td><a href="https://na7q.com/wp-content/uploads/2024/12/map.mbtiles" target="_blank" rel="noopener">World Map</a></td>
-          <td>Any</td>
-          <td>Ready-to-use starter world map (zoom level 6).</td>
+          <td data-label="Tool"><a href="https://na7q.com/wp-content/uploads/2024/12/map.mbtiles" target="_blank" rel="noopener">World Map</a></td>
+          <td data-label="Platform">Any</td>
+          <td data-label="Description">Ready-to-use starter world map (zoom level 6).</td>
         </tr>
         <tr>
-          <td><a href="https://downloads.aprs.wiki/APRSdroid/gui7-concurrency.exe" target="_blank" rel="noopener">OSM Map Maker</a></td>
-          <td>Windows</td>
-          <td>GUI tool for downloading OSM maps.</td>
+          <td data-label="Tool"><a href="https://downloads.aprs.wiki/APRSdroid/gui7-concurrency.exe" target="_blank" rel="noopener">OSM Map Maker</a></td>
+          <td data-label="Platform">Windows</td>
+          <td data-label="Description">GUI tool for downloading OSM maps.</td>
         </tr>
         <tr>
-          <td><a href="https://na7q.com/wp-content/uploads/2025/01/gui7-concurrency.py" target="_blank" rel="noopener">Python Map Maker</a></td>
-          <td>Win/Mac/Linux</td>
-          <td>Python script version, cross-platform.</td>
+          <td data-label="Tool"><a href="https://na7q.com/wp-content/uploads/2025/01/gui7-concurrency.py" target="_blank" rel="noopener">Python Map Maker</a></td>
+          <td data-label="Platform">Win/Mac/Linux</td>
+          <td data-label="Description">Python script version, cross-platform.</td>
         </tr>
         <tr>
-          <td><a href="https://na7q.com/wp-content/uploads/2025/02/mapmaker-0.2.exe" target="_blank" rel="noopener">Multi-Map Maker</a></td>
-          <td>Windows</td>
-          <td>Supports Google, Google Sat, Google Terrain, OSM, USGS, USFS, Canada Topo, Thunderforest, MapBuilder Light/Dark, and more.</td>
+          <td data-label="Tool"><a href="https://na7q.com/wp-content/uploads/2025/02/mapmaker-0.2.exe" target="_blank" rel="noopener">Multi-Map Maker</a></td>
+          <td data-label="Platform">Windows</td>
+          <td data-label="Description">Supports Google, Google Sat, Google Terrain, OSM, USGS, USFS, Canada Topo, Thunderforest, MapBuilder Light/Dark, and more.</td>
         </tr>
         <tr>
-          <td><a href="https://na7q.com/wp-content/uploads/2025/02/mapviewer.exe" target="_blank" rel="noopener">Map Viewer</a></td>
-          <td>Windows</td>
-          <td>Preview different map types to see which style you prefer.</td>
+          <td data-label="Tool"><a href="https://na7q.com/wp-content/uploads/2025/02/mapviewer.exe" target="_blank" rel="noopener">Map Viewer</a></td>
+          <td data-label="Platform">Windows</td>
+          <td data-label="Description">Preview different map types to see which style you prefer.</td>
         </tr>
         <tr>
-          <td><a href="https://extract.bbbike.org/" target="_blank" rel="noopener">BBBike MapsForge</a></td>
-          <td>Web</td>
-          <td>Custom MapsForge OSM maps online.</td>
+          <td data-label="Tool"><a href="https://extract.bbbike.org/" target="_blank" rel="noopener">BBBike MapsForge</a></td>
+          <td data-label="Platform">Web</td>
+          <td data-label="Description">Custom MapsForge OSM maps online.</td>
         </tr>
       </tbody>
     </table>
@@ -153,123 +172,6 @@
       <li><strong>Zoom level</strong> is required (1-18). A distance input is optional — if left blank for a city, state, or region, it will download everything within that boundary.</li>
       <li>For <strong>states or larger</strong>, zoom 13-14 is recommended. Washington State at zoom 15 is 2-5GB depending on the map used.</li>
       <li>Not all maps support all zoom levels or areas — research the map type you want.</li>
-    </ul>
-  </div>
-</section>
-
-<section id="whatsnew" class="section alt">
-  <h2>What's new in the 9M2PJU Mod</h2>
-  <p class="section-sub">
-    A comprehensive refresh of NA7Q's enhanced APRSdroid. Below is everything that changed
-    compared to the upstream NA7Q fork.
-  </p>
-
-  <div class="whatsnew-group">
-    <h3>Repo &amp; branding</h3>
-    <ul>
-      <li><strong>Version bumped</strong> to <code>v2.0.0</code> (APRS tocall <code>APDR20</code>, displayed as "APRSdroid 2.0.0"). Versioning is tag-driven — each release gets a <code>vX.Y.Z</code> tag.</li>
-      <li><strong>New app icon &amp; logo</strong> — all 6 density-specific <code>icon.png</code> files regenerated from a new 2048×2048 source, plus a 512×512 <code>logo.png</code>.</li>
-      <li><strong>Branded splash screen</strong> on cold start — full-screen splash via <code>SplashTheme</code>, 153 KB lossy WebP (down from 4.7 MB PNG).</li>
-    </ul>
-  </div>
-
-  <div class="whatsnew-group">
-    <h3>Modern Android support (targetSdk 33 → 35)</h3>
-    <ul>
-      <li><strong><code>targetSdkVersion</code> 33 → 35</strong> (Android 15). Satisfies the Google Play targetSdk floor. <code>minSdkVersion</code> bumped 14 → 19 to enable modern AndroidX libraries.</li>
-      <li><strong>Foreground service types</strong> (Android 14+) — <code>AprsService</code> declares <code>location|microphone|connectedDevice</code>; <code>ServiceNotifier</code> passes an explicit type bitmask to <code>startForeground()</code> on API 29+.</li>
-      <li><strong>Bluetooth permissions</strong> (Android 12+) — added <code>BLUETOOTH_SCAN</code> with <code>neverForLocation</code> and <code>BLUETOOTH_CONNECT</code>; legacy <code>BLUETOOTH</code>/<code>BLUETOOTH_ADMIN</code> capped at <code>maxSdkVersion=30</code>.</li>
-      <li><strong>Storage permissions</strong> (Android 11+) — added <code>MANAGE_EXTERNAL_STORAGE</code> for offline MBTiles map files; legacy storage perms capped at <code>maxSdkVersion=32</code>.</li>
-      <li><strong><code>POST_NOTIFICATIONS</code></strong> (Android 13+) — requested at runtime via <code>PermissionHelper</code>.</li>
-      <li><strong>Edge-to-edge opt-out</strong> (Android 15+) — <code>WindowCompat.setDecorFitsSystemWindows(window, true)</code> prevents content from going under system bars.</li>
-    </ul>
-  </div>
-
-  <div class="whatsnew-group">
-    <h3>UI modernization (Phase 1 — theme &amp; chrome)</h3>
-    <ul>
-      <li><strong>Material Design dark theme</strong> — migrated from <code>Theme.Holo</code> (2011) to <code>Theme.MaterialComponents</code>. The app uses a <strong>dark-only</strong> theme with navy surfaces and amber accent, matching the app icon.</li>
-      <li><strong>Brand palette</strong> derived from the app icon — navy surfaces <code>#0D182D</code>/<code>#13203A</code>/<code>#1C2F51</code> (elevation tints), amber accent <code>#CEB619</code>, cool grey text.</li>
-      <li><strong>New dependencies:</strong> <code>androidx.appcompat:appcompat:1.6.1</code> + <code>com.google.android.material:material:1.9.0</code>.</li>
-      <li><strong>Material buttons</strong> with amber background and navy text, applied via <code>materialButtonStyle</code>.</li>
-      <li><strong>Activity migrations:</strong> <code>APRSdroid</code>, <code>ProfileImportActivity</code>, <code>KeyfileImportActivity</code> → <code>AppCompatActivity</code>.</li>
-      <li><strong>Map activity excluded</strong> — <code>MapAct</code> (MapsForge) keeps Holo theme for compatibility; will be migrated in a later phase.</li>
-    </ul>
-    <p class="whatsnew-note">
-      <strong>Phase 2 (not yet done):</strong> ListActivity → RecyclerView,
-      PreferenceActivity → PreferenceFragmentCompat, Material dialogs, layout hardcoded
-      colors → <code>@color/</code> resources, dynamic color (Material You), core-splashscreen API.
-    </p>
-  </div>
-
-  <div class="whatsnew-group">
-    <h3>This landing page</h3>
-    <ul>
-      <li><strong>Custom domain:</strong> <a href="https://aprsdroid.hamradio.my/">aprsdroid.hamradio.my</a>.</li>
-      <li><strong>Dark navy + amber theme</strong> matching the app icon.</li>
-      <li><strong>Live download counters</strong> — no backend. Real GitHub release download counts.</li>
-      <li><strong>Download buttons</strong> for every release APK, with file size and per-asset download count.</li>
-    </ul>
-  </div>
-
-  <div class="whatsnew-group">
-    <h3>UI/UX improvements (latest)</h3>
-    <ul>
-      <li><strong>Adaptive launcher icon</strong> for Android 13+ — the app icon now fills the entire launcher slot with a navy background, matching how WhatsApp and other modern apps look. No more shrunken logo with a default border.</li>
-      <li><strong>Edge-to-edge fix for Android 15/16</strong> — content no longer draws under the status bar or behind the under-display camera. Proper system bar inset handling for all screens.</li>
-      <li><strong>Bottom navigation blank gap fixed</strong> — the bottom nav bar's background now extends to the screen edge on Android 16, with no blank area below the icons.</li>
-      <li><strong>No sliding animation between tabs</strong> — switching between Log, Hub, Map, and Messages is now instant. Activity transition animations disabled globally.</li>
-      <li><strong>Map recenter button repositioned</strong> — moved above the OSM zoom controls to avoid overlap.</li>
-      <li><strong>OSM Maps preferences reordered</strong> — the file picker now appears before the offline mapping toggle, with a note to select a map file before enabling offline mode.</li>
-      <li><strong>Bottom navigation with Menu tab</strong> — quick access to Preferences, Hub, Log, Map, Messages, and more from any screen. Replaces the old 3-dot overflow menu.</li>
-      <li><strong>Map auto-zooms to GPS location</strong> — on first open, the map centers on the user's last known GPS position instead of a hardcoded default (Berlin).</li>
-      <li><strong>About dialog with logo and full credits</strong> — app logo, project lineage, and credits to Bob Bruninga (WB4APR), Georg Lukas (DO1GL), NA7Q, and 9M2PJU.</li>
-      <li><strong>Donation popup</strong> — appears on page load with Malaysia e-wallet QR, Buy Me a Coffee, and Wise links. Auto-closes after 5 seconds. Fixed to stay on-screen on mobile browsers.</li>
-      <li><strong>Crash fixes</strong> — Android 14+ <code>registerReceiver</code> SecurityException fixed; MessageActivity null ActionBar crash fixed; map screen crash on Material Components theme fixed.</li>
-    </ul>
-  </div>
-
-  <div class="whatsnew-group">
-    <h3>v2.0.4 — Android 15/16 inset fixes &amp; Clear Log refresh</h3>
-    <ul>
-      <li><strong>Double top padding fixed on Preferences</strong> — PreferenceActivity's internal layout was applying the status bar inset on top of the manual inset listener, causing excessive blank space. Now uses edge-to-edge with <code>consumeSystemWindowInsets()</code> to prevent double-padding.</li>
-      <li><strong>Content no longer bleeds under the status bar</strong> — all activities now have proper system bar inset handling (status bar, navigation bar, display cutout) for Android 15/16 edge-to-edge enforcement.</li>
-      <li><strong>PreferenceScreen dialog sub-screens fixed</strong> — section headers like "Incoming Messages" no longer overlap with the status bar clock. The dialog theme now applies <code>fitsSystemWindows</code> and <code>windowDrawsSystemBarBackgrounds=false</code>.</li>
-      <li><strong>Clear Log refreshes instantly</strong> — after clearing the log from the menu, the ListView now updates immediately without needing to switch tabs and back.</li>
-      <li><strong>Symbol picker inset handling</strong> — the APRS symbol picker now handles edge-to-edge insets properly on Android 15/16.</li>
-    </ul>
-  </div>
-
-  <div class="whatsnew-group">
-    <h3>v2.0.5 — PreferenceScreen dialog sub-screens fully fixed on Android 16</h3>
-    <ul>
-      <li><strong>PreferenceScreen dialog sub-screens now fully fixed</strong> — the v2.0.4 theme-based approach didn't work on Android 16. The new fix intercepts preference clicks, creates a custom dialog with <code>setDecorFitsSystemWindows(true)</code>, and uses <code>getRootAdapter()</code> to populate the list. Section headers like "Incoming Messages" are now properly pushed below the status bar.</li>
-      <li><strong>Back button no longer shows old broken dialog</strong> — the old edge-to-edge dialog created by <code>PreferenceScreen.onClick()</code> is now dismissed after our custom dialog shows.</li>
-      <li><strong>Sub-screen activities correctly launch as separate activities</strong> — Connection Preferences, Digipeating, IGating, Messaging, Compressed, Symbol, and Location all launch as full-screen activities with proper edge-to-edge inset handling.</li>
-    </ul>
-  </div>
-
-  <div class="whatsnew-group">
-    <h3>v2.0.6 — Full edge-to-edge, no more dialog sub-screens, real-time log</h3>
-    <ul>
-      <li><strong>Full edge-to-edge with transparent system bars</strong> — status bar and navigation bar are now transparent, so the app's navy background flows seamlessly under the system bars. Content padding ensures text starts below the status bar icons. Smooth scrolling through the padding area — modern Android look.</li>
-      <li><strong>No more dialog sub-screens</strong> — Notifications and Position privacy are now separate full-screen activities, launched exactly like Connection Preferences, Location Settings, etc. All sub-screens now have a consistent look and feel: full-screen, edge-to-edge, smooth scrolling. No more reflection hacks or custom dialogs.</li>
-      <li><strong>Log tab updates in real-time</strong> — the Show Log tab now refreshes every 2 seconds while active, so new log entries appear immediately when tracking starts. No need to switch tabs and back anymore.</li>
-    </ul>
-  </div>
-
-  <div class="whatsnew-group">
-    <h3>v2.0.7 — Dark navigation bar on all screens</h3>
-    <ul>
-      <li><strong>Navigation bar always dark</strong> — the navigation bar was transparent, which let light content show through on the splash screen, Log, and Hub screens. Now uses the app's navy background color so the nav bar is consistently dark across all screens. Status bar stays transparent for the seamless edge-to-edge look.</li>
-      <li><strong>Splash screen nav bar fixed</strong> — the splash activity was enabling edge-to-edge mode, which let Android 16 override the black nav bar color with white. Removed the edge-to-edge call so the splash theme's solid black bars are respected.</li>
-    </ul>
-  </div>
-
-  <div class="whatsnew-group">
-    <h3>v2.0.8 — GitHub Pages cleanup</h3>
-    <ul>
-      <li><strong>Removed location from maintainer credit</strong> — removed "Kuala Lumpur, Malaysia" from the maintainer credit on GitHub Pages.</li>
     </ul>
   </div>
 </section>
@@ -320,6 +222,7 @@
     — not found in the official APRSdroid.
   </p>
 
+  <div class="whatsnew-grid">
   <div class="whatsnew-group">
     <h3>RF &amp; networking</h3>
     <ul>
@@ -363,6 +266,7 @@
       <li><strong>Under-the-hood improvements</strong> — numerous performance and stability enhancements.</li>
     </ul>
   </div>
+  </div>
 </section>
 
 <section id="maps" class="section">
@@ -392,6 +296,7 @@
     APRS packets over LoRa radio without a phone data connection.
   </p>
 
+  <div class="whatsnew-grid">
   <div class="whatsnew-group">
     <h3>Requirements</h3>
     <ul>
@@ -443,6 +348,7 @@
       <li><strong>Incoming:</strong> The tracker receives LoRa APRS packets and forwards them to APRSdroid via BLE. APRSdroid decodes and displays them.</li>
     </ul>
   </div>
+  </div>
 </section>
 
 <section id="screenshots" class="section">
@@ -487,6 +393,7 @@
     community. This project stands on the shoulders of giants.
   </p>
 
+  <div class="whatsnew-grid">
   <div class="whatsnew-group">
     <h3>Georg Lukas (DO1GL) — Original Author</h3>
     <p>
@@ -553,6 +460,7 @@
       pioneering work, none of this would exist.
     </p>
   </div>
+  </div>
 
   <p>
     APRS&reg; is a registered trademark of Bob Bruninga, WB4APR.
@@ -566,6 +474,34 @@
 </footer>
 
 <script src="script.js"></script>
+
+<script>
+// Sticky nav toggle for mobile
+(function() {
+  var toggle = document.getElementById('topnav-toggle');
+  var links = document.getElementById('topnav-links');
+  if (!toggle || !links) return;
+  function setExpanded(open) {
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  toggle.addEventListener('click', function() {
+    setExpanded(!links.classList.contains('open'));
+  });
+  // Close menu after clicking a link (mobile)
+  links.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() { setExpanded(false); });
+  });
+  // Shrink nav on scroll
+  var nav = document.getElementById('topnav');
+  var lastY = 0;
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 24);
+    lastY = y;
+  }, { passive: true });
+})();
+</script>
 
 <!-- Donation popup -->
 <div id="donation-popup" class="donation-popup-overlay" style="display:none;">

@@ -767,8 +767,8 @@
 <string name="bot_no_email">Enter an email address.</string>
 <string name="bot_no_callsign">Enter a callsign.</string>
 <string name="bot_no_satname">Enter a satellite name.</string>
-<string name="bot_sota_or_alerts">SOTA — spots or alerts?</string>
-<string name="bot_pota_or_alerts">POTA — spots or alerts?</string>
+<string name="bot_sota_or_alerts">SOTA: spots or alerts?</string>
+<string name="bot_pota_or_alerts">POTA: spots or alerts?</string>
 <string name="bot_spots">Spots</string>
 <string name="bot_alerts">Alerts</string>
 

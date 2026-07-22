@@ -510,13 +510,12 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		Toast.makeText(this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 	}
 
-	// posmsg [email] [optional message]
+	// posmsg [email]
 	def onBotPosmsg() {
 		if (!AprsService.running) { showStartTrackingDialog(); return }
 		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
 		val view = inflater.inflate(R.layout.bot_posmsg, null, false)
 		val emailField = view.findViewById(R.id.bot_posmsg_email_field).asInstanceOf[EditText]
-		val msgField = view.findViewById(R.id.bot_posmsg_message_field).asInstanceOf[EditText]
 
 		new AlertDialog.Builder(this)
 			.setTitle(R.string.bot_posmsg)
@@ -528,9 +527,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 						Toast.makeText(MessageActivity.this, R.string.bot_no_email, Toast.LENGTH_SHORT).show()
 						return
 					}
-					val msg = msgField.getText().toString.trim
-					val cmd = if (msg.isEmpty) "posmsg %s".format(email) else "posmsg %s %s".format(email, msg)
-					sendMessage(cmd)
+					sendMessage("posmsg %s".format(email))
 					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})

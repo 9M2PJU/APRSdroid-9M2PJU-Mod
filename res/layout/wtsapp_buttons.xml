@@ -9,39 +9,60 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 android:id="@+id/wtsapp_buttons"
 android:layout_width="fill_parent"
 android:layout_height="wrap_content"
-android:orientation="horizontal"
-android:padding="4dp"
+android:orientation="vertical"
 android:background="#222" >
 
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_gravity="center_vertical"
-android:layout_weight="1"
-android:text="@string/p__wtsapp"
-android:textColor="#25D366"
-android:textSize="12sp"
-android:paddingLeft="6dp" />
+	<!-- Title row -->
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:padding="4dp" >
 
-<Button android:id="@+id/wtsapp_btn_send"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="@string/wtsapp_send"
-android:textSize="12sp"
-android:minWidth="48dp" />
+		<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:layout_weight="1"
+		android:text="@string/p__wtsapp"
+		android:textColor="#25D366"
+		android:textSize="12sp"
+		android:paddingLeft="6dp" />
+	</LinearLayout>
 
-<Button android:id="@+id/wtsapp_btn_set_alias"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="@string/wtsapp_set_alias"
-android:textSize="12sp"
-android:minWidth="48dp" />
+	<!-- Scrollable command buttons -->
+	<HorizontalScrollView
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:scrollbars="none" >
 
-<Button android:id="@+id/wtsapp_btn_remove_alias"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="@string/wtsapp_remove_alias"
-android:textSize="12sp"
-android:minWidth="48dp" />
+		<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:padding="4dp" >
 
+			<Button android:id="@+id/wtsapp_btn_send"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/wtsapp_send"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/wtsapp_btn_set_alias"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/wtsapp_set_alias"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+			<Button android:id="@+id/wtsapp_btn_remove_alias"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/wtsapp_remove_alias"
+			android:textSize="11sp"
+			android:minWidth="40dp" />
+
+		</LinearLayout>
+	</HorizontalScrollView>
 </LinearLayout>

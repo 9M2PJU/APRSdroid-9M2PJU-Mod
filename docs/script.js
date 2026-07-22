@@ -41,7 +41,9 @@ function assetButton(asset) {
   const a = document.createElement("a");
   a.href = asset.browser_download_url;
   a.className = "btn btn-primary";
-  a.textContent = "Download .apk";
+  const dot = asset.name.lastIndexOf(".");
+  const ext = dot >= 0 ? asset.name.slice(dot + 1).toUpperCase() : "file";
+  a.textContent = "Download ." + ext;
   return a;
 }
 

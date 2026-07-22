@@ -55,7 +55,7 @@ class APRSdroid extends AppCompatActivity {
 		// enforced regardless of whether we call setDecorFitsSystemWindows.
 		// navigationBarColor is ignored. If we DON'T call
 		// setDecorFitsSystemWindows(false), the system fills the nav bar
-		// area with its default (light) color — even though our window
+		// area with its default (light) color -- even though our window
 		// background is black. By calling it, the black window background
 		// extends behind the nav bar, keeping it dark.
 		getWindow().setDecorFitsSystemWindows(false)

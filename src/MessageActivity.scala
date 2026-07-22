@@ -661,7 +661,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			.show()
 	}
 
-	// sota/pota — choose spots or alerts
+	// sota/pota -- choose spots or alerts
 	def onBotSotaOrPota(command : String, titleId : Int) {
 		if (!AprsService.running) { showStartTrackingDialog(); return }
 		new AlertDialog.Builder(this)
@@ -751,7 +751,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		Toast.makeText(this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
-	// email <addr> <msg> — start draft
+	// email <addr> <msg> -- start draft
 	def onMailmyEmail() {
 		if (!AprsService.running) { showStartTrackingDialog(); return }
 		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
@@ -782,7 +782,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			.show()
 	}
 
-	// SENDLOC <addr> — email your position
+	// SENDLOC <addr> -- email your position
 	def onMailmySendloc() {
 		if (!AprsService.running) { showStartTrackingDialog(); return }
 		val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE).asInstanceOf[LayoutInflater]
@@ -1002,7 +1002,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 		val bandSpinner = view.findViewById(R.id.repeat_band_spinner).asInstanceOf[Spinner]
 		val filtersField = view.findViewById(R.id.repeat_filters_field).asInstanceOf[EditText]
 
-		// Band options — default 2m (index 0)
+		// Band options -- default 2m (index 0)
 		val bands = Array[CharSequence](
 			getString(R.string.repeat_band_2m),
 			getString(R.string.repeat_band_70cm),
@@ -1048,7 +1048,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					if (band != "2m") {
 						sb.append(" ").append(band)
 					} else if (!numStr.isEmpty) {
-						// num specified + default band — still append band for clarity
+						// num specified + default band -- still append band for clarity
 						sb.append(" ").append(band)
 					}
 					if (!filters.isEmpty) {

@@ -9,7 +9,7 @@
   and "iw" (Hebrew); here we declare the modern BCP-47 codes ("id", "he") and
   Android resolves them to the legacy resource folders automatically.
 
-  Default (omitted below) is English (US) — res/values/strings.xml.
+  Default (omitted below) is English (US) - res/values/strings.xml.
 -->
 <locale-config xmlns:android="http://schemas.android.com/apk/res/android">
     <locale android:name="af"    /> <!-- Afrikaans -->

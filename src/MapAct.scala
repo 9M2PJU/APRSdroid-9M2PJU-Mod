@@ -64,7 +64,7 @@ class MapAct extends MapActivity with MapMenuHelper {
 		// Apply hardware acceleration preference
 		applyHardwareAcceleration(prefs.getBoolean("hardware_acceleration", true), mapview)
 		setupBottomNav()
-		// "My location" FAB — center the map on the last known GPS location
+		// "My location" FAB -- center the map on the last known GPS location
 		myLocationBtn.setOnClickListener(new View.OnClickListener {
 			override def onClick(v : View) : Unit = centerOnMyLocation()
 		})
@@ -176,7 +176,7 @@ class MapAct extends MapActivity with MapMenuHelper {
 					if (!result.isSuccess)
 						Toast.makeText(this, result.getErrorMessage, Toast.LENGTH_SHORT).show()
 				} else {
-					// Offline mode on but file invalid — fall back to online
+					// Offline mode on but file invalid -- fall back to online
 					loadOnlineMap()
 				}
 			} catch {
@@ -185,7 +185,7 @@ class MapAct extends MapActivity with MapMenuHelper {
 					loadOnlineMap()
 			}
 		} else {
-			// Offline mode off — use online map
+			// Offline mode off -- use online map
 			loadOnlineMap()
 		}
 		val themefile = new File(prefs.getString("themefile", android.os.Environment.getExternalStorageDirectory() + "/aprsdroid.xml"))

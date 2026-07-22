@@ -5,7 +5,7 @@
          BUTTONS
          ============================================================ -->
 
-    <!-- Filled button — amber accent, navy text. Primary action. -->
+    <!-- Filled button - amber accent, navy text. Primary action. -->
     <style name="Widget.AppTheme.Button"
            parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/md_accent</item>
@@ -23,7 +23,7 @@
         <item name="iconTint">@color/md_on_accent</item>
     </style>
 
-    <!-- Tonal button — secondary container color. Secondary action. -->
+    <!-- Tonal button - secondary container color. Secondary action. -->
     <style name="Widget.AppTheme.Button.TonalButton"
            parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/md_secondary_container</item>
@@ -39,7 +39,7 @@
         <item name="iconTint">@color/md_on_secondary_container</item>
     </style>
 
-    <!-- Outlined button — transparent bg, outline border. -->
+    <!-- Outlined button - transparent bg, outline border. -->
     <style name="Widget.AppTheme.Button.OutlinedButton"
            parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">@color/md_primary</item>
@@ -56,7 +56,7 @@
         <item name="iconTint">@color/md_primary</item>
     </style>
 
-    <!-- Text button — no background, accent text. Low-emphasis action. -->
+    <!-- Text button - no background, accent text. Low-emphasis action. -->
     <style name="Widget.AppTheme.Button.TextButton"
            parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/md_accent</item>
@@ -72,7 +72,7 @@
     </style>
 
     <!-- ============================================================
-         ACTION BAR — modern top app bar
+         ACTION BAR - modern top app bar
          Surface-colored, no elevation, clean typography.
          ============================================================ -->
 
@@ -89,7 +89,7 @@
         <item name="height">@dimen/actionbar_height</item>
     </style>
 
-    <!-- Action bar overlay theme — tint icons and text for surface bg -->
+    <!-- Action bar overlay theme - tint icons and text for surface bg -->
     <style name="ThemeOverlay.AppTheme.ActionBar"
            parent="ThemeOverlay.MaterialComponents.ActionBar.Surface">
         <item name="android:textColorPrimary">@color/md_on_surface</item>
@@ -97,7 +97,7 @@
     </style>
 
     <!-- ============================================================
-         DIALOGS — Material alert dialog with rounded corners
+         DIALOGS - Material alert dialog with rounded corners
          ============================================================ -->
 
     <style name="ThemeOverlay.AppTheme.Dialog"
@@ -137,7 +137,7 @@
     </style>
 
     <!-- ============================================================
-         BOTTOM SHEET — rounded top corners
+         BOTTOM SHEET - rounded top corners
          ============================================================ -->
 
     <style name="ThemeOverlay.AppTheme.BottomSheetDialog"
@@ -151,7 +151,7 @@
     </style>
 
     <!-- ============================================================
-         TYPOGRAPHY — Material type scale
+         TYPOGRAPHY - Material type scale
          ============================================================ -->
 
     <style name="TextAppearance.AppTheme.ActionBar.Title"
@@ -204,7 +204,7 @@
     </style>
 
     <!-- ============================================================
-         CARD — for list items and content containers
+         CARD - for list items and content containers
          ============================================================ -->
 
     <style name="Widget.AppTheme.CardView"

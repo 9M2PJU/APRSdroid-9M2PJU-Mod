@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  MAILMY buttons — shown above the message list when the conversation
+  MAILMY buttons - shown above the message list when the conversation
   is with MAILMY. Email-to-APRS gateway.
   Commands: email(E), SEND(S), SENDLOC(L), STATUS(ST), CANCEL(C), HELP(H)
 -->

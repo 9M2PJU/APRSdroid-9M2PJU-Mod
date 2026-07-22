@@ -1,4 +1,4 @@
-/* APRSdroid 9M2PJU Mod — GitHub Pages landing
+/* APRSdroid 9M2PJU Mod -- GitHub Pages landing
  * Palette derived from the app icon:
  *   navy bg #0D182D, surface #1C2F51, steel #2C4B62,
  *   amber accent #CEB619, cool grey text #ADB2BF, muted #64819B
@@ -376,7 +376,7 @@ h2 { font-size: clamp(1.4rem, 3vw, 2rem); margin-top: 0; }
   }
 }
 
-/* Map tools table — horizontally scrollable on small screens */
+/* Map tools table -- horizontally scrollable on small screens */
 .map-tools-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -483,7 +483,7 @@ footer a { color: var(--text); }
 .footer-meta { margin-top: 0.5rem; font-size: 0.85rem; }
 
 /* ============================================================
-   Responsive — tablet & mobile
+   Responsive -- tablet & mobile
    ============================================================ */
 @media (max-width: 820px) {
   .topnav-toggle { display: inline-block; }
@@ -559,7 +559,7 @@ footer a { color: var(--text); }
   }
   .map-tools td:last-child { border-bottom: none; }
   .map-tools td::before {
-    content: attr(data-label) " — ";
+    content: attr(data-label) " -- ";
     color: var(--muted);
     font-weight: 600;
     font-size: 0.78rem;

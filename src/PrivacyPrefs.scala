@@ -19,7 +19,7 @@ class PrivacyPrefs extends PreferenceActivity with SharedPreferences.OnSharedPre
 	}
 
 	override def onSharedPreferenceChanged(sp: SharedPreferences, key: String) {
-		// No special handling needed — preferences are simple checkboxes
+		// No special handling needed -- preferences are simple checkboxes
 		// and a list preference.
 	}
 }

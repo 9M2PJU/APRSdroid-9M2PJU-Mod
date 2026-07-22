@@ -149,7 +149,7 @@ object UpdateChecker {
                 }
             }
 
-            // No APK asset found — fall back to the releases page URL
+            // No APK asset found -- fall back to the releases page URL
             ReleaseInfo(tag, RELEASES_URL, null)
         } catch {
             case e : Exception =>
@@ -212,10 +212,10 @@ object UpdateChecker {
             .setPositiveButton(R.string.update_download, new DialogInterface.OnClickListener {
                 override def onClick(d : DialogInterface, which : Int) : Unit = {
                     if (info.apkName != null) {
-                        // We have a direct APK download URL — download and install
+                        // We have a direct APK download URL -- download and install
                         downloadAndInstall(act, info)
                     } else {
-                        // No APK asset — fall back to opening browser
+                        // No APK asset -- fall back to opening browser
                         UrlOpener.open(act, RELEASES_URL)
                     }
                 }

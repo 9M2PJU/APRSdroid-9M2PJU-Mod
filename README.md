@@ -46,41 +46,41 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 
 ### What 9M2PJU added on top of NA7Q's fork
 
-- **Adaptive launcher icon** for Android 13+ — full logo with navy
+- **Adaptive launcher icon** for Android 13+ -- full logo with navy
   background, no default border (matches WhatsApp-style icons)
-- **Modern Android support** — `targetSdk 35` (Android 15), foreground service
+- **Modern Android support** -- `targetSdk 35` (Android 15), foreground service
   types for Android 14+, Bluetooth permissions for Android 12+, storage
   permissions for Android 11+, `POST_NOTIFICATIONS` for Android 13+,
   edge-to-edge opt-out for Android 15+ with proper system bar inset handling
   (status bar, navigation bar, display cutout)
-- **Material Design dark theme** — `Theme.MaterialComponents` with navy/amber
+- **Material Design dark theme** -- `Theme.MaterialComponents` with navy/amber
   palette, bottom navigation bar, modern component styles
-- **Branded splash screen** — full-screen splash with centerCrop rendering
-- **In-app update checker** — download and install updates directly from
+- **Branded splash screen** -- full-screen splash with centerCrop rendering
+- **In-app update checker** -- download and install updates directly from
   GitHub Releases, with Cloudflare CDN fallback when GitHub API is unreachable
-- **GitHub Actions CI/CD** — signed release APK builds, automatic GitHub
+- **GitHub Actions CI/CD** -- signed release APK builds, automatic GitHub
   Releases on `v*` tags, auto-generated `version.json` for the update checker
 - **GitHub Pages landing page** at <https://aprsdroid.hamradio.my/> with
   live download counters, responsive design for desktop and mobile browsers
 - **New app icon and logo** across all density buckets
-- **Map auto-zooms to GPS location** — on first open, the map centers on
+- **Map auto-zooms to GPS location** -- on first open, the map centers on
   the user's last known GPS position instead of a hardcoded default
-- **Map recenter button repositioned** — sits above the OSM zoom controls
+- **Map recenter button repositioned** -- sits above the OSM zoom controls
   to avoid overlap
-- **Restored OSM Maps preferences** — file picker first, then offline
+- **Restored OSM Maps preferences** -- file picker first, then offline
   mapping toggle (with guidance to select a map file before enabling),
   MapsForge / MBTiles file picker, storage permissions button, hardware
   acceleration toggle
-- **About dialog with logo and full credits** — app logo, project lineage,
+- **About dialog with logo and full credits** -- app logo, project lineage,
   and credits to Bob Bruninga (WB4APR), Georg Lukas (DO1GL), NA7Q, and 9M2PJU
-- **Bottom navigation with Menu tab** — quick access to Preferences, Hub,
+- **Bottom navigation with Menu tab** -- quick access to Preferences, Hub,
   Log, Map, Messages, and more from any screen, with no sliding animation
   between tabs
-- **Android 14+ crash fix** — `RECEIVER_NOT_EXPORTED` flag for
+- **Android 14+ crash fix** -- `RECEIVER_NOT_EXPORTED` flag for
   `registerReceiver` (required by Android 14/Upside Down Cake)
-- **APRS messaging bots &amp; services** — one-tap access to 9 APRS-based
+- **APRS messaging bots &amp; services** -- one-tap access to 9 APRS-based
   services: Winlink (WLNK-1), WTSAPP, 9M2PJU-4 BOT, APRSMY Net, MAILMY,
-  REPEATER, CALLMY, BBSMY, and GAMEMY — each with quick-action buttons
+  REPEATER, CALLMY, BBSMY, and GAMEMY -- each with quick-action buttons
   that send correctly formatted APRS commands
 - **App name and About dialog unified** across all 52 locale files
 - **Version bumped** to `v2.0.0` (tocall `APDR20`)
@@ -91,19 +91,19 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 
 ### Features inherited from NA7Q's fork
 
-- **Digipeater** — direct or full digipeating
-- **2-Way IGating** — full Internet Gateway functionality
-- **BLE TNC support** — Mobilinkd, DigiRig, and other Bluetooth TNCs
-- **Offline maps** — MBTiles + MapsForge V3 with OpenStreetMap
-- **Radio control** — Vero, BTech, Radioddity, and other radios
-- **Mic-E compression** — efficient position encoding with emergency status
+- **Digipeater** -- direct or full digipeating
+- **2-Way IGating** -- full Internet Gateway functionality
+- **BLE TNC support** -- Mobilinkd, DigiRig, and other Bluetooth TNCs
+- **Offline maps** -- MBTiles + MapsForge V3 with OpenStreetMap
+- **Radio control** -- Vero, BTech, Radioddity, and other radios
+- **Mic-E compression** -- efficient position encoding with emergency status
 - **Symbol overlay support**
-- **Unit options** — metric or imperial
+- **Unit options** -- metric or imperial
 
 ### Features from the original APRSdroid
 
 - **Real-time position reporting** via GPS
-- **APRS messaging** — send and receive messages
+- **APRS messaging** -- send and receive messages
 - **TCP/IP connectivity** to APRS-IS
 - **AFSK modem** for audio-based TNC
 - **USB TNC support**
@@ -114,7 +114,7 @@ The direct upstream is [NA7Q's fork](https://github.com/na7q/aprsdroid).
 
 The **Messages** screen provides one-tap access to a growing suite of
 APRS-based bots and gateway services. Each service is a remote callsign
-you can converse with using quick-action buttons — no need to memorize
+you can converse with using quick-action buttons -- no need to memorize
 commands. Just open a conversation, tap a button, and the app sends the
 correctly formatted APRS message for you.
 
@@ -137,7 +137,7 @@ correctly formatted APRS message for you.
 | Service | Callsign | Type | Buttons | Description |
 |---|---|---|---|---|
 | **Winlink** | `WLNK-1` | Stateful | 9 | Send/receive Winlink email via APRSLink. Login with password challenge, list/read/reply/forward/kill messages, compose multi-line emails. |
-| **WTSAPP** | `WTSAPP` | Stateless | 3 | WhatsApp gateway — send WhatsApp messages via APRS. Manage aliases, compose messages, remove aliases. |
+| **WTSAPP** | `WTSAPP` | Stateless | 3 | WhatsApp gateway -- send WhatsApp messages via APRS. Manage aliases, compose messages, remove aliases. |
 | **9M2PJU-4 BOT** | `9M2PJU-4` | Stateless | 13 | Multi-function APRS bot: weather (Today), position messaging (PosMsg), location lookup (WhereIs, WhereAmI), satellite info (RiseSet, SatPass), SOTA/POTA spots &amp; alerts, nearby Police/Hospital/Fire stations, HF propagation forecast (Prop), and Help. |
 | **APRSMY Net** | `APRSMY` | Stateless | 7 | Malaysian APRS network service. Check in, get net info, list check-ins, and more. |
 | **MAILMY** | `MAILMY` | Stateless | 6 | Lightweight email gateway. Send email with optional position, check delivery status, cancel pending sends. |
@@ -146,13 +146,13 @@ correctly formatted APRS message for you.
 | **BBSMY** | `BBSMY` | Stateless | 6 | APRS BBS (bulletin board system). List messages, read by number, post public bulletins, send private messages, post urgent notices. |
 | **GAMEMY** | `GAMEMY` | Stateless | 7 | APRS trivia game. Start a game, get hints, skip questions, check your score, view the leaderboard, and stop the game. |
 
-### Winlink (WLNK-1) — APRSLink email gateway
+### Winlink (WLNK-1) -- APRSLink email gateway
 
 Winlink integration uses the [APRSLink](https://winlink.org/APRSLink)
 protocol to send and receive Winlink email via APRS messages addressed
 to `WLNK-1`. The app handles the full login handshake automatically:
 
-1. **Login** — sends a command to WLNK-1, receives a password challenge,
+1. **Login** -- sends a command to WLNK-1, receives a password challenge,
    computes the response from your Winlink password, and sends it back.
 2. Once logged in, you can **List** pending messages, **Read** by number,
    **Reply**, **Compose** new emails (multi-line, auto-split into 67-char
@@ -164,7 +164,7 @@ to `WLNK-1`. The app handles the full login handshake automatically:
 > **Preferences → Messaging** before using Winlink. Enable **Auto-login**
 > to automatically log in when the APRS service starts.
 
-### 9M2PJU-4 BOT — Multi-function APRS bot
+### 9M2PJU-4 BOT -- Multi-function APRS bot
 
 The 9M2PJU-4 BOT is a multi-purpose APRS information service operated by
 9M2PJU. It provides 13 quick-access commands:
@@ -185,14 +185,14 @@ The 9M2PJU-4 BOT is a multi-purpose APRS information service operated by
 | Fire Stn | `fire` | Nearby fire stations |
 | Prop | `prop` | HF propagation forecast |
 
-### REPEATER (REPEAT) — Repeater lookup
+### REPEATER (REPEAT) -- Repeater lookup
 
 Find nearby amateur radio repeaters using the REPEAT protocol. The
 **Nearest** dialog lets you specify:
 
-- **Number** — how many repeaters to return (1–10, default 1)
-- **Band** — 2m, 70cm, 6m, 10m, 1.25m, 33cm, or 23cm (default 2m)
-- **Filters** — optional capability filters like `+echolink`, `+dstar`,
+- **Number** -- how many repeaters to return (1-10, default 1)
+- **Band** -- 2m, 70cm, 6m, 10m, 1.25m, 33cm, or 23cm (default 2m)
+- **Filters** -- optional capability filters like `+echolink`, `+dstar`,
   `+ares`, `+fusion`, `+dmr`, etc.
 
 The app sends the command `n [Num] [Band] [+Filter]` to `REPEAT` and
@@ -221,7 +221,7 @@ displays the response in the conversation.
 ### Installation
 
 > **Important:** Uninstall any previous official version of APRSdroid before
-> installing this mod — the signing key differs, so Android will refuse an
+> installing this mod -- the signing key differs, so Android will refuse an
 > in-place upgrade.
 
 1. Download the latest signed release APK from the
@@ -245,7 +245,7 @@ GPS location on first open. To use offline maps:
    read
 5. (Optional) Toggle **"Enable Hardware Acceleration"** for smoother
    map rendering (on by default)
-6. Open **Map** — offline tiles will load without internet
+6. Open **Map** -- offline tiles will load without internet
 
 #### Malaysia, Singapore & Brunei offline map
 
@@ -261,7 +261,7 @@ available as a GitHub release asset:
 3. In APRSdroid: **Menu** → **Preferences** → **OSM Maps** → **Select MapsforgeV3 or .mbtiles map**
 4. Select the `.map` file you copied
 5. Enable **"Enable offline mapping"**
-6. Open **Map** — the offline map loads without internet
+6. Open **Map** -- the offline map loads without internet
 
 #### Other map sources
 
@@ -341,7 +341,7 @@ GPS → Phone → APRSdroid → BLE → LoRa Tracker → LoRa Radio → APRS Net
 
 ## License
 
-This project is licensed under the **GNU General Public License v2.0** — see
+This project is licensed under the **GNU General Public License v2.0** -- see
 the [LICENSE](LICENSE) file for details.
 
 ---
@@ -356,7 +356,7 @@ issue or pull request at the
 
 ## Credits
 
-### Georg Lukas (ge0rg) — Original Author
+### Georg Lukas (ge0rg) -- Original Author
 
 [APRSdroid](https://aprsdroid.org/) was created by **Georg Lukas, ge0rg** and
 has been the premier APRS client for Android since 2010. Written in Scala
@@ -364,22 +364,22 @@ with a Java core, it supports TCP/IP, AFSK, Bluetooth TNCs, and USB TNCs.
 Georg continues to maintain the upstream project and licenses it under the
 GPLv2 so that the community can build on his work.
 
-### NA7Q — Enhanced Fork
+### NA7Q -- Enhanced Fork
 
 [NA7Q's fork](https://github.com/na7q/aprsdroid) builds on Georg's original
 work with BLE TNC support, digipeater and IGate functionality, symbol
 overlays, Mic-E improvements, and offline mapping. NA7Q's fork is the direct
 upstream of this mod. Homepage: <https://na7q.com/aprsdroid-osm/>
 
-### 9M2PJU — This Mod
+### 9M2PJU -- This Mod
 
 This mod is maintained by **9M2PJU** (Kuala Lumpur, Malaysia). It builds on
 NA7Q's fork with modern Android compatibility, Material Design UI, bottom
 navigation, in-app updates, CI/CD, and a landing page.
 
-### Bob Bruninga, WB4APR — Creator of APRS
+### Bob Bruninga, WB4APR -- Creator of APRS
 
-**Bob Bruninga, WB4APR** (1947–2022) created the Automatic Packet Reporting
+**Bob Bruninga, WB4APR** (1947-2022) created the Automatic Packet Reporting
 System (APRS) in the 1980s. His vision of a real-time, position-aware digital
 communications network for amateur radio lives on in every APRS client,
 igate, and digipeater worldwide. Without Bob's pioneering work, none of this

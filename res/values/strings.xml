@@ -83,11 +83,11 @@
 <string name="firstrun_welcome_title">Welcome to APRSdroid</string>
 <string name="firstrun_welcome_text">APRSdroid is an Android app for amateur radio APRS. To get started, please grant the following permissions. You can change these later in Android Settings.</string>
 <string name="firstrun_perms_header">Permissions needed</string>
-<string name="firstrun_perm_location">📍 Location — Needed to broadcast your position to the APRS network and show nearby stations.</string>
-<string name="firstrun_perm_notifications">🔔 Notifications — Needed to show service status and alert you of incoming APRS messages. (Android 13+)</string>
-<string name="firstrun_perm_bluetooth">🔵 Bluetooth — Needed to connect to Bluetooth TNCs and radios. (Android 12+)</string>
-<string name="firstrun_perm_microphone">🎤 Microphone — Needed for AFSK audio decoding when using the phone as a TNC.</string>
-<string name="firstrun_perm_storage">📁 Storage — Needed for offline MBTiles and MapsForge maps. On Android 11+, requires \"All files access\".</string>
+<string name="firstrun_perm_location">📍 Location - Needed to broadcast your position to the APRS network and show nearby stations.</string>
+<string name="firstrun_perm_notifications">🔔 Notifications - Needed to show service status and alert you of incoming APRS messages. (Android 13+)</string>
+<string name="firstrun_perm_bluetooth">🔵 Bluetooth - Needed to connect to Bluetooth TNCs and radios. (Android 12+)</string>
+<string name="firstrun_perm_microphone">🎤 Microphone - Needed for AFSK audio decoding when using the phone as a TNC.</string>
+<string name="firstrun_perm_storage">📁 Storage - Needed for offline MBTiles and MapsForge maps. On Android 11+, requires \"All files access\".</string>
 <string name="firstrun_btn_grant">Grant Permissions</string>
 <string name="firstrun_btn_storage">Grant All Files Access</string>
 <string name="firstrun_btn_continue">Continue</string>
@@ -147,10 +147,10 @@
 	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 	</string>
 <string name="ad_thanks">Thanks to:</string>
-<string name="ad_thanks_0">Bob Bruninga, WB4APR (1947–2022): Creator of APRS</string>
+<string name="ad_thanks_0">Bob Bruninga, WB4APR (1947-2022): Creator of APRS</string>
 <string name="ad_thanks_1">Georg Lukas, DO1GL: Original APRSdroid author</string>
 <string name="ad_thanks_2">Mike, NA7Q: BLE TNC, digipeater, IGate, MBTiles mapping, https://na7q.com/aprsdroid-osm/</string>
-<string name="ad_thanks_3">9M2PJU: 9M2PJU Mod, Material UI, bottom nav, in-app updates, https://hamradio.my</string>
+<string name="ad_thanks_3">9M2PJU: 9M2PJU Mod - because the best APRS client deserves the best Android experience, https://hamradio.my</string>
 <string name="ad_thanks_4">Michael, DO3BOX: idea</string>
 <string name="ad_thanks_5">Dirk, DB5OY: motivation and support</string>
 <string name="ad_thanks_6">Bastian, DB1BM: AFSK implementation</string>

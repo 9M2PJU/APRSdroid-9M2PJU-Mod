@@ -65,7 +65,7 @@ class PrefsAct extends PreferenceActivity {
 	// navigation (onContentChanged, onWindowFocusChanged, onPreDraw)
 	// because the ListView content is swapped and padding may be reset.
 	// Uses clipToPadding=false so items scroll smoothly through the
-	// padding area under the transparent status bar — modern edge-to-edge.
+	// padding area under the transparent status bar -- modern edge-to-edge.
 	def applyPrefTopInset() {
 		val res = getResources()
 		val resId = res.getIdentifier("status_bar_height", "dimen", "android")
@@ -74,7 +74,7 @@ class PrefsAct extends PreferenceActivity {
 		val navBarHeight = if (navBarResId > 0) res.getDimensionPixelSize(navBarResId) else 0
 		val lv = findViewById(android.R.id.list).asInstanceOf[android.view.View]
 		if (lv != null) {
-			// clipToPadding=false for smooth edge-to-edge scrolling —
+			// clipToPadding=false for smooth edge-to-edge scrolling --
 			// items scroll through the padding area under the status bar.
 			if (lv.isInstanceOf[android.view.ViewGroup])
 				lv.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
@@ -127,7 +127,7 @@ class PrefsAct extends PreferenceActivity {
 
 	// All PreferenceScreen sub-screens (Notifications, Position privacy,
 	// etc.) have been converted to separate activities with <intent>
-	// tags. No more dialog sub-screens — super.onPreferenceTreeClick()
+	// tags. No more dialog sub-screens -- super.onPreferenceTreeClick()
 	// handles everything natively by launching the target activity.
 
 	override def onCreate(savedInstanceState: Bundle) {
@@ -273,7 +273,7 @@ class PrefsAct extends PreferenceActivity {
 	override def onActivityResult(reqCode : Int, resultCode : Int, data : Intent) {
 		android.util.Log.d("PrefsAct", "onActResult: request=" + reqCode + " result=" + resultCode + " " + data)
 		if (resultCode == android.app.Activity.RESULT_OK && reqCode == 123456) {
-			// tilepath picker — resolve URI to real path and save
+			// tilepath picker -- resolve URI to real path and save
 			val takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 			getContentResolver.takePersistableUriPermission(data.getData(), takeFlags)
 			val resolvedPath = data.getData().getScheme match {
@@ -323,7 +323,7 @@ class PrefsAct extends PreferenceActivity {
 	// BCP-47 language tags supported by APRSdroid. Must match the entries in
 	// res/xml/locales_config.xml. Order is alphabetical by tag; the dialog
 	// sorts by display name at runtime. Legacy folder names "in"/"iw" are
-	// declared with their modern equivalents "id"/"he" — Android resolves
+	// declared with their modern equivalents "id"/"he" -- Android resolves
 	// them to res/values-in and res/values-iw automatically.
 	lazy val supportedLocales : Array[String] = Array(
 		"af", "ar", "bg", "br", "bs", "ca", "ceb", "cs", "da", "de",

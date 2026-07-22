@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  APRSMY buttons — shown above the message list when the conversation
+  APRSMY buttons - shown above the message list when the conversation
   is with APRSMY. All commands are no-argument, sent directly.
 -->
 <LinearLayout

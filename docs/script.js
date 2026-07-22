@@ -1,8 +1,8 @@
-// APRSdroid 9M2PJU Mod — download page logic
+// APRSdroid 9M2PJU Mod -- download page logic
 // Fetches release info from the public GitHub API and renders download
 // buttons + live download counters. No backend; the GitHub API exposes
 // download_count per asset for unauthenticated requests (CORS-enabled,
-// 60 req/hour per IP — plenty for a landing page).
+// 60 req/hour per IP -- plenty for a landing page).
 
 const OWNER = "9M2PJU";
 const REPO  = "APRSdroid-9M2PJU-Mod";

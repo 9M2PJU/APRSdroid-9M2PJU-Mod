@@ -176,7 +176,7 @@ dependencies {
 	implementation 'com.google.android.gms:play-services-maps:17.0.0'
 	implementation 'com.google.maps.android:android-maps-utils:0.5'
 	implementation 'androidx.core:core:1.6.0'
-	// Material Design / AppCompat — modern UI (Phase 1)
+	// Material Design / AppCompat -- modern UI (Phase 1)
 	// material 1.7+ uses <macro> resource tags requiring AGP 7.0+;
 	// we're on AGP 3.5.1 (Scala plugin), so pin to 1.6.0.
 	implementation 'androidx.appcompat:appcompat:1.6.1'

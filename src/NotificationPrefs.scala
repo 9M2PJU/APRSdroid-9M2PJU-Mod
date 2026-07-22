@@ -19,7 +19,7 @@ class NotificationPrefs extends PreferenceActivity with SharedPreferences.OnShar
 	}
 
 	override def onSharedPreferenceChanged(sp: SharedPreferences, key: String) {
-		// No special handling needed — preferences are simple checkboxes
+		// No special handling needed -- preferences are simple checkboxes
 		// and ringtone preferences.
 	}
 }

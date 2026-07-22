@@ -50,24 +50,24 @@ class FirstRunActivity extends AppCompatActivity {
     def getAllPermissions() : Array[String] = {
         val perms = ArrayBuffer[String]()
 
-        // Location — needed by everyone for beaconing
+        // Location -- needed by everyone for beaconing
         perms += AndroidManifest.permission.ACCESS_FINE_LOCATION
         perms += AndroidManifest.permission.ACCESS_COARSE_LOCATION
 
-        // Notifications — Android 13+ (API 33+)
+        // Notifications -- Android 13+ (API 33+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             perms += AndroidManifest.permission.POST_NOTIFICATIONS
 
-        // Bluetooth — Android 12+ (API 31+)
+        // Bluetooth -- Android 12+ (API 31+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             perms += AndroidManifest.permission.BLUETOOTH_CONNECT
             perms += AndroidManifest.permission.BLUETOOTH_SCAN
         }
 
-        // Microphone — for AFSK audio decoding
+        // Microphone -- for AFSK audio decoding
         perms += AndroidManifest.permission.RECORD_AUDIO
 
-        // Legacy storage — Android 10 and below
+        // Legacy storage -- Android 10 and below
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             perms += AndroidManifest.permission.READ_EXTERNAL_STORAGE
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P)
@@ -91,7 +91,7 @@ class FirstRunActivity extends AppCompatActivity {
     }
 
     // MANAGE_EXTERNAL_STORAGE (Android 11+) can't be requested via the
-    // standard permission dialog — the user must toggle it in system settings.
+    // standard permission dialog -- the user must toggle it in system settings.
     def requestManageStorage() : Unit = {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!Environment.isExternalStorageManager()) {

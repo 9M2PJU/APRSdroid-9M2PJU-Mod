@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  9M2PJU-4 APRS Bot buttons — shown above the message list when the
+  9M2PJU-4 APRS Bot buttons - shown above the message list when the
   conversation is with 9M2PJU-4. Horizontally scrollable strip.
-  Stateless — just sends APRS messages with the command text.
+  Stateless - just sends APRS messages with the command text.
 -->
 <LinearLayout
 xmlns:android="http://schemas.android.com/apk/res/android"

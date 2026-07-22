@@ -2,7 +2,7 @@
 <resources>
 
     <!-- ============================================================
-         AppTheme — Material 3-inspired design system on top of
+         AppTheme - Material 3-inspired design system on top of
          Material Components 1.9.0 (M2). We can't use the Material3
          library (requires compileSdk 34+; we're at 33), but we apply
          M3 design principles: tonal color palette, shape theming,
@@ -44,7 +44,7 @@
         <item name="android:actionBarTheme">@style/ThemeOverlay.AppTheme.ActionBar</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppTheme.ActionBar</item>
 
-        <!-- ===== System bars — transparent status bar, dark nav bar ===== -->
+        <!-- ===== System bars - transparent status bar, dark nav bar ===== -->
         <!-- Status bar is transparent so the app's navy background flows
              under it. Nav bar uses the app's navy color so it's always
              dark (some screens have light content at the bottom that
@@ -67,7 +67,7 @@
     </style>
 
     <!-- ============================================================
-         SplashTheme — launcher splash. No action bar, black window
+         SplashTheme - launcher splash. No action bar, black window
          background. The splash image is shown via an ImageView in
          splash.xml (setContentView), which uses centerCrop for
          perfect fit without distortion.
@@ -89,7 +89,7 @@
     </style>
 
     <!-- ============================================================
-         MapViewTheme — dark Material theme for the map activities.
+         MapViewTheme - dark Material theme for the map activities.
          Uses Theme.MaterialComponents (required by BottomNavigationView
          and other Material components). Matches AppTheme so the bottom
          navigation bar has the same dark background on all screens.

@@ -27,7 +27,7 @@ class LogActivity extends MainListActivity("log", R.id.log) {
 	lazy val locReceiver = new LocationReceiver2[Cursor](load_cursor, replace_cursor, cancel_cursor)
 	lazy val la = new PostListAdapter(this)
 
-	// Periodic refresh handler — ensures the log updates in real-time
+	// Periodic refresh handler -- ensures the log updates in real-time
 	// even if UPDATE broadcasts are delayed or coalesced by the OS.
 	val refreshHandler = new Handler()
 	val REFRESH_INTERVAL_MS = 2000L  // 2 seconds

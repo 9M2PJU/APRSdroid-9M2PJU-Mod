@@ -8,7 +8,7 @@ import _root_.net.ab0oo.aprs.parser.MessagePacket
 import scala.collection.mutable
 
 /**
- * WinlinkService — manages the APRSLink (WLNK-1) session state machine.
+ * WinlinkService -- manages the APRSLink (WLNK-1) session state machine.
  *
  * APRSLink lets APRS users send/receive Winlink email by sending APRS
  * messages addressed to WLNK-1. The protocol is documented at
@@ -26,7 +26,7 @@ import scala.collection.mutable
  * lines, terminated by /EX.
  *
  * This service is a singleton tied to AprsService lifecycle. It hooks into
- * MessageService.handleMessage() — when a message arrives from WLNK-1,
+ * MessageService.handleMessage() -- when a message arrives from WLNK-1,
  * it's routed here for protocol parsing instead of normal APRS ACK handling.
  */
 object WinlinkService {
@@ -82,7 +82,7 @@ class WinlinkService(s : AprsService) {
 	@volatile var statusCallback : (Int => Unit) = null
 
 	def getState = {
-		// Check for login timeout — if stuck in LOGIN_STARTED or CHALLENGE
+		// Check for login timeout -- if stuck in LOGIN_STARTED or CHALLENGE
 		// for too long, reset to LOGGED_OUT so buttons work again
 		if (state == STATE_LOGIN_STARTED || state == STATE_CHALLENGE) {
 			if (loginStartTime > 0 &&
@@ -129,7 +129,7 @@ class WinlinkService(s : AprsService) {
 
 	/**
 	 * Initiate Winlink login.
-	 * APRSLink doesn't have a "Start" command — instead, you send any
+	 * APRSLink doesn't have a "Start" command -- instead, you send any
 	 * valid command (we use "L" to list messages) and WLNK-1 responds
 	 * with a login challenge if you're not authenticated. Once you
 	 * respond to the challenge, WLNK-1 processes the original command.
@@ -152,7 +152,7 @@ class WinlinkService(s : AprsService) {
 		Log.i(TAG, "initiating Winlink login by sending L command")
 		loginStartTime = System.currentTimeMillis()
 		setState(STATE_LOGIN_STARTED)
-		// Send "L" — WLNK-1 will respond with a login challenge
+		// Send "L" -- WLNK-1 will respond with a login challenge
 		messageList.clear()
 		sendToWlnk("L")
 	}
@@ -390,7 +390,7 @@ class WinlinkService(s : AprsService) {
 			true
 
 		case _ =>
-			// Not in a login flow — could be an unsolicited notification
+			// Not in a login flow -- could be an unsolicited notification
 			// (e.g. "you have unread mail"). Store it.
 			storeFromWlnk(text, null)
 			true
@@ -431,7 +431,7 @@ class WinlinkService(s : AprsService) {
 			if (pos >= 1 && pos <= password.length) {
 				answer.append(password.charAt(pos - 1))
 			} else {
-				// Position out of range — use first char as fallback
+				// Position out of range -- use first char as fallback
 				Log.w(TAG, "challenge position %d exceeds password length %d".format(pos, password.length))
 				answer.append(password.charAt(0))
 			}

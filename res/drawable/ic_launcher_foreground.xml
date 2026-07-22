@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Adaptive icon foreground — the app logo centered within the 108dp
+<!-- Adaptive icon foreground - the app logo centered within the 108dp
      canvas. The system applies a launcher mask (circle, squircle, etc.)
      and only the center 66% ("safe zone") is guaranteed to be visible.
      The inset keeps the logo within the safe zone so it doesn't get

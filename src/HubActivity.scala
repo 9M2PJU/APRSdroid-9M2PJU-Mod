@@ -18,7 +18,7 @@ class HubActivity extends MainListActivity("hub", R.id.hub) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.main)
 
-		// Hub doesn't show the Send Position / Start Tracking buttons —
+		// Hub doesn't show the Send Position / Start Tracking buttons --
 		// those are only shown in the Log view.
 		findViewById(R.id.buttonlayout).asInstanceOf[View].setVisibility(View.GONE)
 

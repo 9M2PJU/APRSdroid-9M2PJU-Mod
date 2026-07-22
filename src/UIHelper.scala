@@ -79,7 +79,7 @@ object UIHelper
 	 */
 	def applySystemBarInsets(act : android.app.Activity) {
 		// Detect PreferenceActivity by type, NOT by looking for
-		// android.R.id.list — ListActivity-based screens (LogActivity,
+		// android.R.id.list -- ListActivity-based screens (LogActivity,
 		// HubActivity, ConversationsActivity) also have android.R.id.list
 		// but are NOT PreferenceActivity.
 		val is_pref_activity = act.isInstanceOf[android.preference.PreferenceActivity]
@@ -181,7 +181,7 @@ object UIHelper
 	// PreferenceActivity's internal system layout has an intermediate
 	// LinearLayout with fitsSystemWindows="true" that auto-applies the
 	// status bar inset as padding. On Android 15/16 (edge-to-edge enforced),
-	// this can be unreliable — especially after navigating to a sub-screen
+	// this can be unreliable -- especially after navigating to a sub-screen
 	// and back, causing the first preference item to bleed under the status
 	// bar.
 	//
@@ -191,7 +191,7 @@ object UIHelper
 	//  2. Applies them as top+bottom padding to the PreferenceActivity's
 	//     built-in ListView (android.R.id.list)
 	//  3. Consumes the insets (returns consumed insets) so the internal
-	//     LinearLayout's fitsSystemWindows doesn't also apply them — that
+	//     LinearLayout's fitsSystemWindows doesn't also apply them -- that
 	//     would cause double padding
 	//
 	// The ListView uses the default clipToPadding=true so items are clipped
@@ -209,7 +209,7 @@ object UIHelper
 		}
 
 		val prefList = act.findViewById(android.R.id.list).asInstanceOf[View]
-		// clipToPadding=false for smooth edge-to-edge scrolling — items
+		// clipToPadding=false for smooth edge-to-edge scrolling -- items
 		// scroll through the padding area under the transparent status bar.
 		if (prefList != null && prefList.isInstanceOf[android.view.ViewGroup])
 			prefList.asInstanceOf[android.view.ViewGroup].setClipToPadding(false)
@@ -242,7 +242,7 @@ object UIHelper
 							prefList.getPaddingRight(), bottomPad)
 						// Consume insets so PreferenceActivity's internal
 						// LinearLayout (fitsSystemWindows="true") doesn't
-						// also apply them — that would double the padding.
+						// also apply them -- that would double the padding.
 						insets.consumeSystemWindowInsets()
 					}
 				})
@@ -474,7 +474,7 @@ trait UIHelper extends Activity
 		highlightBottomNav()
 	}
 
-	// Highlight the current tab — called from setupBottomNav() and onResume()
+	// Highlight the current tab -- called from setupBottomNav() and onResume()
 	// Uses suppressingNavSelection flag so setSelectedItemId doesn't trigger
 	// a new activity launch (which would cause an infinite loop).
 	def highlightBottomNav() {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  WTSAPP action buttons — shown above the message list when the
+  WTSAPP action buttons - shown above the message list when the
   conversation is with WTSAPP (APRS to WhatsApp Gateway).
   Inflated by MessageActivity when targetcall is WTSAPP.
 -->

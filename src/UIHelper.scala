@@ -430,12 +430,17 @@ trait UIHelper extends Activity
 
 	// Set up the bottom navigation bar. Call from onContentViewLoaded()
 	// or onResume(). The current activity is highlighted based on menu_id.
+	// Flag to suppress the nav listener when we programmatically set the
+	// selected item (so it doesn't launch a new activity)
+	var suppressingNavSelection = false
+
 	def setupBottomNav() {
 		val nav = findViewById(R.id.bottom_nav).asInstanceOf[View]
 		if (nav == null) return
 		val bn = nav.asInstanceOf[BottomNavigationView]
 		bn.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener {
 			override def onNavigationItemSelected(item : MenuItem) : Boolean = {
+				if (suppressingNavSelection) return true
 				item.getItemId match {
 					case R.id.nav_hub =>
 						startActivity(new Intent(UIHelper.this, classOf[HubActivity])
@@ -470,6 +475,8 @@ trait UIHelper extends Activity
 	}
 
 	// Highlight the current tab — called from setupBottomNav() and onResume()
+	// Uses suppressingNavSelection flag so setSelectedItemId doesn't trigger
+	// a new activity launch (which would cause an infinite loop).
 	def highlightBottomNav() {
 		val nav = findViewById(R.id.bottom_nav).asInstanceOf[View]
 		if (nav == null) return
@@ -481,7 +488,9 @@ trait UIHelper extends Activity
 			case R.id.conversations => R.id.nav_messages
 			case _ => R.id.nav_log
 		}
+		suppressingNavSelection = true
 		bn.setSelectedItemId(currentNavId)
+		suppressingNavSelection = false
 	}
 
 	// Show the old options menu as a popup anchored above the bottom nav.

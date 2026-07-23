@@ -91,6 +91,7 @@
 		android:configChanges="orientation|keyboardHidden|screenSize"
 		android:parentActivityName=".ConversationsActivity"
 		android:alwaysRetainTaskState="true"
+		android:windowSoftInputMode="stateUnspecified|adjustResize"
 		/>
 	<activity android:name=".PrefsAct" android:label="@string/app_prefs"
 		android:parentActivityName=".HubActivity"

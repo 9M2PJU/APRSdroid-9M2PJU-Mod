@@ -79,6 +79,28 @@ APRS® is a registered trademark of Bob Bruninga, WB4APR.
 
 ---
 
+## Support the project
+
+If you find APRSdroid 9M2PJU Mod useful, consider supporting development:
+
+<div align="center">
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy_Me_a_Coffee-9M2PJU-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/9m2pju)
+[![Wise](https://img.shields.io/badge/Wise-faizulz13-163300?style=for-the-badge&logo=wise&logoColor=white)](https://wise.com/pay/me/faizulz13)
+
+<details>
+<summary>📱 Show Malaysia e-wallet QR</summary>
+
+<img src="docs/assets/donation-qr.png" alt="Malaysia e-wallet donation QR" width="250">
+
+*Scan with Boost, Touch 'n Go, GrabPay, or any Malaysian e-wallet*
+
+</details>
+
+</div>
+
+---
+
 <div align="center">
 
 **Made with care by [9M2PJU](https://hamradio.my). 73.**

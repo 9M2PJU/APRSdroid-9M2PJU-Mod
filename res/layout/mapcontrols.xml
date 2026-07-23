@@ -1,4 +1,5 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto" >
 <ProgressBar
 	android:id="@+id/loading"
 	style="@android:style/Widget.ProgressBar.Large.Inverse"
@@ -31,8 +32,39 @@
 	android:contentDescription="@string/map_my_location"
 	app:backgroundTint="@color/md_surface_variant"
 	app:tint="@color/md_accent"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
 	/>
+<LinearLayout
+	android:id="@+id/zoom_controls"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_gravity="bottom|end|right"
+	android:layout_marginTop="16dip"
+	android:layout_marginLeft="16dip"
+	android:layout_marginRight="16dip"
+	android:layout_marginBottom="168dip"
+	android:orientation="vertical" >
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/zoom_in_btn"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="12dip"
+		android:src="@drawable/ic_zoom_in"
+		android:contentDescription="Zoom in"
+		app:backgroundTint="@color/md_surface_variant"
+		app:tint="@color/md_on_surface"
+		app:fabSize="mini" />
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/zoom_out_btn"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:src="@drawable/ic_zoom_out"
+		android:contentDescription="Zoom out"
+		app:backgroundTint="@color/md_surface_variant"
+		app:tint="@color/md_on_surface"
+		app:fabSize="mini" />
+</LinearLayout>
 <LinearLayout
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"

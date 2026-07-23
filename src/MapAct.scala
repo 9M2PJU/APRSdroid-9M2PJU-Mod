@@ -41,6 +41,8 @@ class MapAct extends MapActivity with MapMenuHelper {
 	lazy val locReceiver = new LocationReceiver2[ArrayList[OSMStation]](staoverlay.load_stations,
 			staoverlay.replace_stations, staoverlay.cancel_stations)
 	lazy val myLocationBtn = findViewById(R.id.my_location_btn).asInstanceOf[com.google.android.material.floatingactionbutton.FloatingActionButton]
+	lazy val zoomInBtn = findViewById(R.id.zoom_in_btn).asInstanceOf[com.google.android.material.floatingactionbutton.FloatingActionButton]
+	lazy val zoomOutBtn = findViewById(R.id.zoom_out_btn).asInstanceOf[com.google.android.material.floatingactionbutton.FloatingActionButton]
 
 	// Apply hardware acceleration based on user preference
 	def applyHardwareAcceleration(useHardwareAcceleration : Boolean, mapview : MapView) {
@@ -58,7 +60,9 @@ class MapAct extends MapActivity with MapMenuHelper {
 	override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.mapview)
-		mapview.setBuiltInZoomControls(true)
+		// Disable built-in MapsForge zoom controls -- replaced with
+		// Material Design FloatingActionButton zoom buttons.
+		mapview.setBuiltInZoomControls(false)
 		mapview.getOverlays().add(staoverlay)
 		mapview.setTextScale(getResources().getDisplayMetrics().density)
 		// Increase in-memory tile cache so more tiles stay in RAM
@@ -77,6 +81,13 @@ class MapAct extends MapActivity with MapMenuHelper {
 		// "My location" FAB -- center the map on the last known GPS location
 		myLocationBtn.setOnClickListener(new View.OnClickListener {
 			override def onClick(v : View) : Unit = centerOnMyLocation()
+		})
+		// Material Design FAB zoom buttons
+		zoomInBtn.setOnClickListener(new View.OnClickListener {
+			override def onClick(v : View) : Unit = changeZoom(+1)
+		})
+		zoomOutBtn.setOnClickListener(new View.OnClickListener {
+			override def onClick(v : View) : Unit = changeZoom(-1)
 		})
 
 		startLoading()

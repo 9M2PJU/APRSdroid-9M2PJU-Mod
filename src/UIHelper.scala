@@ -620,7 +620,7 @@ trait UIHelper extends Activity
 		// Show the version (from package info, not hardcoded) in the badge
 		val versionView = aboutview.findViewById(R.id.about_version).asInstanceOf[android.widget.TextView]
 		if (versionView != null)
-			versionView.setText("v" + pi.versionName)
+			versionView.setText(pi.versionName)
 		// Wire up the action buttons inside the About dialog
 		val websiteBtn = aboutview.findViewById(R.id.about_btn_website).asInstanceOf[android.view.View]
 		if (websiteBtn != null)

@@ -63,10 +63,14 @@ class MapAct extends MapActivity with MapMenuHelper {
 		mapview.setTextScale(getResources().getDisplayMetrics().density)
 		// Increase in-memory tile cache so more tiles stay in RAM
 		// during a session, reducing re-downloads when panning.
-		mapview.getInMemoryTileCache().setCapacity(50)
+		// Some MapsForge 0.3.0 builds throw UnsupportedOperationException
+		// on setCapacity(), so guard it.
+		try { mapview.getInMemoryTileCache().setCapacity(50) }
+		catch { case _ : UnsupportedOperationException => Log.d("Map", "InMemoryTileCache.setCapacity unsupported") }
 		// Enable persistent disk cache so downloaded tiles survive
 		// across app restarts -- no re-download on next launch.
-		mapview.getFileSystemTileCache().setPersistent(true)
+		try { mapview.getFileSystemTileCache().setPersistent(true) }
+		catch { case _ : UnsupportedOperationException => Log.d("Map", "FileSystemTileCache.setPersistent unsupported") }
 		// Apply hardware acceleration preference
 		applyHardwareAcceleration(prefs.getBoolean("hardware_acceleration", true), mapview)
 		setupBottomNav()

@@ -54,7 +54,7 @@
 <meta name="twitter:creator" content="@9m2pju">
 <meta name="twitter:site" content="@9m2pju">
 <meta name="twitter:label1" content="Download">
-<meta name="twitter:data1" content="Free APK on GitHub">
+<meta name="twitter:data1" content="Free APK download">
 <meta name="twitter:label2" content="License">
 <meta name="twitter:data2" content="GPLv2 Open Source">
 
@@ -75,8 +75,8 @@
 <link rel="manifest" href="site.webmanifest">
 
 <!-- ===== Preconnect for faster external resource loading ===== -->
-<link rel="preconnect" href="https://github.com">
-<link rel="dns-prefetch" href="https://github.com">
+<link rel="preconnect" href="https://aprsdroid.hamradio.my">
+<link rel="dns-prefetch" href="https://aprsdroid.hamradio.my">
 
 <!-- ===== Stylesheet ===== -->
 <link rel="stylesheet" href="style.css">
@@ -92,7 +92,7 @@
   "applicationSubCategory": "Amateur Radio",
   "description": "APRSdroid 9M2PJU Mod is the enhanced APRS (Automatic Packet Reporting System) client for Android. Features offline maps, BLE TNC, digipeater, I-gate, Mic-E, APRS messaging, SmartBeaconing, AFSK, USB serial TNC, and Winlink APRSLink integration.",
   "url": "https://aprsdroid.hamradio.my/",
-  "downloadUrl": "https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/latest",
+  "downloadUrl": "https://aprsdroid.hamradio.my/#download",
   "screenshot": "https://aprsdroid.hamradio.my/assets/screenshots/screenshot-map.png",
   "softwareVersion": "v2.0.21",
   "datePublished": "2024-01-01",
@@ -145,7 +145,6 @@
   "logo": "https://aprsdroid.hamradio.my/assets/icon-256.png",
   "description": "Amateur radio operator and developer of APRSdroid 9M2PJU Mod.",
   "sameAs": [
-    "https://github.com/9M2PJU",
     "https://hamradio.my"
   ]
 }
@@ -192,7 +191,7 @@
       "name": "Is APRSdroid 9M2PJU Mod free?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, APRSdroid 9M2PJU Mod is free and open source software licensed under the GNU General Public License version 2 (GPLv2). You can download the APK from GitHub Releases at no cost."
+        "text": "Yes, APRSdroid 9M2PJU Mod is free and open source software licensed under the GNU General Public License version 2 (GPLv2). You can download the APK at no cost from the download section on this page."
       }
     },
     {
@@ -232,7 +231,7 @@
       "name": "How do I install APRSdroid 9M2PJU Mod?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Download the APK from the GitHub Releases page and install it on your Android device. You may need to enable 'Install from unknown sources' in your Android settings. The app is signed with the HamRadio.my organization key."
+        "text": "Download the APK from the download section on this page and install it on your Android device. You may need to enable 'Install from unknown sources' in your Android settings. The app is signed with the HamRadio.my organization key."
       }
     }
   ]
@@ -398,7 +397,7 @@
   <h3 class="features-subheading">Enhanced features (inherited from NA7Q's fork)</h3>
   <p class="section-sub">
     These features come from
-    <a href="https://github.com/na7q/aprsdroid" target="_blank" rel="noopener">NA7Q's enhanced APRSdroid fork</a>
+    <a href="https://na7q.com/aprsdroid-osm/" target="_blank" rel="noopener">NA7Q's enhanced APRSdroid fork</a>
     (<a href="https://na7q.com/aprsdroid-osm/" target="_blank" rel="noopener">homepage</a>)
     and are not found in the official APRSdroid.
   </p>
@@ -752,7 +751,7 @@
     <h3>Requirements</h3>
     <ul>
       <li>A LoRa APRS tracker board with BLE KISS TNC firmware (e.g.
-        <a href="https://github.com/richonguzman/LoRa_APRS_Tracker" target="_blank" rel="noopener">richonguzman's LoRa APRS Tracker</a>)</li>
+        <a href="https://aprsdroid.hamradio.my/#lora" target="_blank" rel="noopener">richonguzman's LoRa APRS Tracker</a>)</li>
       <li>Android phone with Bluetooth</li>
       <li>APRSdroid 9M2PJU Mod installed</li>
     </ul>
@@ -827,7 +826,7 @@
   <div class="whatsnew-group">
     <h3>NA7Q -- Enhanced Fork</h3>
     <p>
-      <a href="https://github.com/na7q/aprsdroid" target="_blank" rel="noopener">NA7Q's fork</a>
+      <a href="https://na7q.com/aprsdroid-osm/" target="_blank" rel="noopener">NA7Q's fork</a>
       builds on Georg's original work with significant enhancements:
     </p>
     <ul>
@@ -863,9 +862,9 @@
       <li><strong>Conversations grid layout</strong> -- 3x3 grid of service buttons with a full-width "Send message to..." button on top.</li>
       <li><strong>SQLite timestamp fix</strong> -- replaced unsupported <code>strftime('%y')</code> with <code>substr()</code> for proper DD/MM/YY formatting.</li>
       <li><strong>Bottom nav highlighting fix</strong> -- correct tab highlighting with <code>FLAG_ACTIVITY_REORDER_TO_FRONT</code> across all activities.</li>
-      <li><strong>GitHub Actions CI/CD</strong> -- signed release APK builds, automatic GitHub Releases on <code>v*</code> tags, auto-generated <code>version.json</code>.</li>
-      <li><strong>GitHub Pages landing page</strong> at <a href="https://aprsdroid.hamradio.my/">aprsdroid.hamradio.my</a> with live download counters, responsive for desktop and mobile.</li>
-      <li><strong>In-app update checker</strong> -- download and install updates directly from GitHub Releases, with Cloudflare CDN fallback.</li>
+      <li><strong>Automated CI/CD pipeline</strong> -- signed release APK builds, automatic releases on version tags, auto-generated <code>version.json</code>.</li>
+      <li><strong>Landing page</strong> at <a href="https://aprsdroid.hamradio.my/">aprsdroid.hamradio.my</a> with live download counters, responsive for desktop and mobile.</li>
+      <li><strong>In-app update checker</strong> -- download and install updates directly within the app, with Cloudflare CDN fallback.</li>
       <li><strong>Android 14+ crash fix</strong> -- <code>RECEIVER_NOT_EXPORTED</code> flag for <code>registerReceiver</code>.</li>
       <li><strong>App name and About dialog unified</strong> across all 52 locale files.</li>
       <li><strong>Map performance improvements</strong> -- cached Paint objects, persistent tile cache, Material Design FAB zoom controls.</li>

@@ -8,17 +8,14 @@ import org.mapsforge.v3.core.Tile;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class OsmTileDownloader extends TileDownloader {
-    // OSM France tile subdomains -- rotating across these allows parallel
-    // HTTP connections (browsers/clients limit concurrent connections per
-    // hostname). MapsForge calls getHostName() once per tile download, so
-    // round-robin distributes tiles across subdomains automatically.
+    // Standard OSM tile server. OSM recommends using a single hostname
+    // (tile.openstreetmap.org) as it supports HTTP/2, which handles
+    // multiplexing without needing subdomains.
     private static final String[] ONLINE_SUBDOMAINS = {
-        "a.tile.openstreetmap.fr",
-        "b.tile.openstreetmap.fr",
-        "c.tile.openstreetmap.fr"
+        "tile.openstreetmap.org"
     };
     private static final String HOST_NAME_OFFLINE = "127.0.0.1";
-    private static final byte ZOOM_MAX = 20;
+    private static final byte ZOOM_MAX = 19;
     private final StringBuilder stringBuilder = new StringBuilder();
     private static final String TAG = "OsmTileDownloader";
     private final PrefsWrapper prefsWrapper;
@@ -70,8 +67,8 @@ public class OsmTileDownloader extends TileDownloader {
     @Override
     public String getTilePath(Tile tile) {
         this.stringBuilder.setLength(0);
-        // OSM France tiles: /osmfr/{z}/{x}/{y}.png
-        this.stringBuilder.append("/osmfr/");
+        // Standard OSM tiles: /{z}/{x}/{y}.png
+        this.stringBuilder.append('/');
         this.stringBuilder.append(tile.zoomLevel);
         this.stringBuilder.append('/');
         this.stringBuilder.append(tile.tileX);

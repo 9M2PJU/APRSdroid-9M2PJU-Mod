@@ -353,7 +353,9 @@ object UpdateChecker {
      * Run the update check if needed. Called from MainListActivity.onResume.
      */
     def checkForUpdates(act : Activity) : Unit = {
-        if (!shouldCheck(act)) return
+        val should = shouldCheck(act)
+        Log.i(TAG, s"checkForUpdates: shouldCheck=$should, installed=${getInstalledVersionName(act)}")
+        if (!should) return
         doCheck(act, force = false)
     }
 
@@ -362,21 +364,30 @@ object UpdateChecker {
      * Called from the "Check for updates" menu item.
      */
     def forceCheckForUpdates(act : Activity) : Unit = {
+        Log.i(TAG, "forceCheckForUpdates called")
         doCheck(act, force = true)
     }
 
     private def doCheck(act : Activity, force : Boolean) : Unit = {
         val localVersion = getInstalledVersionName(act)
-        if (localVersion.isEmpty) return
+        Log.i(TAG, s"doCheck: force=$force, localVersion=$localVersion")
+        if (localVersion.isEmpty) {
+            Log.w(TAG, "doCheck: local version is empty, aborting")
+            return
+        }
 
         markChecked(act)  // record check time regardless of result
 
         new MyAsyncTask[Void, ReleaseInfo]() {
             override def doInBackground1(params : Array[String]) : ReleaseInfo = {
-                fetchLatestRelease()
+                Log.i(TAG, "doInBackground: fetching latest release...")
+                val info = fetchLatestRelease()
+                Log.i(TAG, "doInBackground: result=" + (if (info != null) info.tag else "null"))
+                info
             }
             override def onPostExecute(info : ReleaseInfo) : Unit = {
                 if (info == null) {
+                    Log.w(TAG, "onPostExecute: info is null, fetch failed")
                     if (force)
                         Toast.makeText(act, R.string.update_check_failed, Toast.LENGTH_SHORT).show()
                     return
@@ -385,9 +396,14 @@ object UpdateChecker {
                 // User skipped this version previously?
                 val prefs = PreferenceManager.getDefaultSharedPreferences(act)
                 val skipped = prefs.getString("skipped_version", null)
-                if (skipped != null && skipped == info.tag) return
+                if (skipped != null && skipped == info.tag) {
+                    Log.i(TAG, s"onPostExecute: version ${info.tag} was skipped by user")
+                    return
+                }
 
-                if (isNewerVersion(localVersion, info.tag)) {
+                val newer = isNewerVersion(localVersion, info.tag)
+                Log.i(TAG, s"onPostExecute: local=$localVersion, remote=${info.tag}, isNewer=$newer")
+                if (newer) {
                     Log.i(TAG, s"Update available: $localVersion -> ${info.tag}")
                     showUpdateDialog(act, localVersion, info)
                 } else {

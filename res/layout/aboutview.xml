@@ -1,84 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="wrap_content"
-	android:layout_width="fill_parent" >
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical" >
-		<ImageView
-			android:layout_width="120dp"
-			android:layout_height="120dp"
-			android:layout_gravity="center"
-			android:src="@drawable/logo"
-			android:layout_marginTop="4sp"
-			android:layout_marginBottom="10sp"
-			android:contentDescription="@string/app_name"
-			/>
-		<TextView
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:textSize="20sp"
-			android:text="APRSdroid 9M2PJU Mod"
-			android:layout_marginBottom="2sp"
-			/>
-		<TextView
-			android:id="@+id/about_version"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:textSize="13sp"
-			android:textColor="@color/md_text_secondary"
-			android:layout_marginBottom="7sp"
-			/>
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:autoLink="web"
-			android:text="@string/ad_copyright"
-			android:layout_marginBottom="7sp" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:autoLink="web"
-			android:text="@string/ad_gpl"
-			android:layout_marginBottom="10sp" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:text="@string/ad_thanks" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:text="@string/ad_thanks_0" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:text="@string/ad_thanks_1" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:autoLink="web"
-			android:text="@string/ad_thanks_2" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:autoLink="web"
-			android:text="@string/ad_thanks_3" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:text="@string/ad_thanks_4" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:text="@string/ad_thanks_5" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:text="@string/ad_thanks_6" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:text="@string/ad_thanks_7" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:autoLink="web"
-			android:text="@string/ad_thanks_8" />
-		<TextView
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:autoLink="web"
-			android:text="@string/ad_thanks_9" />
-	</LinearLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false" >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp" >
+
+    <!-- ===== App icon with rounded card ===== -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/md_surface_variant"
+        app:strokeWidth="0dp" >
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ===== App name ===== -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/md_on_surface"
+        android:text="APRSdroid 9M2PJU Mod"
+        android:layout_marginBottom="2dp" />
+
+    <!-- ===== Version badge ===== -->
+    <TextView
+        android:id="@+id/about_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:textColor="@color/md_accent"
+        android:background="@drawable/version_badge"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- ===== Action buttons row ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/about_btn_website"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/ad_homepage"
+            android:textSize="12sp"
+            android:textColor="@color/md_accent"
+            app:strokeColor="@color/md_outline_variant"
+            android:layout_marginEnd="6dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/about_btn_updates"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/check_updates"
+            android:textSize="12sp"
+            android:textColor="@color/md_accent"
+            app:strokeColor="@color/md_outline_variant"
+            android:layout_marginStart="6dp" />
+    </LinearLayout>
+
+    <!-- ===== Divider ===== -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_outline_variant"
+        android:layout_marginBottom="12dp" />
+
+    <!-- ===== Copyright section ===== -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linkTextColor="@color/md_accent"
+        android:textSize="13sp"
+        android:textColor="@color/md_text_secondary"
+        android:lineSpacingExtra="3dp"
+        android:text="@string/ad_copyright"
+        android:layout_marginBottom="10dp" />
+
+    <!-- ===== License header ===== -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/md_on_surface"
+        android:text="@string/ad_license_title"
+        android:layout_marginBottom="4dp" />
+
+    <!-- ===== License body ===== -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linkTextColor="@color/md_accent"
+        android:textSize="12sp"
+        android:textColor="@color/md_text_secondary"
+        android:lineSpacingExtra="2dp"
+        android:text="@string/ad_gpl"
+        android:layout_marginBottom="12dp" />
+
+    <!-- ===== Divider ===== -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_outline_variant"
+        android:layout_marginBottom="12dp" />
+
+    <!-- ===== Credits header ===== -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/md_on_surface"
+        android:text="@string/ad_thanks"
+        android:layout_marginBottom="6dp" />
+
+    <!-- ===== Credits list ===== -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linkTextColor="@color/md_accent"
+        android:textSize="12sp"
+        android:textColor="@color/md_text_secondary"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/ad_thanks_all" />
+
+</LinearLayout>
 </ScrollView>

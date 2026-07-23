@@ -615,19 +615,30 @@ trait UIHelper extends Activity
 
 	def aboutDialog() {
 		val pi = getPackageManager().getPackageInfo(this.getPackageName(), 0)
-		val title = getString(R.string.ad_title);
 		val inflater = getLayoutInflater()
 		val aboutview = inflater.inflate(R.layout.aboutview, null)
-		// Show the version (from package info, not hardcoded) below the app name
+		// Show the version (from package info, not hardcoded) in the badge
 		val versionView = aboutview.findViewById(R.id.about_version).asInstanceOf[android.widget.TextView]
 		if (versionView != null)
-			versionView.setText(pi.versionName)
-		new AlertDialog.Builder(this).setTitle(title)
+			versionView.setText("v" + pi.versionName)
+		// Wire up the action buttons inside the About dialog
+		val websiteBtn = aboutview.findViewById(R.id.about_btn_website).asInstanceOf[android.view.View]
+		if (websiteBtn != null)
+			websiteBtn.setOnClickListener(new android.view.View.OnClickListener {
+				override def onClick(v : android.view.View) : Unit =
+					UrlOpener.open(UIHelper.this, "https://aprsdroid.hamradio.my/")
+			})
+		val updatesBtn = aboutview.findViewById(R.id.about_btn_updates).asInstanceOf[android.view.View]
+		if (updatesBtn != null)
+			updatesBtn.setOnClickListener(new android.view.View.OnClickListener {
+				override def onClick(v : android.view.View) : Unit =
+					UpdateChecker.forceCheckForUpdates(UIHelper.this)
+			})
+		// Use MaterialAlertDialogBuilder for modern styling
+		new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
 			.setView(aboutview)
-			.setIcon(android.R.drawable.ic_dialog_info)
 			.setPositiveButton(android.R.string.ok, null)
-			.setNeutralButton(R.string.ad_homepage, new UrlOpener(this, "https://aprsdroid.hamradio.my/"))
-			.create.show
+			.create().show()
 	}
 
 	def reportBug() {

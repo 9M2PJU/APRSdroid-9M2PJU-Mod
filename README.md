@@ -223,9 +223,25 @@ displays the response in the conversation.
 |:---:|:---:|:---:|
 | ![Splash](docs/assets/splash-user.jpg) | ![Log](docs/assets/screenshots/screenshot-log.png) | ![Hub](docs/assets/screenshots/screenshot-hub.png) |
 
-| Map | Messages | Preferences |
+| Map | Messages | Menu |
 |:---:|:---:|:---:|
-| ![Map](docs/assets/screenshots/screenshot-map.png) | ![Messages](docs/assets/screenshots/screenshot-messages.png) | ![Preferences](docs/assets/screenshots/screenshot-prefs.png) |
+| ![Map](docs/assets/screenshots/screenshot-map.png) | ![Messages](docs/assets/screenshots/screenshot-messages.png) | ![Menu](docs/assets/screenshots/screenshot-menu.png) |
+
+| Preferences | About | Connection Prefs |
+|:---:|:---:|:---:|
+| ![Preferences](docs/assets/screenshots/screenshot-prefs.png) | ![About](docs/assets/screenshots/screenshot-about.png) | ![Connection Prefs](docs/assets/screenshots/screenshot-backend-prefs.png) |
+
+| Digipeater Prefs | I-Gate Prefs | Messaging Prefs |
+|:---:|:---:|:---:|
+| ![Digipeater Prefs](docs/assets/screenshots/screenshot-digi-prefs.png) | ![I-Gate Prefs](docs/assets/screenshots/screenshot-igate-prefs.png) | ![Messaging Prefs](docs/assets/screenshots/screenshot-messaging-prefs.png) |
+
+| Winlink Prefs | Location Prefs | Compressed Prefs |
+|:---:|:---:|:---:|
+| ![Winlink Prefs](docs/assets/screenshots/screenshot-winlink-prefs.png) | ![Location Prefs](docs/assets/screenshots/screenshot-location-prefs.png) | ![Compressed Prefs](docs/assets/screenshots/screenshot-compressed-prefs.png) |
+
+| APRS Symbol | Privacy Prefs | Notification Prefs |
+|:---:|:---:|:---:|
+| ![APRS Symbol](docs/assets/screenshots/screenshot-symbol-prefs.png) | ![Privacy Prefs](docs/assets/screenshots/screenshot-privacy-prefs.png) | ![Notification Prefs](docs/assets/screenshots/screenshot-notification-prefs.png) |
 
 </div>
 

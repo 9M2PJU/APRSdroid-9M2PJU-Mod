@@ -233,7 +233,7 @@ class AprsService extends Service {
 	override def onUnbind(i : Intent) : Boolean = false
 		
 	def showToast(msg : String) {
-		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+		ToastHelper.show(this, msg)
 		addPost(StorageDatabase.Post.TYPE_INFO, null, msg)
 	}
 

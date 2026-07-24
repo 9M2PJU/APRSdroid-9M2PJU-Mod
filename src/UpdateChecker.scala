@@ -311,8 +311,7 @@ object UpdateChecker {
             override def onPostExecute(apkFile : File) : Unit = {
                 progress.dismiss()
                 if (apkFile == null || !apkFile.exists()) {
-                    Toast.makeText(act, R.string.update_download_failed,
-                        Toast.LENGTH_SHORT).show()
+                    ToastHelper.show(act, R.string.update_download_failed)
                     // Fall back to opening the browser
                     UrlOpener.open(act, RELEASES_URL)
                     return
@@ -322,8 +321,7 @@ object UpdateChecker {
 
             override def onCancelled() : Unit = {
                 progress.dismiss()
-                Toast.makeText(act, R.string.update_download_cancelled,
-                    Toast.LENGTH_SHORT).show()
+                ToastHelper.show(act, R.string.update_download_cancelled)
             }
         }.execute()
     }
@@ -342,8 +340,7 @@ object UpdateChecker {
         } catch {
             case e : Exception =>
                 Log.e(TAG, "Failed to launch installer: " + e.getMessage)
-                Toast.makeText(act, R.string.update_install_failed,
-                    Toast.LENGTH_SHORT).show()
+                ToastHelper.show(act, R.string.update_install_failed)
                 // Fall back to opening the browser
                 UrlOpener.open(act, RELEASES_URL)
         }
@@ -389,7 +386,7 @@ object UpdateChecker {
                 if (info == null) {
                     Log.w(TAG, "onPostExecute: info is null, fetch failed")
                     if (force)
-                        Toast.makeText(act, R.string.update_check_failed, Toast.LENGTH_SHORT).show()
+                        ToastHelper.show(act, R.string.update_check_failed)
                     return
                 }
 
@@ -409,7 +406,7 @@ object UpdateChecker {
                 } else {
                     Log.d(TAG, s"Up to date: $localVersion (latest: ${info.tag})")
                     if (force)
-                        Toast.makeText(act, act.getString(R.string.up_to_date, info.tag), Toast.LENGTH_SHORT).show()
+                        ToastHelper.show(act, act.getString(R.string.up_to_date, info.tag))
                 }
             }
         }.execute()

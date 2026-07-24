@@ -83,8 +83,7 @@ class FirstRunActivity extends AppCompatActivity {
             checkSelfPermission(p) != PackageManager.PERMISSION_GRANTED)
 
         if (need_request.isEmpty) {
-            Toast.makeText(this, R.string.firstrun_perms_already_granted,
-                Toast.LENGTH_SHORT).show()
+            ToastHelper.show(this, R.string.firstrun_perms_already_granted)
         } else {
             ActivityCompat.requestPermissions(this, need_request, REQUEST_ALL_PERMISSIONS)
         }
@@ -106,12 +105,10 @@ class FirstRunActivity extends AppCompatActivity {
                         startActivityForResult(intent, REQUEST_MANAGE_STORAGE)
                 }
             } else {
-                Toast.makeText(this, R.string.firstrun_storage_already_granted,
-                    Toast.LENGTH_SHORT).show()
+                ToastHelper.show(this, R.string.firstrun_storage_already_granted)
             }
         } else {
-            Toast.makeText(this, R.string.firstrun_storage_not_needed,
-                Toast.LENGTH_SHORT).show()
+            ToastHelper.show(this, R.string.firstrun_storage_not_needed)
         }
     }
 
@@ -122,12 +119,10 @@ class FirstRunActivity extends AppCompatActivity {
             val granted = grantResults.count(_ == PackageManager.PERMISSION_GRANTED)
             val total = grantResults.length
             if (granted == total) {
-                Toast.makeText(this, R.string.firstrun_perms_granted,
-                    Toast.LENGTH_SHORT).show()
+                ToastHelper.show(this, R.string.firstrun_perms_granted)
             } else {
-                Toast.makeText(this,
-                    getString(R.string.firstrun_perms_partial, granted: Integer, total: Integer),
-                    Toast.LENGTH_SHORT).show()
+                ToastHelper.show(this,
+                    getString(R.string.firstrun_perms_partial, granted: Integer, total: Integer))
             }
         }
     }
@@ -135,11 +130,9 @@ class FirstRunActivity extends AppCompatActivity {
     override def onActivityResult(requestCode : Int, resultCode : Int, data : Intent) : Unit = {
         if (requestCode == REQUEST_MANAGE_STORAGE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
-                Toast.makeText(this, R.string.firstrun_storage_granted,
-                    Toast.LENGTH_SHORT).show()
+                ToastHelper.show(this, R.string.firstrun_storage_granted)
             } else {
-                Toast.makeText(this, R.string.firstrun_storage_denied,
-                    Toast.LENGTH_SHORT).show()
+                ToastHelper.show(this, R.string.firstrun_storage_denied)
             }
         }
     }

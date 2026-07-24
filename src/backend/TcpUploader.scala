@@ -121,7 +121,7 @@ class TcpUploader(service : AprsService, prefs : PrefsWrapper) extends AprsBacke
 					import AprsService.block2runnable
 					if (!passcode_warned && prefs.getProto() == "aprsis" && prefs.getPasscode() == "-1") {
                                                 service.handler.post {
-                                                        Toast.makeText(service, R.string.anon_warning, Toast.LENGTH_SHORT).show()
+                                                        ToastHelper.show(service, R.string.anon_warning)
                                                 }
                                                 passcode_warned = true
 					}

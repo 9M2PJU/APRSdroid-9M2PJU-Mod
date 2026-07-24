@@ -321,7 +321,7 @@ trait UIHelper extends Activity
 
 	def trackOnMap(call : String) {
 		val text = getString(R.string.map_track_call, call)
-		Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+		ToastHelper.show(this, text)
 		MapModes.startMap(this, prefs, call)
 	}
 
@@ -331,7 +331,7 @@ trait UIHelper extends Activity
 			finish()
 		} else {
 			startActivity(new Intent(this, act));
-			Toast.makeText(this, toastId, Toast.LENGTH_SHORT).show()
+			ToastHelper.show(this, toastId)
 			openedPrefs = true
 		}
 	}
@@ -655,7 +655,7 @@ trait UIHelper extends Activity
 			startActivity(Intent.createChooser(intent, getString(R.string.report_bug)))
 		} catch {
 			case _ : android.content.ActivityNotFoundException =>
-				Toast.makeText(this, R.string.no_email_app, Toast.LENGTH_SHORT).show()
+				ToastHelper.show(this, R.string.no_email_app)
 		}
 	}
 
@@ -806,7 +806,7 @@ trait UIHelper extends Activity
 			Log.d("GetStaPos", "Found " + targetcall +" " + lat + " " + lon)
 			(true, lat, lon)
 		} else {
-			Toast.makeText(this, getString(R.string.map_track_unknown, targetcall), Toast.LENGTH_SHORT).show()
+			ToastHelper.show(this, getString(R.string.map_track_unknown, targetcall))
 			cursor.close()
 			Log.d("GetStaPos", "Missed " + targetcall)
 			(false, 0, 0)
@@ -925,7 +925,7 @@ trait UIHelper extends Activity
 			Log.d("LogExporter", "saving " + filename + " done: " + error)
 			onStopLoading()
 			if (error != null)
-				Toast.makeText(UIHelper.this, error, Toast.LENGTH_SHORT).show()
+				ToastHelper.show(UIHelper.this, error)
 			else 
 				UIHelper.shareFile(UIHelper.this, file, filename)
 		}
@@ -938,7 +938,7 @@ object UrlOpener {
 			ctx.startActivity(new Intent(Intent.ACTION_VIEW,
 				Uri.parse(url)))
 		} catch {
-		case e : Exception => Toast.makeText(ctx, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show()
+		case e : Exception => ToastHelper.show(ctx, e.getLocalizedMessage())
 		}
 	}
 }

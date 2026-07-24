@@ -94,9 +94,9 @@
   "url": "https://aprsdroid.hamradio.my/",
   "downloadUrl": "https://aprsdroid.hamradio.my/#download",
   "screenshot": "https://aprsdroid.hamradio.my/assets/screenshots/screenshot-map.png",
-  "softwareVersion": "v2.0.25",
+  "softwareVersion": "v2.0.26",
   "datePublished": "2024-01-01",
-  "dateModified": "2026-07-23",
+  "dateModified": "2026-07-24",
   "author": {
     "@type": "Person",
     "name": "9M2PJU",
@@ -870,7 +870,11 @@
       <li><strong>Map performance improvements</strong> - cached Paint objects, persistent tile cache, Material Design FAB zoom controls.</li>
       <li><strong>Keyboard obscuring fix</strong> - message input stays visible above soft keyboard via IME inset handling.</li>
       <li><strong>Realtime message replies fix</strong> - package-directed broadcasts for Android 14+ compatibility.</li>
-      <li><strong>Version bumped</strong> to <code>v2.0.25</code> (tocall <code>APDR20</code>).</li>
+      <li><strong>Version bumped</strong> to <code>v2.0.26</code> (tocall <code>APDR20</code>).</li>
+      <li><strong>Winlink chat window title</strong> - added "WINLINK Email" header to the WLNK-1 chat window, matching other service layouts.</li>
+      <li><strong>Winlink login timeout and rate-limit handling</strong> - active login timeout prevents the Login button from hanging; WLNK-1 rate-limit errors now trigger a cooldown period.</li>
+      <li><strong>Conversation list fix</strong> - shows the latest message per callsign instead of the first sent message.</li>
+      <li><strong>Toast and placeholder text audit</strong> - renamed "APRS Bot" to "9M2PJU-4 Bot" in toast, standardized email placeholders to <code>9m2pju@hamradio.my</code>, updated callsign hints, shortened toast duration to 2s, rebranded first-run and update dialogs to "APRSdroid 9M2PJU Mod".</li>
       <li><strong>Comprehensive README and documentation rewrite</strong>.</li>
     </ul>
   </div>

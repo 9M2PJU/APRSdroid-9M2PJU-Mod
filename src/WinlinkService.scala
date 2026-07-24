@@ -65,6 +65,7 @@ class WinlinkService(s : AprsService) {
 	private var loginStartTime : Long = 0
 	private var lastChallengeTime : Long = 0
 	private var challengeAnswer : String = ""
+	private var lastChallengeDigits : String = ""
 
 	// Login cooldown: when WLNK-1 rate-limits us ("too many login attempts
 	// -- try again later (2H)"), we store the time until which login
@@ -234,10 +235,9 @@ class WinlinkService(s : AprsService) {
 
 	/**
 	 * Initiate Winlink login.
-	 * APRSLink doesn't have a "Start" command -- instead, you send any
-	 * valid command (we use "L" to list messages) and WLNK-1 responds
-	 * with a login challenge if you're not authenticated. Once you
-	 * respond to the challenge, WLNK-1 processes the original command.
+	 * Per APRSLink spec, "send any characters to initiate login". We
+	 * send "Start" (same as LoRa APRS Tracker by CA2RXU). WLNK-1
+	 * responds with a login challenge if not authenticated.
 	 */
 	def login() : Boolean = {
 		val password = s.prefs.getWinlinkPassword()
@@ -265,12 +265,12 @@ class WinlinkService(s : AprsService) {
 				Toast.LENGTH_SHORT).show()
 			return false
 		}
-		Log.i(TAG, "initiating Winlink login by sending L command")
+		Log.i(TAG, "initiating Winlink login by sending Start command")
 		loginStartTime = System.currentTimeMillis()
 		setState(STATE_LOGIN_STARTED)
-		// Send "L" -- WLNK-1 will respond with a login challenge
+		// Send "Start" -- WLNK-1 will respond with a login challenge
 		messageList.clear()
-		sendToWlnk("L")
+		sendToWlnk("Start")
 		// Schedule active timeout so we don't hang forever if WLNK-1
 		// never replies (no digipeater heard, poor RF path, etc.)
 		scheduleLoginTimeout()
@@ -538,17 +538,47 @@ class WinlinkService(s : AprsService) {
 			return
 		}
 
+		val challengeDigits = digits.substring(0, 3)
+		Log.d(TAG, "challenge digits: " + challengeDigits)
+
+		// Cache the answer for 10 minutes (same as LoRa APRS Tracker by
+		// CA2RXU). If WLNK-1 retransmits the SAME challenge (because our
+		// ACK was lost), we send the SAME answer. This avoids generating
+		// a new random answer for a retransmitted challenge.
+		// BUG FIX: also check if the challenge digits changed -- LoRa's
+		// code doesn't do this, so a new challenge with different digits
+		// within 10 min gets the old (wrong) answer. We recompute if
+		// either 10 min passed OR the digits are different.
+		val now = System.currentTimeMillis
+		if (lastChallengeTime == 0 ||
+		    (now - lastChallengeTime) > 10 * 60 * 1000 ||
+		    challengeDigits != lastChallengeDigits) {
+			challengeAnswer = computeChallengeAnswer(challengeDigits)
+			lastChallengeTime = now
+			lastChallengeDigits = challengeDigits
+			Log.d(TAG, "computed new challenge answer (digits=%s)".format(challengeDigits))
+		} else {
+			Log.d(TAG, "reusing cached challenge answer (same digits, within 10min)")
+		}
+
+		setState(STATE_CHALLENGE)
+		sendToWlnk(challengeAnswer)
+	}
+
+	/**
+	 * Compute the challenge response: 3 password chars at the indicated
+	 * positions + 3 random alphanumeric chars, Fisher-Yates shuffled.
+	 * Follows the same algorithm as LoRa APRS Tracker (CA2RXU).
+	 */
+	private def computeChallengeAnswer(challengeDigits : String) : String = {
 		val password = s.prefs.getWinlinkPassword()
 		if (password.isEmpty) {
 			Log.w(TAG, "no password set for challenge")
 			setState(STATE_ERROR)
-			return
+			return ""
 		}
 
-		val challengeDigits = digits.substring(0, 3)
-		Log.d(TAG, "challenge digits: " + challengeDigits)
-
-		// Build the answer: 3 password chars at indicated positions + 3 random
+		// Build the answer: 3 password chars at indicated positions
 		val answer = new StringBuilder
 		for (c <- challengeDigits) {
 			val pos = c - '0'  // 1-indexed position
@@ -576,10 +606,7 @@ class WinlinkService(s : AprsService) {
 			arr(j) = tmp
 		}
 
-		challengeAnswer = new String(arr)
-		Log.d(TAG, "sending challenge response")
-		setState(STATE_CHALLENGE)
-		sendToWlnk(challengeAnswer)
+		new String(arr)
 	}
 
 	private def handleLoginSuccess(text : String) {
@@ -649,6 +676,8 @@ class WinlinkService(s : AprsService) {
 		loginTime = 0
 		loginStartTime = 0
 		challengeAnswer = ""
+		lastChallengeDigits = ""
+		lastChallengeTime = 0
 		// Note: do NOT clear loginCooldownUntil here -- if WLNK-1 has
 		// rate-limited us, the cooldown persists across service restarts
 		// so auto-login doesn't immediately spam WLNK-1 again.

@@ -317,12 +317,8 @@ Travis is no longer wired up to the repo.
   Releases, GitHub Actions, or GitHub Pages anywhere in `docs/index.html`
   visible text, meta tags, or structured data. Use "download section on this
   page" or "automated CI/CD pipeline" instead.
-- **All notifications use `ToastHelper`.** Always use
-  `ToastHelper.show(context, text)` or `ToastHelper.show(context, R.string.xxx)`
-  instead of `Toast.makeText(...)`. ToastHelper uses a Snackbar with 1.5s
-  duration in Activities (bottom of screen, Material styled) and falls back
-  to `Toast.LENGTH_SHORT` (2s) in Service contexts where Snackbar is not
-  available.
+- **All Toasts use `LENGTH_SHORT`.** Always use `Toast.LENGTH_SHORT` (2s)
+  instead of `Toast.LENGTH_LONG` (3.5s) to keep notifications brief.
 
 ## 10. Gotchas
 

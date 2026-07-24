@@ -109,7 +109,7 @@ class MapAct extends MapActivity with MapMenuHelper {
 			case _ : SecurityException => /* ignore */
 			case _ : Throwable => /* ignore */
 		}
-		ToastHelper.show(this, R.string.map_no_location)
+		Toast.makeText(this, R.string.map_no_location, Toast.LENGTH_SHORT).show()
 	}
 
 	override def onResume() {
@@ -195,7 +195,7 @@ class MapAct extends MapActivity with MapMenuHelper {
 				if (isMapFileValid) {
 					val result = mapview.setMapFile(mapfile)
 					if (!result.isSuccess)
-						ToastHelper.show(this, result.getErrorMessage)
+						Toast.makeText(this, result.getErrorMessage, Toast.LENGTH_SHORT).show()
 				} else {
 					// Offline mode on but file invalid -- fall back to online
 					loadOnlineMap()

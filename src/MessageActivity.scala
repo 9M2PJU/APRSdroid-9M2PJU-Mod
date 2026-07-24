@@ -276,17 +276,17 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	def requireWinlinkService(f : WinlinkService => Unit) {
 		getWinlinkService match {
 			case Some(ws) => f(ws)
-			case None => ToastHelper.show(this, R.string.winlink_not_logged_in)
+			case None => Toast.makeText(this, R.string.winlink_not_logged_in, Toast.LENGTH_SHORT).show()
 		}
 	}
 
 	def onWinlinkLogin() {
 		if (prefs.getCallsign().isEmpty) {
-			ToastHelper.show(this, R.string.winlink_no_callsign)
+			Toast.makeText(this, R.string.winlink_no_callsign, Toast.LENGTH_SHORT).show()
 			return
 		}
 		if (prefs.getWinlinkPassword().isEmpty) {
-			ToastHelper.show(this, R.string.winlink_no_password)
+			Toast.makeText(this, R.string.winlink_no_password, Toast.LENGTH_SHORT).show()
 			return
 		}
 		if (!AprsService.running) {
@@ -298,9 +298,9 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				// login() returns false (and shows its own toast) if
 				// blocked by cooldown, missing credentials, etc.
 				if (ws.login())
-					ToastHelper.show(this, R.string.winlink_login_started)
+					Toast.makeText(this, R.string.winlink_login_started, Toast.LENGTH_SHORT).show()
 			case None =>
-				ToastHelper.show(this, R.string.winlink_not_logged_in)
+				Toast.makeText(this, R.string.winlink_not_logged_in, Toast.LENGTH_SHORT).show()
 		}
 		updateWinlinkStatus()
 	}
@@ -308,7 +308,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	def onWinlinkLogout() {
 		requireWinlinkService { ws =>
 			ws.logout()
-			ToastHelper.show(this, R.string.winlink_logged_out)
+			Toast.makeText(this, R.string.winlink_logged_out, Toast.LENGTH_SHORT).show()
 		}
 		updateWinlinkStatus()
 	}
@@ -350,12 +350,12 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val subject = subjField.getText().toString.trim
 					val body = bodyField.getText().toString
 					if (to.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.winlink_email_failed)
+						Toast.makeText(MessageActivity.this, R.string.winlink_email_failed, Toast.LENGTH_SHORT).show()
 						return
 					}
 					requireWinlinkService { ws =>
 						ws.sendEmail(to, subject, body)
-						ToastHelper.show(MessageActivity.this, R.string.winlink_sending)
+						Toast.makeText(MessageActivity.this, R.string.winlink_sending, Toast.LENGTH_SHORT).show()
 					}
 				}
 			})
@@ -463,17 +463,17 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val recipient = recipientField.getText().toString.trim
 					val message = messageField.getText().toString.trim
 					if (recipient.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.wtsapp_no_recipient)
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_recipient, Toast.LENGTH_SHORT).show()
 						return
 					}
 					if (message.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.wtsapp_no_message)
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_message, Toast.LENGTH_SHORT).show()
 						return
 					}
 					// Format: @<recipient> <message>
 					val formatted = "@%s %s".format(recipient, message)
 					sendMessage(formatted)
-					ToastHelper.show(MessageActivity.this, R.string.wtsapp_sent)
+					Toast.makeText(MessageActivity.this, R.string.wtsapp_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -500,17 +500,17 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val alias = aliasField.getText().toString.trim
 					val phone = phoneField.getText().toString.trim
 					if (alias.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.wtsapp_no_alias)
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_alias, Toast.LENGTH_SHORT).show()
 						return
 					}
 					if (phone.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.wtsapp_no_phone)
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_phone, Toast.LENGTH_SHORT).show()
 						return
 					}
 					// Format: #SET <alias> <phone>
 					val formatted = "#SET %s %s".format(alias, phone)
 					sendMessage(formatted)
-					ToastHelper.show(MessageActivity.this, R.string.wtsapp_alias_set)
+					Toast.makeText(MessageActivity.this, R.string.wtsapp_alias_set, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -535,13 +535,13 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val alias = aliasField.getText().toString.trim
 					if (alias.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.wtsapp_no_alias)
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_alias, Toast.LENGTH_SHORT).show()
 						return
 					}
 					// Format: #RM <alias>
 					val formatted = "#RM %s".format(alias)
 					sendMessage(formatted)
-					ToastHelper.show(MessageActivity.this, R.string.wtsapp_alias_removed)
+					Toast.makeText(MessageActivity.this, R.string.wtsapp_alias_removed, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -593,7 +593,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		ToastHelper.show(this, R.string.bot_sent)
+		Toast.makeText(this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// posmsg [email]
@@ -610,11 +610,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val email = emailField.getText().toString.trim
 					if (email.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.bot_no_email)
+						Toast.makeText(MessageActivity.this, R.string.bot_no_email, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("posmsg %s".format(email))
-					ToastHelper.show(MessageActivity.this, R.string.bot_sent)
+					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -635,11 +635,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val call = callField.getText().toString.trim
 					if (call.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.bot_no_callsign)
+						Toast.makeText(MessageActivity.this, R.string.bot_no_callsign, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("whereis %s".format(call))
-					ToastHelper.show(MessageActivity.this, R.string.bot_sent)
+					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -660,11 +660,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val name = nameField.getText().toString.trim
 					if (name.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.bot_no_satname)
+						Toast.makeText(MessageActivity.this, R.string.bot_no_satname, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("satpass %s".format(name))
-					ToastHelper.show(MessageActivity.this, R.string.bot_sent)
+					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -687,7 +687,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 						case _ => "spots"
 					}
 					sendMessage("%s %s".format(command, sub))
-					ToastHelper.show(MessageActivity.this, R.string.bot_sent)
+					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -726,7 +726,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		ToastHelper.show(this, R.string.aprsmy_sent)
+		Toast.makeText(this, R.string.aprsmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// ===== MAILMY =====
@@ -758,7 +758,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		ToastHelper.show(this, R.string.mailmy_sent)
+		Toast.makeText(this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// email <addr> <msg> -- start draft
@@ -777,15 +777,15 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val addr = addrField.getText().toString.trim
 					val msg = msgField.getText().toString.trim
 					if (addr.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.mailmy_no_addr)
+						Toast.makeText(MessageActivity.this, R.string.mailmy_no_addr, Toast.LENGTH_SHORT).show()
 						return
 					}
 					if (msg.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.mailmy_no_msg)
+						Toast.makeText(MessageActivity.this, R.string.mailmy_no_msg, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("email %s %s".format(addr, msg))
-					ToastHelper.show(MessageActivity.this, R.string.mailmy_sent)
+					Toast.makeText(MessageActivity.this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -806,11 +806,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val addr = addrField.getText().toString.trim
 					if (addr.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.mailmy_no_addr)
+						Toast.makeText(MessageActivity.this, R.string.mailmy_no_addr, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("SENDLOC %s".format(addr))
-					ToastHelper.show(MessageActivity.this, R.string.mailmy_sent)
+					Toast.makeText(MessageActivity.this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -838,7 +838,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		ToastHelper.show(this, R.string.callmy_sent)
+		Toast.makeText(this, R.string.callmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// callsign <CALL>
@@ -855,11 +855,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val call = callField.getText().toString.trim
 					if (call.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.callmy_no_callsign)
+						Toast.makeText(MessageActivity.this, R.string.callmy_no_callsign, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("callsign %s".format(call))
-					ToastHelper.show(MessageActivity.this, R.string.callmy_sent)
+					Toast.makeText(MessageActivity.this, R.string.callmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -895,7 +895,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		ToastHelper.show(this, R.string.bbsmy_sent)
+		Toast.makeText(this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// POST <text>
@@ -912,11 +912,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val text = textField.getText().toString.trim
 					if (text.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.bbsmy_no_text)
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("P %s".format(text))
-					ToastHelper.show(MessageActivity.this, R.string.bbsmy_sent)
+					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -937,11 +937,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val text = textField.getText().toString.trim
 					if (text.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.bbsmy_no_text)
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("PU %s".format(text))
-					ToastHelper.show(MessageActivity.this, R.string.bbsmy_sent)
+					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -964,15 +964,15 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val call = callField.getText().toString.trim
 					val text = textField.getText().toString.trim
 					if (call.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.bbsmy_no_callsign)
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_callsign, Toast.LENGTH_SHORT).show()
 						return
 					}
 					if (text.isEmpty) {
-						ToastHelper.show(MessageActivity.this, R.string.bbsmy_no_text)
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("S %s %s".format(call, text))
-					ToastHelper.show(MessageActivity.this, R.string.bbsmy_sent)
+					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -1000,7 +1000,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		ToastHelper.show(this, R.string.repeat_sent)
+		Toast.makeText(this, R.string.repeat_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// n [Num] [Band] [+Filter]
@@ -1042,13 +1042,15 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 						try {
 							val n = numStr.toInt
 							if (n < 1 || n > 10) {
-								ToastHelper.show(MessageActivity.this, R.string.repeat_no_num)
+								Toast.makeText(MessageActivity.this, R.string.repeat_no_num,
+									Toast.LENGTH_SHORT).show()
 								return
 							}
 							sb.append(" ").append(n)
 						} catch {
 							case e : Exception =>
-								ToastHelper.show(MessageActivity.this, R.string.repeat_no_num)
+								Toast.makeText(MessageActivity.this, R.string.repeat_no_num,
+									Toast.LENGTH_SHORT).show()
 								return
 						}
 					}
@@ -1063,7 +1065,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 						sb.append(" ").append(filters)
 					}
 					sendMessage(sb.toString)
-					ToastHelper.show(MessageActivity.this, R.string.repeat_sent)
+					Toast.makeText(MessageActivity.this, R.string.repeat_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -1101,7 +1103,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		ToastHelper.show(this, R.string.gamemy_sent)
+		Toast.makeText(this, R.string.gamemy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	override def onResume() {

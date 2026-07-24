@@ -42,7 +42,7 @@ class PrefsAct extends PreferenceActivity {
 
 			UIHelper.shareFile(this, file, filename)
 		} catch {
-			case e : Exception => ToastHelper.show(this, e.getMessage())
+			case e : Exception => Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show()
 		}
 	}
 
@@ -257,13 +257,13 @@ class PrefsAct extends PreferenceActivity {
 		if (file != null) {
 			PreferenceManager.getDefaultSharedPreferences(this)
 				.edit().putString(pref_name, file).commit()
-			ToastHelper.show(this, file)
+			Toast.makeText(this, file, Toast.LENGTH_SHORT).show()
 			// reload prefs
 			finish()
 			startActivity(getIntent())
 		} else {
 			val errmsg = getString(error_id, data.getDataString())
-			ToastHelper.show(this, errmsg)
+			Toast.makeText(this, errmsg, Toast.LENGTH_SHORT).show()
 			db.addPost(System.currentTimeMillis(), StorageDatabase.Post.TYPE_ERROR,
 				getString(R.string.post_error), errmsg)
 		}
@@ -283,9 +283,9 @@ class PrefsAct extends PreferenceActivity {
 			if (resolvedPath != null) {
 				PreferenceManager.getDefaultSharedPreferences(this)
 					.edit().putString("tilepath", resolvedPath).commit()
-				ToastHelper.show(this, getString(R.string.selected_file, new File(resolvedPath).getName()))
+				Toast.makeText(this, getString(R.string.selected_file, new File(resolvedPath).getName()), Toast.LENGTH_SHORT).show()
 			} else {
-				ToastHelper.show(this, R.string.mapfile_error)
+				Toast.makeText(this, R.string.mapfile_error, Toast.LENGTH_SHORT).show()
 			}
 			finish()
 			startActivity(getIntent())

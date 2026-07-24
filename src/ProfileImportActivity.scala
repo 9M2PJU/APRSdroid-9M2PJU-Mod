@@ -52,14 +52,14 @@ class ProfileImportActivity extends AppCompatActivity {
 			}
 			prefsedit.commit()
 			val msg = getString(R.string.profile_import_done, getIntent.getData().getPath())
-			ToastHelper.show(this, msg)
+			Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 			db.addPost(System.currentTimeMillis(), StorageDatabase.Post.TYPE_INFO,
 				getString(R.string.profile_import_activity), msg)
 			startActivity(new Intent(this, classOf[LogActivity]))
 		} catch {
 			case e : Exception =>
 				val errmsg = getString(R.string.profile_import_error, e.getMessage())
-				ToastHelper.show(this, errmsg)
+				Toast.makeText(this, errmsg, Toast.LENGTH_SHORT).show()
 				db.addPost(System.currentTimeMillis(), StorageDatabase.Post.TYPE_ERROR,
 					getString(R.string.profile_import_activity), errmsg)
 				e.printStackTrace()

@@ -116,7 +116,7 @@ class SmartBeaconing(service : AprsService, prefs : PrefsWrapper) extends Locati
 		Log.d(TAG, "onProviderDisabled: " + provider)
 		if (provider == LocationManager.GPS_PROVIDER) {
 			// GPS was our last data source, we have to complain!
-			ToastHelper.show(service, R.string.service_sm_no_gps)
+			Toast.makeText(service, R.string.service_sm_no_gps, Toast.LENGTH_SHORT).show()
 		}
 	}
 	override def onProviderEnabled(provider : String) {

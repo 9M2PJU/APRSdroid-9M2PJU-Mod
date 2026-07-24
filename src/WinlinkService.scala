@@ -194,7 +194,7 @@ class WinlinkService(s : AprsService) {
 					setState(STATE_LOGGED_OUT)
 					// Notify the user -- s is the AprsService Context
 					Toast.makeText(s, s.getString(R.string.winlink_login_timeout),
-						Toast.LENGTH_LONG).show()
+						Toast.LENGTH_SHORT).show()
 				}
 				loginTimeoutRunnable = null
 			}
@@ -244,12 +244,12 @@ class WinlinkService(s : AprsService) {
 		val callsign = s.prefs.getCallsign()
 		if (callsign.isEmpty) {
 			Log.w(TAG, "no callsign set")
-			Toast.makeText(s, R.string.winlink_no_callsign, Toast.LENGTH_LONG).show()
+			Toast.makeText(s, R.string.winlink_no_callsign, Toast.LENGTH_SHORT).show()
 			return false
 		}
 		if (password.isEmpty) {
 			Log.w(TAG, "no Winlink password set")
-			Toast.makeText(s, R.string.winlink_no_password, Toast.LENGTH_LONG).show()
+			Toast.makeText(s, R.string.winlink_no_password, Toast.LENGTH_SHORT).show()
 			return false
 		}
 		if (!AprsService.running) {
@@ -262,7 +262,7 @@ class WinlinkService(s : AprsService) {
 			val mins = (remaining / 60000).toInt
 			Log.w(TAG, "login blocked by cooldown (%d min remaining)".format(mins))
 			Toast.makeText(s, s.getString(R.string.winlink_login_cooldown, mins.asInstanceOf[Integer]),
-				Toast.LENGTH_LONG).show()
+				Toast.LENGTH_SHORT).show()
 			return false
 		}
 		Log.i(TAG, "initiating Winlink login by sending L command")

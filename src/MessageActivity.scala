@@ -276,17 +276,17 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	def requireWinlinkService(f : WinlinkService => Unit) {
 		getWinlinkService match {
 			case Some(ws) => f(ws)
-			case None => Toast.makeText(this, R.string.winlink_not_logged_in, Toast.LENGTH_LONG).show()
+			case None => Toast.makeText(this, R.string.winlink_not_logged_in, Toast.LENGTH_SHORT).show()
 		}
 	}
 
 	def onWinlinkLogin() {
 		if (prefs.getCallsign().isEmpty) {
-			Toast.makeText(this, R.string.winlink_no_callsign, Toast.LENGTH_LONG).show()
+			Toast.makeText(this, R.string.winlink_no_callsign, Toast.LENGTH_SHORT).show()
 			return
 		}
 		if (prefs.getWinlinkPassword().isEmpty) {
-			Toast.makeText(this, R.string.winlink_no_password, Toast.LENGTH_LONG).show()
+			Toast.makeText(this, R.string.winlink_no_password, Toast.LENGTH_SHORT).show()
 			return
 		}
 		if (!AprsService.running) {
@@ -298,9 +298,9 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				// login() returns false (and shows its own toast) if
 				// blocked by cooldown, missing credentials, etc.
 				if (ws.login())
-					Toast.makeText(this, R.string.winlink_login_started, Toast.LENGTH_LONG).show()
+					Toast.makeText(this, R.string.winlink_login_started, Toast.LENGTH_SHORT).show()
 			case None =>
-				Toast.makeText(this, R.string.winlink_not_logged_in, Toast.LENGTH_LONG).show()
+				Toast.makeText(this, R.string.winlink_not_logged_in, Toast.LENGTH_SHORT).show()
 		}
 		updateWinlinkStatus()
 	}
@@ -308,7 +308,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 	def onWinlinkLogout() {
 		requireWinlinkService { ws =>
 			ws.logout()
-			Toast.makeText(this, R.string.winlink_logged_out, Toast.LENGTH_LONG).show()
+			Toast.makeText(this, R.string.winlink_logged_out, Toast.LENGTH_SHORT).show()
 		}
 		updateWinlinkStatus()
 	}
@@ -350,12 +350,12 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val subject = subjField.getText().toString.trim
 					val body = bodyField.getText().toString
 					if (to.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.winlink_email_failed, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.winlink_email_failed, Toast.LENGTH_SHORT).show()
 						return
 					}
 					requireWinlinkService { ws =>
 						ws.sendEmail(to, subject, body)
-						Toast.makeText(MessageActivity.this, R.string.winlink_sending, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.winlink_sending, Toast.LENGTH_SHORT).show()
 					}
 				}
 			})
@@ -463,17 +463,17 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val recipient = recipientField.getText().toString.trim
 					val message = messageField.getText().toString.trim
 					if (recipient.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_recipient, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_recipient, Toast.LENGTH_SHORT).show()
 						return
 					}
 					if (message.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_message, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_message, Toast.LENGTH_SHORT).show()
 						return
 					}
 					// Format: @<recipient> <message>
 					val formatted = "@%s %s".format(recipient, message)
 					sendMessage(formatted)
-					Toast.makeText(MessageActivity.this, R.string.wtsapp_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.wtsapp_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -500,17 +500,17 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val alias = aliasField.getText().toString.trim
 					val phone = phoneField.getText().toString.trim
 					if (alias.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_alias, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_alias, Toast.LENGTH_SHORT).show()
 						return
 					}
 					if (phone.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_phone, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_phone, Toast.LENGTH_SHORT).show()
 						return
 					}
 					// Format: #SET <alias> <phone>
 					val formatted = "#SET %s %s".format(alias, phone)
 					sendMessage(formatted)
-					Toast.makeText(MessageActivity.this, R.string.wtsapp_alias_set, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.wtsapp_alias_set, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -535,13 +535,13 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val alias = aliasField.getText().toString.trim
 					if (alias.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_alias, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.wtsapp_no_alias, Toast.LENGTH_SHORT).show()
 						return
 					}
 					// Format: #RM <alias>
 					val formatted = "#RM %s".format(alias)
 					sendMessage(formatted)
-					Toast.makeText(MessageActivity.this, R.string.wtsapp_alias_removed, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.wtsapp_alias_removed, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -593,7 +593,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		Toast.makeText(this, R.string.bot_sent, Toast.LENGTH_LONG).show()
+		Toast.makeText(this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// posmsg [email]
@@ -610,11 +610,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val email = emailField.getText().toString.trim
 					if (email.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.bot_no_email, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.bot_no_email, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("posmsg %s".format(email))
-					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -635,11 +635,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val call = callField.getText().toString.trim
 					if (call.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.bot_no_callsign, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.bot_no_callsign, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("whereis %s".format(call))
-					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -660,11 +660,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val name = nameField.getText().toString.trim
 					if (name.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.bot_no_satname, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.bot_no_satname, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("satpass %s".format(name))
-					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -687,7 +687,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 						case _ => "spots"
 					}
 					sendMessage("%s %s".format(command, sub))
-					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.bot_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -726,7 +726,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		Toast.makeText(this, R.string.aprsmy_sent, Toast.LENGTH_LONG).show()
+		Toast.makeText(this, R.string.aprsmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// ===== MAILMY =====
@@ -758,7 +758,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		Toast.makeText(this, R.string.mailmy_sent, Toast.LENGTH_LONG).show()
+		Toast.makeText(this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// email <addr> <msg> -- start draft
@@ -777,15 +777,15 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val addr = addrField.getText().toString.trim
 					val msg = msgField.getText().toString.trim
 					if (addr.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.mailmy_no_addr, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.mailmy_no_addr, Toast.LENGTH_SHORT).show()
 						return
 					}
 					if (msg.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.mailmy_no_msg, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.mailmy_no_msg, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("email %s %s".format(addr, msg))
-					Toast.makeText(MessageActivity.this, R.string.mailmy_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -806,11 +806,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val addr = addrField.getText().toString.trim
 					if (addr.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.mailmy_no_addr, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.mailmy_no_addr, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("SENDLOC %s".format(addr))
-					Toast.makeText(MessageActivity.this, R.string.mailmy_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.mailmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -838,7 +838,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		Toast.makeText(this, R.string.callmy_sent, Toast.LENGTH_LONG).show()
+		Toast.makeText(this, R.string.callmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// callsign <CALL>
@@ -855,11 +855,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val call = callField.getText().toString.trim
 					if (call.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.callmy_no_callsign, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.callmy_no_callsign, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("callsign %s".format(call))
-					Toast.makeText(MessageActivity.this, R.string.callmy_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.callmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -895,7 +895,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		Toast.makeText(this, R.string.bbsmy_sent, Toast.LENGTH_LONG).show()
+		Toast.makeText(this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// POST <text>
@@ -912,11 +912,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val text = textField.getText().toString.trim
 					if (text.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("P %s".format(text))
-					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -937,11 +937,11 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 				override def onClick(d : DialogInterface, which : Int) {
 					val text = textField.getText().toString.trim
 					if (text.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("PU %s".format(text))
-					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -964,15 +964,15 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 					val call = callField.getText().toString.trim
 					val text = textField.getText().toString.trim
 					if (call.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_callsign, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_callsign, Toast.LENGTH_SHORT).show()
 						return
 					}
 					if (text.isEmpty) {
-						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_LONG).show()
+						Toast.makeText(MessageActivity.this, R.string.bbsmy_no_text, Toast.LENGTH_SHORT).show()
 						return
 					}
 					sendMessage("S %s %s".format(call, text))
-					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.bbsmy_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -1000,7 +1000,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		Toast.makeText(this, R.string.repeat_sent, Toast.LENGTH_LONG).show()
+		Toast.makeText(this, R.string.repeat_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	// n [Num] [Band] [+Filter]
@@ -1043,14 +1043,14 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 							val n = numStr.toInt
 							if (n < 1 || n > 10) {
 								Toast.makeText(MessageActivity.this, R.string.repeat_no_num,
-									Toast.LENGTH_LONG).show()
+									Toast.LENGTH_SHORT).show()
 								return
 							}
 							sb.append(" ").append(n)
 						} catch {
 							case e : Exception =>
 								Toast.makeText(MessageActivity.this, R.string.repeat_no_num,
-									Toast.LENGTH_LONG).show()
+									Toast.LENGTH_SHORT).show()
 								return
 						}
 					}
@@ -1065,7 +1065,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 						sb.append(" ").append(filters)
 					}
 					sendMessage(sb.toString)
-					Toast.makeText(MessageActivity.this, R.string.repeat_sent, Toast.LENGTH_LONG).show()
+					Toast.makeText(MessageActivity.this, R.string.repeat_sent, Toast.LENGTH_SHORT).show()
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, null)
@@ -1103,7 +1103,7 @@ class MessageActivity extends StationHelper(R.string.app_messages)
 			return
 		}
 		sendMessage(command)
-		Toast.makeText(this, R.string.gamemy_sent, Toast.LENGTH_LONG).show()
+		Toast.makeText(this, R.string.gamemy_sent, Toast.LENGTH_SHORT).show()
 	}
 
 	override def onResume() {

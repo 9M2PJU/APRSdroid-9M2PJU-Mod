@@ -84,7 +84,7 @@ class KeyfileImportActivity extends AppCompatActivity {
 					.edit().putString("callsign", callsign).commit()
 
 				val msg = getString(R.string.ssl_import_ok, callsign)
-				Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+				Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 				db.addPost(System.currentTimeMillis(), StorageDatabase.Post.TYPE_INFO,
 					getString(R.string.post_info), msg)
 				startActivity(new Intent(this, classOf[LogActivity]))
@@ -92,7 +92,7 @@ class KeyfileImportActivity extends AppCompatActivity {
 		} catch {
 		case e : Exception =>
 			val errmsg = getString(R.string.ssl_import_error, e.getMessage())
-			Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
+			Toast.makeText(this, errmsg, Toast.LENGTH_SHORT).show()
 			db.addPost(System.currentTimeMillis(), StorageDatabase.Post.TYPE_ERROR,
 				getString(R.string.post_error), errmsg)
 			e.printStackTrace()

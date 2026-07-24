@@ -136,7 +136,7 @@ class PeriodicGPS(service : AprsService, prefs : PrefsWrapper) extends LocationS
 		if (provider == LocationManager.GPS_PROVIDER &&
 			netloc_usable == false) {
 			// GPS was our last data source, we have to complain!
-			Toast.makeText(service, R.string.service_no_location, Toast.LENGTH_LONG).show()
+			Toast.makeText(service, R.string.service_no_location, Toast.LENGTH_SHORT).show()
 		}
 	}
 	override def onProviderEnabled(provider : String) {

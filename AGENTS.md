@@ -85,6 +85,14 @@ Full builds take ~3 minutes. The README warns that incremental builds can
 sometimes produce non-functional APKs -- when in doubt, clean first
 (`./gradlew clean`).
 
+**Local build JDK requirement:** Gradle 5.6.4 / AGP 3.5.1 requires
+JDK 8. The local machine has JDK 26 as default, which causes
+`Could not initialize class org.codehaus.groovy.reflection.ReflectionCache`
+errors. To build locally, set `JAVA_HOME` to JDK 8:
+`export JAVA_HOME=/usr/lib/jvm/java-8-openjdk`
+Local builds are not needed for releases -- GitHub Actions CI handles
+all release builds with the correct JDK.
+
 ### Submodules
 
 - `PacketDroid` → `https://github.com/ge0rg/PacketDroid.git` (jni code; the
@@ -1027,7 +1035,7 @@ extend behind the system bars.
 
 ## 17. Version history & release tags
 
-Current version tag: **v2.0.10** (annotated tag).
+Current version tag: **v2.0.26** (annotated tag).
 
 ### v2.0.10 - APRS Messaging Bots & Services
 
@@ -1076,6 +1084,122 @@ source, layout, string, markdown, and HTML files.
 - **Release title:** v2.0.10-9M2PJU
 - **APK:** APRSdroid-9M2PJU-Mod-v2.0.10.apk (signed)
 - **Installed on both phones:** 6e97c930 and db80429a
+
+### v2.0.26 release status
+
+- **Released:** 2026-07-24
+- **GitHub Release:** https://github.com/9M2PJU/APRSdroid-9M2PJU-Mod/releases/tag/v2.0.26
+- **Release title:** v2.0.26-9M2PJU
+- **APK:** APRSdroid-9M2PJU-Mod-v2.0.26.apk (signed, 6.3 MB)
+- **Installed on phone:** db80429a (Android 16)
+- **GitHub Pages:** built and live at aprsdroid.hamradio.my
+- **version.json:** auto-updated by CI to v2.0.26
+
+### v2.0.26 - Winlink UI fixes, login robustness, toast/placeholder audit
+
+Commits in this release (v2.0.25..v2.0.26):
+
+1. `6ccd422` - **Conversation list fix**: `getConversations()` in
+   `StorageDatabase.scala` was grouping by `call` but relied on a
+   subquery ORDER BY surviving the outer GROUP BY, which SQLite does
+   NOT guarantee. When SQLite used the `call` index for grouping it
+   picked the oldest row per group (lowest _id), so the conversation
+   preview always showed the user's first sent message instead of the
+   most recent reply. Fixed by using `MAX(_id)` so SQLite's bare-column
+   rule guarantees all other columns come from the row with the highest
+   _id (latest message) per call, and sorting by `MAX(_id) DESC`.
+
+2. `58bd441` - **Winlink chat window title**: `winlink_buttons.xml`
+   was the only service button layout missing a title row. Added a
+   title row with "WINLINK Email" (`p_winlink`) in blue (`#2196f3`)
+   above the status row, matching the pattern used by all other service
+   layouts (WTSAPP, BOT, APRSMY, MAILMY, CALLMY, BBSMY, REPEATER,
+   GAMEMY).
+
+3. `a82fd76` - **Winlink active login timeout**: Login button could
+   hang indefinitely if WLNK-1 never responded to the login challenge.
+   Added a 2-minute active login timeout in `WinlinkService.scala` that
+   auto-recovers the state to `STATE_LOGGED_OUT` and shows a toast.
+
+4. `ef6a402` - **WLNK-1 rate-limit handling**: WLNK-1 returns rate-limit
+   errors when logins are attempted too frequently. Added a login
+   cooldown mechanism in `WinlinkService.scala` that blocks login
+   attempts for a cooldown period and shows a toast with the remaining
+   minutes. The cooldown is also reflected in the status row text.
+
+5. `8397052` - **Bot toast rename**: Changed `bot_sent` toast from
+   "Command sent to APRS Bot." to "Command sent to 9M2PJU-4 Bot." The
+   service is 9M2PJU-4, not a generic APRS Bot.
+
+6. `6936dd7` - **Toast and placeholder text audit**: Comprehensive
+   audit of all 86 toasts and 32 EditText placeholders across the app.
+   Changes applied per user's manual edits to `output.txt`:
+   - Replaced all generic email placeholders (john@example.com,
+     sam@iam.com, sam@somelongdomainname.net, youraddr@home.net,
+     someone@email.com) with `9m2pju@hamradio.my` across Winlink,
+     BOT, and MAILMY hints
+   - Shortened `winlink_login_timeout` toast (dropped "when you have a
+     better RF path")
+   - Updated `bot_whereis_callsign_hint` from 9M2PJU-8 to 9M2PJU-5
+   - Removed colon from `bot_sota_or_alerts` and `bot_pota_or_alerts`
+   - Renamed `repeat_sent` toast from "REPEAT" to "REPEATER"
+   - Rebranded `firstrun_welcome_title`/`firstrun_welcome_text` and
+     `update_available_text` to "APRSdroid 9M2PJU Mod"
+   - Capitalized `p_winlink` title to "WINLINK Email"
+
+7. `a6bbb81` - **Toast duration**: Changed all 86 toasts from
+   `LENGTH_LONG` (3.5s) to `LENGTH_SHORT` (2s) across 15 files.
+
+8. `15c6f60` + `b203250` - **Snackbar experiment (reverted)**: Tried
+   replacing all Toasts with Snackbar (1.5s custom duration) via a
+   new `ToastHelper.scala`. It crashed with
+   `ClassCastException: FrameLayout cannot be cast to Nothing$` due
+   to Scala type inference on `findViewById`. Fixed the cast but the
+   user didn't like the Snackbar UX (bottom of screen, different
+   style). Reverted both commits in `ca58c39` and `6bddd80`. Back to
+   `Toast.LENGTH_SHORT` (2s) for all toasts. `ToastHelper.scala`
+   deleted.
+
+### Lessons learned in v2.0.26 session
+
+1. **SQLite GROUP BY bare-column rule**: When using `GROUP BY` without
+   an aggregate on the SELECT columns, SQLite's "bare column" rule
+   means the values come from an arbitrary row in the group (often the
+   first by index). To guarantee the latest row, use `MAX(_id)` as an
+   explicit aggregate - SQLite then guarantees all bare columns come
+   from the row with the max _id.
+
+2. **Scala `findViewById` type inference**: `Activity.findViewById(int)`
+   is generic in Java (`<T extends View> T findViewById(int)`). Scala
+   infers `T` as `Nothing$` if not explicitly specified, causing a
+   `ClassCastException` at runtime. Always use
+   `.asInstanceOf[View]` when calling `findViewById` in Scala.
+
+3. **Snackbar vs Toast**: Snackbar requires an anchor View (only
+   available in Activities, not Services), appears at the bottom of
+   the screen (not centered like Toast), and has a different visual
+   style. The user preferred Toast's centered appearance. Snackbar's
+   only advantage is custom duration (e.g. 1500ms), but the user
+   decided 2s Toast was acceptable.
+
+4. **Toast duration is OS-controlled**: Android's Toast API only
+   supports `LENGTH_SHORT` (~2s) and `LENGTH_LONG` (~3.5s). There is
+   no way to set a custom duration. The cancel-via-Handler hack is
+   unreliable on Android 12+ where the system controls toast timing.
+
+5. **GitHub Actions on tag push**: Pushing a `v*` tag triggers BOTH
+   the master push build AND the tag build. The tag build runs the
+   `release` job (creates GitHub Release, updates version.json). Both
+   runs build the APK but only the tag run publishes.
+
+6. **`gh release download`**: Use `gh release download <tag> --dir
+   /tmp/apk-release` to download the release APK directly, instead of
+   `gh run download` which requires the run ID.
+
+7. **AGENTS.md is git-ignored**: It must be force-added with
+   `git add -f AGENTS.md`. When reverting commits that added it, it
+   gets deleted and must be restored from history with
+   `git show <sha>:AGENTS.md > AGENTS.md`.
 
 ### Documentation updates in v2.0.10
 

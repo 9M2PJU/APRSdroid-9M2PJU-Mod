@@ -12,7 +12,7 @@ object ToastHelper {
 	def show(context : Context, text : CharSequence) : Unit = {
 		context match {
 			case a : Activity =>
-				val view = a.findViewById(android.R.id.content).asInstanceOf[View]
+				val view = a.findViewById(android.R.id.content)
 				if (view != null)
 					Snackbar.make(view, text, DURATION_MS).show()
 				else

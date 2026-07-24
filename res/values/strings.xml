@@ -80,8 +80,8 @@
 <string name="fr_text3">Only needed for APRS over the Internet:</string>
 
 <!-- first-run permission screen -->
-<string name="firstrun_welcome_title">Welcome to APRSdroid</string>
-<string name="firstrun_welcome_text">APRSdroid is an Android app for amateur radio APRS. To get started, please grant the following permissions. You can change these later in Android Settings.</string>
+<string name="firstrun_welcome_title">Welcome to APRSdroid 9M2PJU Mod</string>
+<string name="firstrun_welcome_text">APRSdroid 9M2PJU Mod is an Android app for amateur radio APRS. To get started, please grant the following permissions. You can change these later in Android Settings.</string>
 <string name="firstrun_perms_header">Permissions needed</string>
 <string name="firstrun_perm_location">📍 Location - Needed to broadcast your position to the APRS network and show nearby stations.</string>
 <string name="firstrun_perm_notifications">🔔 Notifications - Needed to show service status and alert you of incoming APRS messages. (Android 13+)</string>
@@ -101,7 +101,7 @@
 
 <!-- in-app update check -->
 <string name="update_available_title">Update available</string>
-<string name="update_available_text">A new version of APRSdroid is available!\n\nInstalled: %1$s\nLatest: %2$s\n\nWould you like to download and install it?</string>
+<string name="update_available_text">A new version of APRSdroid 9M2PJU Mod is available!\n\nInstalled: %1$s\nLatest: %2$s\n\nWould you like to download and install it?</string>
 <string name="update_download">Download</string>
 <string name="update_later">Later</string>
 <string name="update_skip">Skip this version</string>
@@ -657,7 +657,7 @@
 
 <!-- Winlink APRSLink -->
 <string name="p__winlink">Winlink</string>
-<string name="p_winlink">Winlink Email</string>
+<string name="p_winlink">WINLINK Email</string>
 <string name="p_winlink_summary">Send/receive Winlink email via APRSLink</string>
 <string name="p_winlink_password">Winlink Password</string>
 <string name="p_winlink_password_summary">Your Winlink account password (for secure login)</string>
@@ -671,7 +671,7 @@
 <string name="winlink_status_error">Login failed</string>
 <string name="winlink_status_cooldown">Rate-limited by WLNK-1, try again in %d min</string>
 
-<string name="winlink_login_timeout">Winlink login timed out - no reply from WLNK-1. Try again when you have a better RF path.</string>
+<string name="winlink_login_timeout">Winlink login timed out - no reply from WLNK-1. Try later.</string>
 <string name="winlink_login_cooldown">WLNK-1 is rate-limiting logins. Try again in %d minutes.</string>
 <string name="winlink_login">Login</string>
 <string name="winlink_logout">Logout</string>
@@ -692,16 +692,16 @@
 <string name="winlink_msg_number">Message number (1-5)</string>
 <string name="winlink_msg_number_hint">1</string>
 <string name="winlink_sms_to">To (email, callsign, or alias)</string>
-<string name="winlink_sms_to_hint">sam@iam.com</string>
+<string name="winlink_sms_to_hint">9m2pju@hamradio.my</string>
 <string name="winlink_sms_message">Short message (one line)</string>
 <string name="winlink_sms_message_hint">A short message</string>
 <string name="winlink_alias_name">Alias name</string>
 <string name="winlink_alias_name_hint">sam</string>
 <string name="winlink_alias_email">Email address</string>
-<string name="winlink_alias_email_hint">sam@somelongdomainname.net</string>
+<string name="winlink_alias_email_hint">9m2pju@hamradio.my</string>
 <string name="winlink_alias_delete_hint">Leave email blank to delete alias</string>
 <string name="winlink_forward_to">Forward to (email or callsign)</string>
-<string name="winlink_forward_to_hint">youraddr@home.net</string>
+<string name="winlink_forward_to_hint">9m2pju@hamradio.my</string>
 <string name="winlink_gateway_count">Number of nearby gateways</string>
 <string name="winlink_gateway_count_hint">1</string>
 <string name="winlink_command_sent">Command sent.</string>
@@ -709,7 +709,7 @@
 <string name="winlink_compose_to">To (email or callsign)</string>
 <string name="winlink_compose_subject">Subject</string>
 <string name="winlink_compose_body">Message body</string>
-<string name="winlink_compose_hint_to">john@example.com</string>
+<string name="winlink_compose_hint_to">9m2pju@hamradio.my</string>
 <string name="winlink_compose_hint_subject">Test message</string>
 <string name="winlink_compose_hint_body">Type your message here…</string>
 <string name="winlink_sending">Sending email…</string>
@@ -765,19 +765,19 @@
 <string name="bot_fire_station">Fire Stn</string>
 <string name="bot_prop">Prop</string>
 <string name="bot_posmsg_email">Email address for position report</string>
-<string name="bot_posmsg_email_hint">someone@email.com</string>
+<string name="bot_posmsg_email_hint">9m2pju@hamradio.my</string>
 <string name="bot_posmsg_message">Optional message (one line)</string>
 <string name="bot_posmsg_message_hint">I am at this location</string>
 <string name="bot_whereis_callsign">Callsign to locate</string>
-<string name="bot_whereis_callsign_hint">9M2PJU-8</string>
+<string name="bot_whereis_callsign_hint">9M2PJU-5</string>
 <string name="bot_satpass_name">Satellite name</string>
 <string name="bot_satpass_name_hint">iss</string>
 <string name="bot_sent">Command sent to 9M2PJU-4 Bot.</string>
 <string name="bot_no_email">Enter an email address.</string>
 <string name="bot_no_callsign">Enter a callsign.</string>
 <string name="bot_no_satname">Enter a satellite name.</string>
-<string name="bot_sota_or_alerts">SOTA: spots or alerts?</string>
-<string name="bot_pota_or_alerts">POTA: spots or alerts?</string>
+<string name="bot_sota_or_alerts">SOTA spots or alerts?</string>
+<string name="bot_pota_or_alerts">POTA spots or alerts?</string>
 <string name="bot_spots">Spots</string>
 <string name="bot_alerts">Alerts</string>
 
@@ -801,7 +801,7 @@
 <string name="mailmy_cancel">Cancel</string>
 <string name="mailmy_help">Help</string>
 <string name="mailmy_email_addr">Email address</string>
-<string name="mailmy_email_addr_hint">someone@email.com</string>
+<string name="mailmy_email_addr_hint">9m2pju@hamradio.my</string>
 <string name="mailmy_email_msg">Message (one line)</string>
 <string name="mailmy_email_msg_hint">Your message text</string>
 <string name="mailmy_sendloc_addr">Email address to send your position to</string>
@@ -856,7 +856,7 @@
 <string name="repeat_band">Frequency band</string>
 <string name="repeat_filters">Capability filters (e.g. +echolink +dstar)</string>
 <string name="repeat_filters_hint">+echolink</string>
-<string name="repeat_sent">Command sent to REPEAT.</string>
+<string name="repeat_sent">Command sent to REPEATER.</string>
 <string name="repeat_no_num">Enter a number between 1 and 10.</string>
 <string name="repeat_band_2m">2m</string>
 <string name="repeat_band_70cm">70cm</string>
